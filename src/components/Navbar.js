@@ -51,7 +51,7 @@ const Navbar = () => {
         {
             label: 'Inicio',
             icon: 'pi pi-home',
-            command: () => navigate('/dashboard')
+            command: () => navigate('/')
         }
     ];
 
@@ -64,12 +64,12 @@ const Navbar = () => {
                 {
                     label: 'Nuevo Contrato',
                     icon: 'pi pi-plus',
-                    command: () => navigate('/contracts/new')
+                    command: () => navigate('/vendedor/new')
                 },
                 {
                     label: 'Mis Contratos',
                     icon: 'pi pi-list',
-                    command: () => navigate('/contracts')
+                    command: () => navigate('/')
                 },
                 {
                     label: 'Plantillas',

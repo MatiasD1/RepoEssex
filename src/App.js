@@ -11,7 +11,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import './CSS/styles.css';
 import { PrimeReactProvider } from 'primereact/api'; 
 import { Toast } from 'primereact/toast';
-import NewContracts from './components/NewContrats';
+import NewContract from './components/NewContract';
 
 const App = () => {
   const  [userRole,setUserRole] = useState(null); 
@@ -48,7 +48,7 @@ const App = () => {
           <Route path="/register" element={userRole ? <Navigate to={`/${userRole}`} /> : <Register />} />
           <Route path="/administrador" element={userRole === "administrador" ? <Administrador /> : <Navigate to="/" />} />
           <Route path="/vendedor" element={userRole === "vendedor" ? <Vendedor /> : <Navigate to="/" />} />
-          <Route path="/vendedor/new" element={userRole === "vendedor" ? <NewContracts /> : <Navigate to="/" />} />
+          <Route path="/vendedor/new" element={userRole === "vendedor" ? <NewContract /> : <Navigate to="/" />} />
         </Routes>
         <Footer/>
       </Router>

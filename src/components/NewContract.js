@@ -6,6 +6,7 @@ import { createContract } from './FirebaseContrats';
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
+import NavBar from './Navbar'; 
 
 const NewContract = () => {
   const [formData, setFormData] = useState({
@@ -59,6 +60,7 @@ const NewContract = () => {
   return (
     <div className="card">
       <Toast ref={toast} />
+      <NavBar/>
       <h2>Nuevo Contrato</h2>
       <form onSubmit={handleSubmit}>
         <div className="p-fluid grid">
