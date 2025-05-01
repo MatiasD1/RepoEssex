@@ -1,0 +1,46 @@
+// footer.scss
+$footer-bg: white; // Fondo gris oscuro
+$footer-text-color: grey; // Color de texto blanco
+
+// Footer estilos
+.footer {
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100%;
+  background-color: black;
+  color: $footer-text-color;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 0.875rem; // text-sm en Tailwind
+  position: relative;
+  bottom: 0;
+
+  .columnaFooter {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Khula', sans-serif;
+  
+    .logosRedes {
+      display: flex;
+      gap: 50px;
+      margin: 20px auto; 
+      max-width: 300px; 
+  }
+  
+    .logoRed img {
+        width: 50px;
+        height: 50px;
+    }
+  }
+
+  // Estilo para el copyright
+  .copyright {
+    font-size: 0.875rem;
+    color: $footer-text-color;
+  }
+
+  // Asegurar que el footer no se superponga en pantallas pequeñas
+  @media (max-width: 767px) {
+    font-size: 0.75rem;
+  }
+}
