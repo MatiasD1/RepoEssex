@@ -3,14 +3,12 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from '../firebase';
-import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('vendedor'); // Por defecto
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -24,7 +22,6 @@ const Register = () => {
         role: role,
       });
 
-      navigate(`/home/${user.uid}`);
     } catch (err) {
       setError(err.message);
     }
@@ -54,6 +51,7 @@ const Register = () => {
         </select>
         <button type="submit">Registrarse</button>
         {error && <p>{error}</p>}
+        <p>¿Ya tienes cuenta? <a href="/login">Inicia sesión</a></p>
       </form>
     </div>
   );

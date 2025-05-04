@@ -7,9 +7,8 @@ import { getDocs, query, collection, where } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import NavBar from './Navbar';
 
-const Vendedor = () => {
+const Sellers = () => {
   const [contracts, setContracts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -19,7 +18,6 @@ const Vendedor = () => {
   const columns = [
     { field: 'titulo', header: 'Título' },
     { field: 'contenido', header: 'Contenido' },
-    { field: 'firma', header: 'Firma' },
     { 
       field: 'createdAt', 
       header: 'Fecha Creación',
@@ -32,9 +30,7 @@ const Vendedor = () => {
         return 'Fecha no disponible';
       }
     },
-    { field: 'status', header: 'Estado' },
-    { field: 'userUID', header: 'Usuario' },
-
+    { field: 'status', header: 'Estado' }
   ];
 
   const showError = (message) => {
@@ -116,20 +112,12 @@ const Vendedor = () => {
 
   return (
     <div className="card">
-      <NavBar/>
       <Toast ref={toast} />
       <h1 className="text-center">Bienvenido {user?.email || 'Usuario'}</h1>
       
       <div className="flex justify-content-between align-items-center mb-4">
         <h2>Mis Contratos</h2>
-        {user && (
-          <Button 
-            label="Nuevo Contrato" 
-            icon="pi pi-plus" 
-            onClick={() => navigate('/vendedor/new')}
-            disabled={loading}
-          />
-        )}
+        
       </div>
 
       {contracts.length > 0 ? (
@@ -160,7 +148,7 @@ const Vendedor = () => {
               <Button 
                 label="Crear primer contrato" 
                 icon="pi pi-plus" 
-                onClick={() => navigate('/vendedor/new')}
+                onClick={() => navigate('/sellers/new')}
                 className="mt-2"
               />
             </>
@@ -173,4 +161,4 @@ const Vendedor = () => {
   );
 };
 
-export default Vendedor;
+export default Sellers;

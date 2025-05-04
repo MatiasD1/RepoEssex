@@ -2,8 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
-import Administrador from './components/Administrador';
-import Vendedor from './components/Vendedor';
+import Administrator from './components/Administrator';
 import Footer from './components/Footer';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './firebase'; 
@@ -12,21 +11,32 @@ import './CSS/styles.css';
 import { PrimeReactProvider } from 'primereact/api'; 
 import { Toast } from 'primereact/toast';
 import NewContract from './components/NewContract';
+import ContractsList from './components/ContractsList';
+import Navbar from './components/Navbar';
+import SellersList from './components/SellersList';
+import Reports from './components/Reports';
+import Sellers from './components/Sellers';
 
 const App = () => {
-  const  [userRole,setUserRole] = useState(null); 
+  const [userRole,setUserRole] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true); 
   const toast = useRef(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        setIsAuthenticated(true);
         const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userData = userDoc.data();
+        setCurrentUser(userData);
         const role = userDoc.exists() ? userDoc.data().role : null;
         setUserRole(role);
 
       } else {
         setUserRole(null);
+        setIsAuthenticated(false);
       }
       setLoading(false); 
     });
@@ -42,13 +52,21 @@ const App = () => {
     <PrimeReactProvider>
       <Toast ref={toast} />
       <Router>
+        {isAuthenticated && <Navbar user={currentUser}/>}
         <Routes>
+          
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={userRole ? <Navigate to={`/${userRole}`} /> : <Login />} />
           <Route path="/register" element={userRole ? <Navigate to={`/${userRole}`} /> : <Register />} />
-          <Route path="/administrador" element={userRole === "administrador" ? <Administrador /> : <Navigate to="/" />} />
-          <Route path="/vendedor" element={userRole === "vendedor" ? <Vendedor /> : <Navigate to="/" />} />
-          <Route path="/vendedor/new" element={userRole === "vendedor" ? <NewContract /> : <Navigate to="/" />} />
+
+          <Route path="/administrator" element={userRole === "administrator" ? <Administrator /> : <Navigate to="/" />} />
+          <Route path="/administrator/ContractsList" element={userRole === "administrator" ? <ContractsList /> : <Navigate to="/" />} />
+          <Route path="/administrator/SellersList" element={userRole === "administrator" ? <SellersList /> : <Navigate to="/" />} />
+          <Route path="/administrator/Reports" element={userRole === "administrator" ? <Reports /> : <Navigate to="/" />} />
+
+          <Route path="/sellers" element={userRole === "sellers" ? <Sellers /> : <Navigate to="/" />} />
+          <Route path="/sellers/new" element={userRole === "sellers" ? <NewContract /> : <Navigate to="/" />} />
+          <Route path="/sellers/ContractsList" element={userRole === "sellers" ? <ContractsList /> : <Navigate to="/" />} />
         </Routes>
         <Footer/>
       </Router>

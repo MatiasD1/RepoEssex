@@ -7,10 +7,13 @@ export const createContract = async (contractData) => {
   if (!auth.currentUser) throw new Error("Usuario no autenticado");
 
   const contractDoc = {
-    ...contractData,
-    userUID: auth.currentUser.uid, // Campo CRÍTICO que vincula al usuario
+    titulo: contractData.titulo,
+    contenido: contractData.contenido,
+    firma: contractData.firma, // Guardamos la firma en base64
+    pdfUrl: contractData.pdfUrl, // URL del PDF generado
+    userUID: auth.currentUser.uid,
     createdAt: serverTimestamp(),
-    status: "activo"
+    status: contractData.firma?"activo":"inactivo"
   };
 
   const docRef = await addDoc(collection(db, "contracts"), contractDoc);
