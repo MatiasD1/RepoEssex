@@ -13,9 +13,9 @@ import { Toast } from 'primereact/toast';
 import NewContract from './components/NewContract';
 import ContractsList from './components/ContractsList';
 import Navbar from './components/Navbar';
-import SellersList from './components/SellersList';
 import Reports from './components/Reports';
 import Sellers from './components/Sellers';
+import PdfList from './components/PdfList';
 
 const App = () => {
   const [userRole,setUserRole] = useState(null);
@@ -61,12 +61,11 @@ const App = () => {
 
           <Route path="/administrator" element={userRole === "administrator" ? <Administrator /> : <Navigate to="/" />} />
           <Route path="/administrator/ContractsList" element={userRole === "administrator" ? <ContractsList /> : <Navigate to="/" />} />
-          <Route path="/administrator/SellersList" element={userRole === "administrator" ? <SellersList /> : <Navigate to="/" />} />
           <Route path="/administrator/Reports" element={userRole === "administrator" ? <Reports /> : <Navigate to="/" />} />
 
           <Route path="/sellers" element={userRole === "sellers" ? <Sellers /> : <Navigate to="/" />} />
           <Route path="/sellers/new" element={userRole === "sellers" ? <NewContract /> : <Navigate to="/" />} />
-          <Route path="/sellers/ContractsList" element={userRole === "sellers" ? <ContractsList /> : <Navigate to="/" />} />
+          <Route path="/sellers/PdfList" element={userRole === "sellers" ? <PdfList /> : <Navigate to="/" />} />
         </Routes>
         <Footer/>
       </Router>
