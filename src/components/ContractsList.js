@@ -41,14 +41,10 @@ const ContractsList = () => {
       } catch (error) {
         console.error("Error fetching contracts:", error);
         setLoading(false);
-      }
-      
+      } 
     }
-    return () => {
-      getContracts();
-    }
-  }
-  , []);
+    getContracts();
+  } , []);
 
 
   if (loading) {

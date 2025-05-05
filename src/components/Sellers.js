@@ -48,7 +48,6 @@ const Sellers = () => {
 
     const fetchContracts = async (userId) => {
       try {
-        setLoading(true);
         const q = query(
           collection(db, "contracts"),
           where("userUID", "==", userId)

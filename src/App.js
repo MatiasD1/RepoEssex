@@ -60,12 +60,12 @@ const App = () => {
           <Route path="/register" element={userRole ? <Navigate to={`/${userRole}`} /> : <Register />} />
 
           <Route path="/administrator" element={userRole === "administrator" ? <Administrator /> : <Navigate to="/" />} />
-          <Route path="/administrator/ContractsList" element={userRole === "administrator" ? <ContractsList /> : <Navigate to="/" />} />
-          <Route path="/administrator/Reports" element={userRole === "administrator" ? <Reports /> : <Navigate to="/" />} />
+          <Route path="/administrator/contractsList" element={userRole === "administrator" ? <ContractsList /> : <Navigate to="/" />} />
+          <Route path="/administrator/reports" element={userRole === "administrator" ? <Reports /> : <Navigate to="/" />} />
 
           <Route path="/sellers" element={userRole === "sellers" ? <Sellers /> : <Navigate to="/" />} />
           <Route path="/sellers/new" element={userRole === "sellers" ? <NewContract /> : <Navigate to="/" />} />
-          <Route path="/sellers/PdfList" element={userRole === "sellers" ? <PdfList /> : <Navigate to="/" />} />
+          <Route path="/sellers/pdfList" element={userRole === "sellers" ? <PdfList /> : <Navigate to="/" />} />
         </Routes>
         <Footer/>
       </Router>
