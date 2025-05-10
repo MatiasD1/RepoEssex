@@ -30,6 +30,7 @@ const Reports = () => {
           totalSnapshot,
           activeSnapshot,
           periodoSnapshot,
+          // eslint-disable-next-line no-unused-vars
           vendedoresSnapshot,
         ] = await Promise.all([
           getDocs(contractsRef),

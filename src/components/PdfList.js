@@ -1,11 +1,20 @@
 import React, { useEffect, useState,useRef } from 'react';
 import { getUserContracts } from './FirebaseContrats';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 
 const PdfList = () => {
 
   const [contracts, setContracts] = useState([]);
   const [loading, setLoading] = useState(true);
   const toast = useRef(null);
+  const columns =[
+    { field: 'userUID', header: 'ID' },
+    { field: 'titulo', header: 'titulo' },
+    { field: 'status', header: 'Estado' },
+    { field: 'createdAt', header: 'Fecha de Creación' },
+    // Agrega más columnas según sea necesario
+  ];
 
   const showError = (message) => {
     toast.current?.show({
@@ -55,9 +64,17 @@ const PdfList = () => {
         fetchContracts();
       },[]);
 
+  if (loading) {
+    return <div>Cargando contratos...</div>;
+  }
+
   return (
     <div>
-      
+      <DataTable value={contracts} paginator rows={10} loading={loading}>
+        {columns.map((col) => (
+          <Column key={col.field} field={col.field} header={col.header} sortable />
+        ))}
+      </DataTable>  
     </div>
   )
 }

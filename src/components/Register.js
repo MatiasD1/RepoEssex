@@ -13,12 +13,12 @@ import { Dropdown } from 'primereact/dropdown';
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('vendedor');
+  const [role, setRole] = useState('');
   const [error, setError] = useState('');
 
   const roles = [
-    { label: 'Vendedor', value: 'vendedor' },
-    { label: 'Administrador', value: 'administrador' }
+    { label: 'Vendedor', value: 'sellers' },
+    { label: 'Administrador', value: 'administrator' }
   ];
 
   const handleRegister = async (e) => {
