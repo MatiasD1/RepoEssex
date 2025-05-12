@@ -4,43 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
-import { getUserFromFirestore } from '../auth'; // Importa tus funciones
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
-const Navbar = () => {
+const Navbar = ({user}) => {
     const navigate = useNavigate();
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                try {
-                    const userData = await getUserFromFirestore(user.uid);
-                    setCurrentUser({
-                        uid: user.uid,
-                        email: user.email,
-                        ...userData
-                    });
-                } catch (error) {
-                    console.error("Error obteniendo datos del usuario:", error);
-                }
-            } else {
-                setCurrentUser(null);
-            }
+        if (user) {
+            setCurrentUser(user);
             setLoading(false);
-        });
-
-        return () => unsubscribe();
-    }, []);
-
+        }else{
+            setCurrentUser(null);
+            setLoading(true);
+        }
+    },[user]);
+    
     const handleLogout = async () => {
         try {
             await signOut(auth);
             setCurrentUser(null);
-            navigate('/login');
         } catch (error) {
             console.error("Error al cerrar sesión:", error);
         }
@@ -64,7 +50,7 @@ const Navbar = () => {
                 {
                     label: 'Nuevo Contrato',
                     icon: 'pi pi-plus',
-                    command: () => navigate('/vendedor/new')
+                    command: () => navigate('/sellers/new',{state:{user}})
                 },
                 {
                     label: 'Mis Contratos',
@@ -74,14 +60,9 @@ const Navbar = () => {
                 {
                     label: 'Plantillas',
                     icon: 'pi pi-copy',
-                    command: () => navigate('/templates')
+                    command: () => navigate('/sellers/ContractsList')
                 }
             ]
-        },
-        {
-            label: 'Firmar',
-            icon: 'pi pi-pencil',
-            command: () => navigate('/sign')
         }
     ];
 
@@ -94,24 +75,19 @@ const Navbar = () => {
                 {
                     label: 'Todos los Contratos',
                     icon: 'pi pi-folder-open',
-                    command: () => navigate('/admin/contracts')
+                    command: () => navigate('/administrator/contractsListAdmin')
                 },
                 {
                     label: 'Vendedores',
                     icon: 'pi pi-users',
-                    command: () => navigate('/admin/sellers')
+                    command: () => navigate('/')
                 },
                 {
                     label: 'Reportes',
                     icon: 'pi pi-chart-bar',
-                    command: () => navigate('/admin/reports')
+                    command: () => navigate('/administrator/reports')
                 }
             ]
-        },
-        {
-            label: 'Filtros Avanzados',
-            icon: 'pi pi-filter',
-            command: () => navigate('/admin/filters')
         }
     ];
 
@@ -119,7 +95,7 @@ const Navbar = () => {
         return <div>Cargando...</div>;
     }
 
-    const roleSpecificItems = currentUser?.role === 'admin' ? adminItems : sellerItems;
+    const roleSpecificItems = currentUser?.role === 'administrator' ? adminItems : sellerItems;
     const items = [...commonItems, ...roleSpecificItems];
 
     const endItems = currentUser ? (

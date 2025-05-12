@@ -3,10 +3,9 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import Navbar from './Navbar';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
-const Admin = () => {
+const Administrator = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +47,6 @@ const Admin = () => {
 
   return (
     <div className="p-4">
-      <Navbar />
       <h1 className="text-2xl font-bold mb-4">Panel de Administración</h1>
       
       <DataTable
@@ -72,4 +70,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default Administrator;
