@@ -16,6 +16,7 @@ import Navbar from './components/Navbar';
 import Reports from './components/Reports';
 import Sellers from './components/Sellers';
 import ContractsListAdmin from './components/ContractsListAdmin';
+import Profile from './components/Profile';
 
 const App = () => {
   const [userRole,setUserRole] = useState(null);
@@ -58,6 +59,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={userRole ? <Navigate to={`/${userRole}`} /> : <Login />} />
           <Route path="/register" element={userRole ? <Navigate to={`/${userRole}`} /> : <Register />} />
+          <Route path="/profile" element={<Profile/>} />
 
           <Route path="/administrator" element={userRole === "administrator" ? <Administrator /> : <Navigate to="/" />} />
           <Route path="/administrator/contractsListAdmin" element={userRole === "administrator" ? <ContractsListAdmin /> : <Navigate to="/" />} />
