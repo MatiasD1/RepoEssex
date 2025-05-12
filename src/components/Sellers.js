@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import  { useState, useEffect, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
-import { getDocs, query, collection, where } from 'firebase/firestore';
-import { db, auth } from '../firebase';
+import {  auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { getUserContracts } from './FirebaseContrats';
+import { formatDate } from './FirebaseContrats';
 
 const Sellers = () => {
   const [contracts, setContracts] = useState([]);
@@ -22,12 +24,7 @@ const Sellers = () => {
       field: 'createdAt', 
       header: 'Fecha Creación',
       body: (rowData) => {
-        if (rowData.createdAt?.toDate) {
-          return rowData.createdAt.toDate().toLocaleDateString();
-        } else if (rowData.createdAt?.seconds) {
-          return new Date(rowData.createdAt.seconds * 1000).toLocaleDateString();
-        }
-        return 'Fecha no disponible';
+        return formatDate(rowData.createdAt);
       }
     },
     { field: 'status', header: 'Estado' }
@@ -42,34 +39,21 @@ const Sellers = () => {
     });
   };
 
-  
-
   useEffect(() => {
 
     const fetchContracts = async (userId) => {
       try {
-        const q = query(
-          collection(db, "contracts"),
-          where("userUID", "==", userId)
-        );
-        
-        const querySnapshot = await getDocs(q);
-        
-        if (querySnapshot.empty) {
-          console.log("No se encontraron contratos para este usuario");
-          setContracts([]);
+        const contractsData = await getUserContracts(userId);
+        if (!contractsData || contractsData.length === 0) {
+          showError("No se encontraron contratos para este usuario");
           return;
         }
-        
-        const contractsData = querySnapshot.docs.map(doc => {
-          const data = doc.data();
-          return {
-            id: doc.id,
-            ...data,
-            // Aseguramos que createdAt sea manejable
-            createdAt: data.createdAt || null
-          };
-        });
+        // Formatear las fechas y otros campos si es necesario
+        contractsData.forEach(contract => {
+          contract.createdAt = formatDate(contract.createdAt);
+          contract.fechaInicio = formatDate(contract.fechaInicio);
+          contract.fechaFin = formatDate(contract.fechaFin);
+        });  
         
         console.log("Contratos cargados:", contractsData);
         setContracts(contractsData);
@@ -102,9 +86,8 @@ const Sellers = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-content-center align-items-center" style={{ height: '50vh' }}>
-        <i className="pi pi-spin pi-spinner" style={{ fontSize: '2rem' }}></i>
-        <p className="mt-3">Cargando contratos...</p>
+      <div className="flex justify-content-center align-items-center min-h-screen">
+        <ProgressSpinner />
       </div>
     );
   }

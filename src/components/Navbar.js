@@ -60,7 +60,7 @@ const Navbar = ({user}) => {
                 {
                     label: 'Plantillas',
                     icon: 'pi pi-copy',
-                    command: () => navigate('/sellers/pdfList',{state:{user}})
+                    command: () => navigate('/sellers/ContractsList')
                 }
             ]
         }
@@ -75,7 +75,7 @@ const Navbar = ({user}) => {
                 {
                     label: 'Todos los Contratos',
                     icon: 'pi pi-folder-open',
-                    command: () => navigate('/administrator/contractsList')
+                    command: () => navigate('/administrator/contractsListAdmin')
                 },
                 {
                     label: 'Vendedores',

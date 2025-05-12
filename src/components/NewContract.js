@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import  { useEffect, useState, useRef } from 'react';
 import { InputText, Button, Toast, Editor, Dialog } from 'primereact';
 import { Calendar } from 'primereact/calendar';
 import { InputMask } from 'primereact/inputmask';
@@ -10,7 +10,6 @@ import { Card } from 'primereact/card';
 import { useNavigate,useLocation } from 'react-router-dom';
 import { auth } from '../firebase';
 import { createContract } from './FirebaseContrats';
-import { Document, Page, Text, Image, StyleSheet, pdf,View } from '@react-pdf/renderer';
 import SignatureCanvas from 'react-signature-canvas';
 
 const NewContract = () => {
@@ -36,20 +35,16 @@ const NewContract = () => {
   const location = useLocation(); 
 
   useEffect(() => {
-    // 1. Primero intenta obtener el usuario de location.state
     if (location.state?.user) {
       setUser(location.state.user);
     } 
-    // 2. Si no existe, pero tienes otra forma de obtener el usuario (ej: desde auth)
     else {
-      // Aquí puedes agregar tu método alternativo para obtener el usuario
-      // Ejemplo con Firebase:
       const currentUser = auth.currentUser;
       if (currentUser) {
         setUser(currentUser);
       }
     }
-  }, [location.state]); // Solo depende de location.state
+  }, [location.state]);
 
   const showError = (message) => {
     toast.current?.show({
@@ -92,121 +87,6 @@ const NewContract = () => {
     signatureRef.current.clear();
   };
 
-  const generatePDF = async () => {
-    // Estilos para el PDF
-    const styles = StyleSheet.create({
-      page: { 
-        padding: 40,
-        fontFamily: 'Times-Roman',
-        fontSize: 12,
-        lineHeight: 1.5
-      },
-      title: { 
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-        textDecoration: 'underline'
-      },
-      sectionTitle: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        marginTop: 15,
-        marginBottom: 10
-      },
-      signatureSection: {
-        marginTop: 40,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-      },
-      signatureLine: {
-        width: 200,
-        borderBottom: '1px solid black',
-        marginBottom: 5
-      }
-    });
-  
-    // Función para formatear fechas
-    const formatDate = (dateString) => {
-      if (!dateString) return '';
-      const date = new Date(dateString);
-      return date.toLocaleDateString('es-ES');
-    };
-  
-    // Contenido del PDF
-    const MyDocument = () => (
-      <Document>
-        <Page style={styles.page}>
-          {/* Título */}
-          <Text style={styles.title}>{formData.titulo}</Text>
-          
-          {/* Partes Contratantes */}
-          <Text style={styles.sectionTitle}>PARTES CONTRATANTES:</Text>
-          <Text>
-            {`Entre ${formData.nombre} ${formData.apellido}, identificado con DNI ${formData.dni}, `}
-            {`y [NOMBRE_EMPRESA], celebran el presente contrato con fecha ${formatDate(formData.fechaInicio)}.`}
-          </Text>
-  
-          {/* Datos del Contrato */}
-          <Text style={styles.sectionTitle}>DATOS DEL CONTRATO:</Text>
-          <Text>
-            {`- Fecha de inicio: ${formatDate(formData.fechaInicio)}`}
-            {'\n'}
-            {`- Fecha de fin: ${formatDate(formData.fechaFin)}`}
-            {'\n'}
-            {`- Monto mensual: $${formData.monto} USD`}
-            {'\n'}
-            {formData.incluyePenalizacion && '- Incluye penalización por mora'}
-          </Text>
-  
-          {/* Contenido Principal */}
-          <Text style={styles.sectionTitle}>CLÁUSULAS:</Text>
-          <Text>
-            {formData.contenido.replace(/<[^>]*>/g, '')}
-          </Text>
-  
-          {/* Términos */}
-          <Text style={styles.sectionTitle}>TÉRMINOS Y CONDICIONES:</Text>
-          <Text>
-            Ambas partes aceptan los términos y condiciones establecidos en este contrato.
-          </Text>
-  
-          {/* Firmas */}
-          <View style={styles.signatureSection}>
-            <View>
-              <Text>Firma del Cliente:</Text>
-              {formData.firma && (
-                <Image 
-                  src={formData.firma} 
-                  style={{ width: 150, height: 60, marginTop: 10 }} 
-                />
-              )}
-              <Text style={{ marginTop: 20 }}>
-                {`${formData.nombre} ${formData.apellido}`}
-                {'\n'}
-                DNI: {formData.dni}
-              </Text>
-            </View>
-  
-            <View>
-              <Text>Firma del Representante:</Text>
-              <View style={styles.signatureLine}></View>
-              <Text style={{ marginTop: 20 }}>
-                {user?.displayName || '[Nombre Representante]'}
-                {'\n'}
-                [Cargo]
-              </Text>
-            </View>
-          </View>
-        </Page>
-      </Document>
-    );
-  
-    const blob = await pdf(<MyDocument />).toBlob();
-    return URL.createObjectURL(blob);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
@@ -220,8 +100,7 @@ const NewContract = () => {
     setLoading(true);
     try {
       const contractId = await createContract({
-        ...formData,
-        pdfUrl: await generatePDF() // Guardamos la URL generada
+        ...formData, 
       });
       showSuccess(`Contrato creado con ID: ${contractId}`);
       navigate('/sellers');

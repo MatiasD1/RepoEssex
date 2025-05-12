@@ -9,8 +9,15 @@ export const createContract = async (contractData) => {
   const contractDoc = {
     titulo: contractData.titulo,
     contenido: contractData.contenido,
+    nombre: contractData.nombre,
+    apellido: contractData.apellido,
+    dni: contractData.dni,
+    monto: contractData.monto,
+    fechaInicio: contractData.fechaInicio,
+    fechaFin: contractData.fechaFin,
+    incluyePenalizacion: contractData.incluyePenalizacion,
+    aceptaTerminos: contractData.aceptaTerminos,
     firma: contractData.firma, // Guardamos la firma en base64
-    pdfUrl: contractData.pdfUrl, // URL del PDF generado
     userUID: auth.currentUser.uid,
     createdAt: serverTimestamp(),
     status: contractData.firma?"activo":"inactivo"
@@ -19,6 +26,16 @@ export const createContract = async (contractData) => {
   const docRef = await addDoc(collection(db, "contracts"), contractDoc);
   return docRef.id; // Retorna el ID automático del nuevo contrato
 };
+
+export const formatDate = (dateString) => {
+    if (!dateString) return '';
+    if (dateString?.toDate){
+      return dateString.toDate().toLocaleDateString('es-ES');
+    }else if (dateString?.seconds) {
+      return new Date(dateString.seconds * 1000).toLocaleDateString('es-ES');
+    }
+    return 'Fecha no disponible';
+  };
 
 export const getUserContracts = async () => {
   if (!auth.currentUser) throw new Error("No autenticado");

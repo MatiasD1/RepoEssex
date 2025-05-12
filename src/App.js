@@ -15,7 +15,7 @@ import ContractsList from './components/ContractsList';
 import Navbar from './components/Navbar';
 import Reports from './components/Reports';
 import Sellers from './components/Sellers';
-import PdfList from './components/PdfList';
+import ContractsListAdmin from './components/ContractsListAdmin';
 
 const App = () => {
   const [userRole,setUserRole] = useState(null);
@@ -60,12 +60,13 @@ const App = () => {
           <Route path="/register" element={userRole ? <Navigate to={`/${userRole}`} /> : <Register />} />
 
           <Route path="/administrator" element={userRole === "administrator" ? <Administrator /> : <Navigate to="/" />} />
-          <Route path="/administrator/contractsList" element={userRole === "administrator" ? <ContractsList /> : <Navigate to="/" />} />
+          <Route path="/administrator/contractsListAdmin" element={userRole === "administrator" ? <ContractsListAdmin /> : <Navigate to="/" />} />
           <Route path="/administrator/reports" element={userRole === "administrator" ? <Reports /> : <Navigate to="/" />} />
 
           <Route path="/sellers" element={userRole === "sellers" ? <Sellers /> : <Navigate to="/" />} />
           <Route path="/sellers/new" element={userRole === "sellers" ? <NewContract /> : <Navigate to="/" />} />
-          <Route path="/sellers/pdfList" element={userRole === "sellers" ? <PdfList /> : <Navigate to="/" />} />
+          <Route path="/sellers/contractsList" element={userRole === "sellers" ? <ContractsList /> : <Navigate to="/" />} />
+
         </Routes>
         <Footer/>
       </Router>
