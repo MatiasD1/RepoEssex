@@ -1,33 +1,35 @@
-import  { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
-import { Button } from 'primereact/button';
 import {  auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { getUserContracts } from './FirebaseContrats';
+import { getUserContracts, deleteContract } from './FirebaseContrats';
 import { formatDate } from './FirebaseContrats';
+import { Button } from 'primereact/button';
 
 const Sellers = () => {
   const [contracts, setContracts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const toast = useRef(null);
-  const navigate = useNavigate();
   
   const columns = [
     { field: 'titulo', header: 'Título' },
     { field: 'contenido', header: 'Contenido' },
-    { 
-      field: 'createdAt', 
-      header: 'Fecha Creación',
-      body: (rowData) => {
-        return formatDate(rowData.createdAt);
-      }
-    },
-    { field: 'status', header: 'Estado' }
+    { field: 'createdAt', header: 'Fecha Creación'},
+    { field: 'status', header: 'Estado' },
+    {
+    header: 'Eliminar',
+    body: (rowData) => (
+      <Button 
+        icon="pi pi-trash" 
+        className="p-button-danger"
+        onClick={() => handleDelete(rowData.id)}
+      />
+    )
+  }   
   ];
 
   const showError = (message) => {
@@ -37,6 +39,27 @@ const Sellers = () => {
       detail: message,
       life: 5000
     });
+  };
+
+  const handleDelete = async (contractId) => {
+    try {
+      await deleteContract(contractId);
+      setContracts(prev => prev.filter(contract => contract.id !== contractId));
+      toast.current.show({
+        severity: 'success',
+        summary: 'Éxito',
+        detail: 'Contrato eliminado correctamente',
+        life: 5000
+      });
+    } catch (error) {
+      console.error("Error al eliminar contrato:", error);
+      toast.current.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'No se pudo eliminar el contrato',
+        life: 5000
+      });
+    }
   };
 
   useEffect(() => {
@@ -99,10 +122,8 @@ const Sellers = () => {
       
       <div className="flex justify-content-between align-items-center mb-4">
         <h2>Mis Contratos</h2>
-        
       </div>
-
-      {contracts.length > 0 ? (
+      
         <DataTable
           value={contracts}
           paginator
@@ -122,23 +143,6 @@ const Sellers = () => {
             />
           ))}
         </DataTable>
-      ) : (
-        <div className="text-center py-4">
-          {user ? (
-            <>
-              <p>No tienes contratos registrados</p>
-              <Button 
-                label="Crear primer contrato" 
-                icon="pi pi-plus" 
-                onClick={() => navigate('/sellers/new')}
-                className="mt-2"
-              />
-            </>
-          ) : (
-            "Inicia sesión para ver tus contratos"
-          )}
-        </div>
-      )}
     </div>
   );
 };

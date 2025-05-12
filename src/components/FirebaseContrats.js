@@ -49,6 +49,19 @@ export const getUserContracts = async () => {
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
 
+export const deleteContract = async (contractId) => {
+  if (!auth.currentUser) throw new Error("No autenticado");
+  const contractRef = doc(db, "contracts", contractId);
+  const contractSnap = await getDoc(contractRef);
+  if (!contractSnap.exists()) {
+    throw new Error("El contrato no existe");
+  }
+  if (contractSnap.data().userUID !== auth.currentUser.uid) {
+    throw new Error("No tienes permiso para eliminar este contrato");
+  }
+  await deleteDoc(contractRef);
+};
+
 // Verificación de propiedad usando UID directo
 const verifyOwnership = async (contractId) => {
   if (!auth.currentUser) throw new Error("Usuario no autenticado");
