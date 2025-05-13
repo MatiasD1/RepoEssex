@@ -4,9 +4,11 @@ import { auth, db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -14,12 +16,22 @@ const Profile = () => {
                 const userDoc = await getDoc(doc(db, "users", user.uid));
                 const userData = userDoc.data();
                 setUser(userData);
+                setLoading(false);
             } else {
                 setUser(null);
+                setLoading(true);
             }
         });
         return () => unsubscribe();
     }, []);
+
+  if (loading) {
+        return (
+            <div className="flex align-items-center justify-content-center min-h-screen bg-gray-100">
+                <ProgressSpinner />
+            </div>
+        );
+    }  
   return (
         <div className="flex align-items-center justify-content-center min-h-screen bg-gray-100">
             <Card 
