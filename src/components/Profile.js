@@ -1,29 +1,33 @@
-import  { useEffect, useState } from 'react'
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth, db } from '../firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import  { useEffect, useState, useRef } from 'react'
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { Toast } from 'primereact/toast';
+import { useLocation } from 'react-router-dom';
+
 
 const Profile = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const location = useLocation();
+    const toast = useRef(null);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                const userData = userDoc.data();
-                setUser(userData);
-                setLoading(false);
-            } else {
-                setUser(null);
-                setLoading(true);
-            }
-        });
-        return () => unsubscribe();
-    }, []);
+        const currentUser = location.state?.user;
+        if (currentUser) {
+            setUser(currentUser);
+            setLoading(false);
+        } else {
+            setLoading(true);
+            toast.current.show({
+                severity: 'warn',
+                summary: 'Advertencia',
+                detail: 'No se encontró información del usuario',
+                life: 3000,
+            });
+        }
+    }, [location.state]);
+
 
   if (loading) {
         return (
@@ -34,6 +38,7 @@ const Profile = () => {
     }  
   return (
         <div className="flex align-items-center justify-content-center min-h-screen bg-gray-100">
+            <Toast ref={toast} position='top-right'/>
             <Card 
                 title="Información de Usuario" 
                 className="w-full md:w-6 lg:w-4"
