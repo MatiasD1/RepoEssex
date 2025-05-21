@@ -228,7 +228,7 @@ const ContractsList = () => {
           paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} contratos"
           emptyMessage="No se encontraron contratos"
-          responsiveLayout="scroll"
+          scrollable
         >
           <Column field="titulo" header="Título" sortable></Column>
           <Column header="Cliente" body={clientBodyTemplate} sortable></Column>

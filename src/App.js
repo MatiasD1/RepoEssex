@@ -7,15 +7,18 @@ import Footer from './components/Footer';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './firebase'; 
 import { doc, getDoc } from 'firebase/firestore';
-import './CSS/styles.css';
 import { PrimeReactProvider } from 'primereact/api'; 
 import { Toast } from 'primereact/toast';
+import { ProgressSpinner } from 'primereact/progressspinner';
 import NewContract from './components/NewContract';
 import ContractsList from './components/ContractsList';
 import Navbar from './components/Navbar';
 import Reports from './components/Reports';
 import Sellers from './components/Sellers';
 import ContractsListAdmin from './components/ContractsListAdmin';
+import Profile from './components/Profile';
+import './CSS/styles.css';
+import 'animate.css';
 
 const App = () => {
   const [userRole,setUserRole] = useState(null);
@@ -45,7 +48,9 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <div>Cargando...</div>;
+    return <div className="flex justify-content-center align-items-center min-h-screen bg-blue-50">
+        <ProgressSpinner style={{ width: '60px', height: '60px' }} strokeWidth="4" />
+      </div> 
   }
 
   return (
@@ -58,6 +63,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={userRole ? <Navigate to={`/${userRole}`} /> : <Login />} />
           <Route path="/register" element={userRole ? <Navigate to={`/${userRole}`} /> : <Register />} />
+          <Route path="/profile" element={<Profile/>} />
 
           <Route path="/administrator" element={userRole === "administrator" ? <Administrator /> : <Navigate to="/" />} />
           <Route path="/administrator/contractsListAdmin" element={userRole === "administrator" ? <ContractsListAdmin /> : <Navigate to="/" />} />

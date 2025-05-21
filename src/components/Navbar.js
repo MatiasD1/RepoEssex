@@ -27,6 +27,7 @@ const Navbar = ({user}) => {
         try {
             await signOut(auth);
             setCurrentUser(null);
+            navigate('/login');
         } catch (error) {
             console.error("Error al cerrar sesión:", error);
         }
@@ -104,7 +105,7 @@ const Navbar = ({user}) => {
                 label={currentUser.email || 'Perfil'} 
                 icon="pi pi-user" 
                 className="p-button-text p-button-plain" 
-                onClick={() => navigate('/profile')}
+                onClick={() => navigate(`/profile`, { state: { user: user } })}
             />
             <Button 
                 icon="pi pi-sign-out" 
