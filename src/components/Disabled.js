@@ -23,17 +23,15 @@ const Disabled = () => {
             },
             (error) => {
                 showError(error);
-                setLoading(false);
-            }
-        );
-
-        return () => unsubscribe();
-    })
-    .catch(error => {
-      showError(error);
-      setLoading(false);
-    });
-}, []);
+                setLoading(true);
+            });
+            return () => unsubscribe();
+        })
+        .catch(error => {
+            showError(error);
+            setLoading(false);
+        });
+    }, []);
 
     const actionTemplate = (rowData) => (
         <div className="flex gap-2">

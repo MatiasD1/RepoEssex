@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs, doc, setDoc, getDoc, updateDoc, query, where, deleteDoc } from "firebase/firestore"
+import { addDoc, collection, doc, setDoc, getDoc, updateDoc, query, where, deleteDoc } from "firebase/firestore"
 import { db } from "../firebase";
 import { toast } from "react-toastify";
 import { auth } from "../firebase";
@@ -68,8 +68,7 @@ export const getActiveUsers = async () => {
             collection(db,"users"),
             where("visible","==",true)
         );   
-        const snapshot = await getDocs(q);
-        return snapshot.docs.map(doc => ({id:doc.id,...doc.data()}));
+        return q;
     } catch (error) {
         showError("Error al obtener los usuarios");
         return [];
@@ -82,8 +81,7 @@ export const getDisabledUsers = async () => {
             collection(db,"users"),
             where("visible","==",false)
         );
-        const snapshot = await getDocs(q);
-        return snapshot.docs.map(doc=>({id:doc.id,...doc.data()}));
+        return q;
     } catch (error) {
         showError("Error al obtener los usuarios");
     }

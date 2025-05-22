@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase';
+import {  onSnapshot } from 'firebase/firestore';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -17,80 +16,82 @@ const Administrator = () => {
   const [showUserDialog, setShowUserDialog] = useState(false);
   const [selectedRole, setSelectedRole] = useState('');
   const [newUser, setNewUser] = useState({
-    email:'',
-    role:'',
-    name:''
+    email: '',
+    role: '',
+    name: ''
   })
-  
-  const roles = ['sellers','administrator']
+
+  const roles = ['sellers', 'administrator']
   const toast = useRef(null);
- 
-  
+
+
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      collection(db, "users"),
-      async (snapshot) => {
-        let usersData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        usersData = await getActiveUsers();
-        setUsers(usersData);
-        setLoading(false);
-      },
-      (error) => {
+    getActiveUsers()
+      .then(q => {
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+          const usersData = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+          setUsers(usersData);
+          setLoading(false);
+        },
+          (error) => {
+            showError(error);
+            setLoading(true);
+          });
+        return () => unsubscribe();
+      })
+      .catch(error => {
         showError(error);
         setLoading(false);
-      }
-    );
-
-    return () => unsubscribe();
+      });
   }, []);
 
 
   const handleUserAdd = async () => {
-      setShowUserDialog(true);
-      setNewUser({ email: '', role: '' ,name:''});
-      setSelectedRole('');     
+    setShowUserDialog(true);
+    setNewUser({ email: '', role: '', name: '' });
+    setSelectedRole('');
   }
 
-  const HandleCreateUser = async () =>{
+  const HandleCreateUser = async () => {
     try {
-    if (!newUser.email || !selectedRole || !newUser.name) {
+      if (!newUser.email || !selectedRole || !newUser.name) {
+        toast.current?.show({
+          severity: 'warn',
+          summary: 'Advertencia',
+          detail: 'Por favor complete todos los campos',
+          life: 5000
+        });
+        return;
+      }
+      const formData = {
+        email: newUser.email,
+        role: selectedRole,
+        name: newUser.name
+      }
+      await createUser(formData);
       toast.current?.show({
-        severity: 'warn',
-        summary: 'Advertencia',
-        detail: 'Por favor complete todos los campos',
+        severity: 'success',
+        summary: 'Éxito',
+        detail: 'Usuario creado correctamente',
         life: 5000
       });
-      return;
+
+      setShowUserDialog(false);
+      setNewUser({ email: '', role: '', name: '' });
+      setSelectedRole('');
+    } catch (error) {
+      console.error("Error creating user:", error);
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Error al crear el usuario: ' + error.message,
+        life: 5000
+      });
     }
-    const formData = {
-      email: newUser.email,
-      role: selectedRole,
-      name:newUser.name
-    }
-    await createUser(formData);
-    toast.current?.show({
-      severity: 'success',
-      summary: 'Éxito',
-      detail: 'Usuario creado correctamente',
-      life: 5000
-    });
-    
-    setShowUserDialog(false);
-    setNewUser({ email: '', role: '', name:'' });
-    setSelectedRole('');
-  } catch (error) {
-    console.error("Error creating user:", error);
-    toast.current?.show({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'Error al crear el usuario: ' + error.message,
-      life: 5000
-    });
-  }
   }
 
 
@@ -105,30 +106,30 @@ const Administrator = () => {
 
   if (loading) {
     return (
-        <div className="flex justify-content-center align-items-center" style={{ height: '60px' }}>
-            <ProgressSpinner style={{ width: '40px', height: '40px' }} />
-        </div>
+      <div className="flex justify-content-center align-items-center" style={{ height: '60px' }}>
+        <ProgressSpinner style={{ width: '40px', height: '40px' }} />
+      </div>
     );
   }
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Panel de Administración</h1>
-      <Toast ref={toast}/>
-      <Button 
+      <Toast ref={toast} />
+      <Button
         icon="pi pi-plus"
         severity="success"
         rounded
         outlined
         toolip="Agregar Usuario"
-        onClick={()=>handleUserAdd()}
+        onClick={() => handleUserAdd()}
       />
 
       <Dialog
         header={`Nuevo Usuario`}
         visible={showUserDialog}
-        style={{width: '80vw' }}
-        onHide={()=>setShowUserDialog(false)}
+        style={{ width: '80vw' }}
+        onHide={() => setShowUserDialog(false)}
       >
         <div className='p-fluid'>
           <div className='field mb-4'>
@@ -136,10 +137,10 @@ const Administrator = () => {
             <InputText
               id='email'
               name='email'
-              placeholder='ingresa tu email'  
+              placeholder='ingresa tu email'
               className='w-full'
               value={newUser.email}
-              onChange={(e)=>setNewUser({...newUser,email:e.target.value})}
+              onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
             />
           </div>
           <div className='field mb-4'>
@@ -153,7 +154,7 @@ const Administrator = () => {
               options={roles}
               onChange={(e) => {
                 setSelectedRole(e.value);
-                setNewUser({...newUser, role: e.value});
+                setNewUser({ ...newUser, role: e.value });
               }}
             />
           </div>
@@ -162,17 +163,17 @@ const Administrator = () => {
             <InputText
               id='name'
               name='name'
-              placeholder='ingresa tu nombre de usuario'  
+              placeholder='ingresa tu nombre de usuario'
               className='w-full'
               value={newUser.name}
-              onChange={(e)=>setNewUser({...newUser,name:e.target.value})}
+              onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
             />
           </div>
         </div>
-        <Button 
-          label='Crear Usuario' 
-          className='p-button-raised p-button-success p-d-block' 
-          onClick={()=>HandleCreateUser()}
+        <Button
+          label='Crear Usuario'
+          className='p-button-raised p-button-success p-d-block'
+          onClick={() => HandleCreateUser()}
         />
       </Dialog>
 
@@ -184,17 +185,17 @@ const Administrator = () => {
         rowsPerPageOptions={[5, 10, 25]}
         tableStyle={{ minWidth: '50rem' }}
       >
-        <Column field='email' header="Email"/>
-        <Column field='role'  header="Rol"/>
-        <Column field='name' header="Nombre"/>
+        <Column field='email' header="Email" />
+        <Column field='role' header="Rol" />
+        <Column field='name' header="Nombre" />
         <Column field='deleteUser' body={
-          <Button 
-            icon="pi pi-times" 
-            rounded 
-            severity="danger" 
+          <Button
+            icon="pi pi-times"
+            rounded
+            severity="danger"
             aria-label="Cancel"
-            onClick={()=>HandleBaja()} />
-          }
+            onClick={() => HandleBaja()} />
+        }
         />
       </DataTable>
     </div>
