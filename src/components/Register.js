@@ -15,6 +15,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [error, setError] = useState('');
+  const [name, setName] = useState('');
 
   const roles = [
     { label: 'Vendedor', value: 'sellers' },
@@ -27,10 +28,23 @@ const Register = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      await setDoc(doc(db, "users", user.uid), {
-        email: email,
-        role: role,
-      });
+      if (role==="sellers"){
+        await setDoc(doc(db, "users", user.uid), {
+          email: email,
+          role: role,
+          name: name,
+          status:"active",
+          visible:true
+        });
+      }else{
+        await setDoc(doc(db,"users",user.uid),{
+          email: email,
+          role: role,
+          name: name,
+          visible:true
+        });
+      }
+        
 
     } catch (err) {
       setError(err.message);
@@ -85,6 +99,19 @@ const Register = () => {
               onChange={(e) => setRole(e.value)}
               className="p-mb-3 p-d-block"
               style={{ width: '100%' }}
+            />
+          </div>
+
+          <div className="p-field">
+            <label htmlFor="Nombre de Usuario" className="p-d-block">Nombre de Usuario</label>
+            <InputText
+              id="name"
+              type="name"
+              value={name}
+              onChange={(e)=>setName(e.value)}
+              className="p-mb-3 p-d-block"
+              style={{ width: '100%' }}
+              required
             />
           </div>
 

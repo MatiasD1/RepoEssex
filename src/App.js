@@ -4,7 +4,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Administrator from './components/Administrator';
 import Footer from './components/Footer';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth, db } from './firebase'; 
 import { doc, getDoc } from 'firebase/firestore';
 import { PrimeReactProvider } from 'primereact/api'; 
@@ -19,6 +19,8 @@ import ContractsListAdmin from './components/ContractsListAdmin';
 import Profile from './components/Profile';
 import './CSS/styles.css';
 import 'animate.css';
+import { showError } from './components/FirebaseSellers';
+import Disabled from './components/Disabled';
 
 const App = () => {
   const [userRole,setUserRole] = useState(null);
@@ -33,6 +35,11 @@ const App = () => {
         setIsAuthenticated(true);
         const userDoc = await getDoc(doc(db, "users", user.uid));
         const userData = userDoc.data();
+        if (userData.status==="disabled"){
+          await signOut(auth);
+          showError('Tu usuario ha sido deshabilitado, comunicate con un administrador');
+          return;
+        }
         setCurrentUser(userData);
         const role = userDoc.exists() ? userDoc.data().role : null;
         setUserRole(role);
@@ -68,6 +75,7 @@ const App = () => {
           <Route path="/administrator" element={userRole === "administrator" ? <Administrator /> : <Navigate to="/" />} />
           <Route path="/administrator/contractsListAdmin" element={userRole === "administrator" ? <ContractsListAdmin /> : <Navigate to="/" />} />
           <Route path="/administrator/reports" element={userRole === "administrator" ? <Reports /> : <Navigate to="/" />} />
+          <Route path="/administrator/disabled" element={userRole === "administrator"?<Disabled /> : <Navigate to="/" />}/>
 
           <Route path="/sellers" element={userRole === "sellers" ? <Sellers /> : <Navigate to="/" />} />
           <Route path="/sellers/new" element={userRole === "sellers" ? <NewContract /> : <Navigate to="/" />} />

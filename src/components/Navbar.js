@@ -89,6 +89,11 @@ const Navbar = ({user}) => {
                     command: () => navigate('/administrator/reports')
                 }
             ]
+        },
+        {
+            label:'Usuarios Deshabilitados',
+            icon:'pi pi-users',
+            command:()=> navigate('/administrator/disabled')
         }
     ];
 
