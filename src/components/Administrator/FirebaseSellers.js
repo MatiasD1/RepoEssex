@@ -1,7 +1,7 @@
 import { addDoc, collection, doc, setDoc, getDoc, updateDoc, query, where, deleteDoc } from "firebase/firestore"
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { toast } from "react-toastify";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import { createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from "firebase/auth";
 
 export const showSuccess = (message) => {

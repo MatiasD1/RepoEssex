@@ -6,8 +6,8 @@ import { Dialog } from 'primereact/dialog';
 import { Card } from 'primereact/card';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Toast } from 'primereact/toast';
-import { getUserContracts, formatDate, generatePDF } from './FirebaseContrats'; // Asegúrate de tener esta función
-import ContractDetail from './ContractDetail'; // Componente que crearemos después
+import { getUserContracts, formatDate, generatePDF } from '../Shared/FirebaseContrats'; 
+import ContractDetail from '../Shared/ContractDetail'; 
 import { saveAs } from 'file-saver';
 
 const ContractsList = () => {

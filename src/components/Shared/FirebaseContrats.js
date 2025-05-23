@@ -1,6 +1,6 @@
 // firebaseContracts.js
 import { collection, query, where, getDocs, doc, getDoc, updateDoc, deleteDoc, serverTimestamp, addDoc } from "firebase/firestore";
-import { db, auth } from "../firebase";
+import { db, auth } from "../../firebase";
 import { Text, View, Document, Page, pdf, Image } from "@react-pdf/renderer"
 
 

@@ -1,10 +1,10 @@
 import  { useState,useEffect } from 'react'
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import { useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { formatDate } from './FirebaseContrats';
+import { formatDate } from '../Shared/FirebaseContrats';
 
 
 const ContractsListAdmin = () => {

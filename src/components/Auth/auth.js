@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"; //Funciones para las 3 
 import { setDoc, doc,getDoc } from "firebase/firestore"; // Obtener datos de firestore
-import { auth, db } from "./firebase"; // Manejo de autenticacion y bdd de firebase
+import { auth, db } from "../../firebase"; // Manejo de autenticacion y bdd de firebase
 
 // Función para autenticar al usuario
 export const authenticateUser = async (email, password) => {
