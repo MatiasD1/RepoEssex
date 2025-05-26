@@ -8,9 +8,9 @@ const Footer = () => {
     <div className="page-container">
       <footer className="footer">
         <p className="copyright">
-          © {new Date().getFullYear()} Essex Seguridad. Todos los derechos reservados.
+          © {new Date().getFullYear()} Desarrollado por B-Logic. Todos los derechos reservados.
         </p>
-        <div className='columnaFooter'>
+       {/* <div className='columnaFooter'>
                 <div className="logosRedes">
                     <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="logoRed" id="logoFB">
                         <img src={facebookLogo} alt="Facebook"/>
@@ -23,6 +23,7 @@ const Footer = () => {
                     </a>
                 </div>
           </div>
+        */}
       </footer>
     </div>
   );

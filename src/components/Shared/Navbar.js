@@ -107,7 +107,7 @@ const Navbar = ({user}) => {
     const endItems = currentUser ? (
         <div className="flex align-items-center gap-2">
             <Button 
-                label={currentUser.email || 'Perfil'} 
+                label={currentUser.name || 'Perfil'} 
                 icon="pi pi-user" 
                 className="p-button-text p-button-plain" 
                 onClick={() => navigate(`/profile`, { state: { user: user } })}
@@ -136,17 +136,19 @@ const Navbar = ({user}) => {
     );
 
     return (
-        <Menubar 
-            model={items} 
-            end={endItems}
-            className="navbar-custom"
-            style={{ 
-                border: 'none',
-                borderBottom: '1px solid #e5e7eb',
-                borderRadius: 0,
-                padding: '0.5rem 2rem'
-            }}
-        />
+        <div className='navbar'>
+            <Menubar 
+                model={items} 
+                end={endItems}
+                className="navbar-custom"
+                style={{ 
+                    border: 'none',
+                    borderBottom: '1px solid #e5e7eb',
+                    borderRadius: 0,
+                    padding: '0.5rem 2rem'
+                }}
+            />
+        </div>
     );
 };
 

@@ -1,19 +1,17 @@
-// footer.scss
-$footer-bg: white; // Fondo gris oscuro
-$footer-text-color: grey; // Color de texto blanco
+@use 'variables';
 
 // Footer estilos
 .footer {
   display: flex;
   flex-direction: column-reverse;
   width: 100%;
-  background-color: black;
-  color: $footer-text-color;
+  background-color: rgb(variables.$Terciario,0.9);
   text-align: center;
   padding: 0.5rem;
   font-size: 0.875rem; // text-sm en Tailwind
   position: relative;
   bottom: 0;
+  color: variables.$Primario;
 
   .columnaFooter {
     display: flex;
@@ -36,7 +34,6 @@ $footer-text-color: grey; // Color de texto blanco
   // Estilo para el copyright
   .copyright {
     font-size: 0.875rem;
-    color: $footer-text-color;
   }
 
   // Asegurar que el footer no se superponga en pantallas pequeñas

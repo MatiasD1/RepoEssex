@@ -1,0 +1,21 @@
+@use 'variables';
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  background-image:  url('../img/fondo.png') ;
+  background-size: cover;      /* para que cubra todo el contenedor */
+  background-position: center; /* para centrar la imagen */
+  background-repeat: no-repeat;
+  color: variables.$Secundario;
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 20px; // opcional
+}

@@ -64,25 +64,29 @@ const App = () => {
     <PrimeReactProvider>
       <Toast ref={toast} />
       <Router>
+        <div className="appContainer">
         {isAuthenticated && <Navbar user={currentUser}/>}
-        <Routes>
+         <main className="content">
+          <Routes>
+           
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/login" element={userRole ? <Navigate to={`/${userRole}`} /> : <Login />} />
+            <Route path="/register" element={userRole ? <Navigate to={`/${userRole}`} /> : <Register />} />
+            <Route path="/profile" element={<Profile/>} />
+
+            <Route path="/administrator" element={userRole === "administrator" ? <Administrator /> : <Navigate to="/" />} />
+            <Route path="/administrator/contractsListAdmin" element={userRole === "administrator" ? <ContractsListAdmin /> : <Navigate to="/" />} />
+            <Route path="/administrator/reports" element={userRole === "administrator" ? <Reports /> : <Navigate to="/" />} />
+            <Route path="/administrator/disabled" element={userRole === "administrator"?<Disabled /> : <Navigate to="/" />}/>
+
+            <Route path="/sellers" element={userRole === "sellers" ? <Sellers /> : <Navigate to="/" />} />
+            <Route path="/sellers/new" element={userRole === "sellers" ? <NewContract /> : <Navigate to="/" />} />
+            <Route path="/sellers/contractsList" element={userRole === "sellers" ? <ContractsList /> : <Navigate to="/" />} />
           
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={userRole ? <Navigate to={`/${userRole}`} /> : <Login />} />
-          <Route path="/register" element={userRole ? <Navigate to={`/${userRole}`} /> : <Register />} />
-          <Route path="/profile" element={<Profile/>} />
-
-          <Route path="/administrator" element={userRole === "administrator" ? <Administrator /> : <Navigate to="/" />} />
-          <Route path="/administrator/contractsListAdmin" element={userRole === "administrator" ? <ContractsListAdmin /> : <Navigate to="/" />} />
-          <Route path="/administrator/reports" element={userRole === "administrator" ? <Reports /> : <Navigate to="/" />} />
-          <Route path="/administrator/disabled" element={userRole === "administrator"?<Disabled /> : <Navigate to="/" />}/>
-
-          <Route path="/sellers" element={userRole === "sellers" ? <Sellers /> : <Navigate to="/" />} />
-          <Route path="/sellers/new" element={userRole === "sellers" ? <NewContract /> : <Navigate to="/" />} />
-          <Route path="/sellers/contractsList" element={userRole === "sellers" ? <ContractsList /> : <Navigate to="/" />} />
-
-        </Routes>
-        <Footer/>
+          </Routes>
+          </main>
+          <Footer/>
+        </div>
       </Router>
     </PrimeReactProvider>
   );
