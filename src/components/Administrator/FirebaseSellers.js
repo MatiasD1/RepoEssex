@@ -123,8 +123,10 @@ export const disableUser = async (docId) => {
 
 export const deleteUser = async (id)=>{
     try {
-        await deleteDoc(doc(db,"users",id));
-        showSuccess("Usuario borrado, recordar borrar al usuario autenticado de uid = "+id);
+        const userRef = doc(db,"users",id);
+        const userSnap = getDoc(userRef); 
+        await deleteDoc(userRef);
+        showSuccess("Usuario borrado, recordar borrar al usuario autenticado de uid = "+ id +" y email = ",+(await userSnap).data().email);
     } catch (error) {
         showError("Error al borrar el usuario");
     }
