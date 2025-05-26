@@ -8,7 +8,7 @@ import { Checkbox } from 'primereact/checkbox';
 import { Divider } from 'primereact/divider';
 import { Card } from 'primereact/card';
 import { useNavigate,useLocation } from 'react-router-dom';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { createContract } from './FirebaseContrats';
 import SignatureCanvas from 'react-signature-canvas';
 

@@ -6,9 +6,8 @@ import { Dialog } from 'primereact/dialog';
 import { Card } from 'primereact/card';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Toast } from 'primereact/toast';
-import { getUserContracts, formatDate } from './FirebaseContrats'; // Asegúrate de tener esta función
-import ContractDetail from './ContractDetail'; // Componente que crearemos después
-import { Document, Page, Text, Image, StyleSheet, pdf, View } from '@react-pdf/renderer';
+import { getUserContracts, formatDate, generatePDF } from '../Shared/FirebaseContrats'; 
+import ContractDetail from '../Shared/ContractDetail'; 
 import { saveAs } from 'file-saver';
 
 const ContractsList = () => {
@@ -50,109 +49,7 @@ const ContractsList = () => {
     });
   };
 
-  const generatePDF = async (contract) => {
-    try {
-      const styles = StyleSheet.create({
-        page: { 
-          padding: 40,
-          fontFamily: 'Times-Roman',
-          fontSize: 12,
-          lineHeight: 1.5
-        },
-        title: { 
-          fontSize: 16,
-          fontWeight: 'bold',
-          marginBottom: 20,
-          textAlign: 'center',
-          textDecoration: 'underline'
-        },
-        sectionTitle: {
-          fontSize: 14,
-          fontWeight: 'bold',
-          marginTop: 15,
-          marginBottom: 10
-        },
-        signatureSection: {
-          marginTop: 40,
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between'
-        },
-        signatureLine: {
-          width: 200,
-          borderBottom: '1px solid black',
-          marginBottom: 5
-        }
-      });
-    
-      const MyDocument = () => (
-        <Document>
-          <Page style={styles.page}>
-            <Text style={styles.title}>{contract.titulo}</Text>
-            
-            <Text style={styles.sectionTitle}>PARTES CONTRATANTES:</Text>
-            <Text>
-              {`Entre ${contract.nombre} ${contract.apellido}, identificado con DNI ${contract.dni}, `}
-              {`y [NOMBRE_EMPRESA], celebran el presente contrato con fecha ${formatDate(contract.fechaInicio)}.`}
-            </Text>
-    
-            <Text style={styles.sectionTitle}>DATOS DEL CONTRATO:</Text>
-            <Text>
-              {`- Fecha de inicio: ${formatDate(contract.fechaInicio)}`}
-              {'\n'}
-              {`- Fecha de fin: ${formatDate(contract.fechaFin)}`}
-              {'\n'}
-              {`- Monto mensual: $${contract.monto} USD`}
-              {'\n'}
-              {contract.incluyePenalizacion && '- Incluye penalización por mora'}
-            </Text>
-    
-            <Text style={styles.sectionTitle}>CLÁUSULAS:</Text>
-            <Text>
-              {contract.contenido.replace(/<[^>]*>/g, '')}
-            </Text>
-    
-            <Text style={styles.sectionTitle}>TÉRMINOS Y CONDICIONES:</Text>
-            <Text>
-              Ambas partes aceptan los términos y condiciones establecidos en este contrato.
-            </Text>
-    
-            <View style={styles.signatureSection}>
-              <View>
-                <Text>Firma del Cliente:</Text>
-                {contract.firma && (
-                  <Image 
-                    src={contract.firma} 
-                    style={{ width: 150, height: 60, marginTop: 10 }} 
-                  />
-                )}
-                <Text style={{ marginTop: 20 }}>
-                  {`${contract.nombre} ${contract.apellido}`}
-                  {'\n'}
-                  DNI: {contract.dni}
-                </Text>
-              </View>
-    
-              <View>
-                <Text>Firma del Representante:</Text>
-                <View style={styles.signatureLine}></View>
-                <Text style={{ marginTop: 20 }}>
-                  {contract.userName || '[Nombre Representante]'}
-                  {'\n'}
-                  [Cargo]
-                </Text>
-              </View>
-            </View>
-          </Page>
-        </Document>
-      );
-    
-      const blob = await pdf(<MyDocument />).toBlob();
-      return blob;
-    } catch (error) {
-      throw error;
-    }
-  };
+  
 
   const handleDownloadPDF = async (contract) => {
     try {

@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { getUserContracts, deleteContract, formatDate } from './FirebaseContrats';
+import { getUserContracts, deleteContract, formatDate } from '../Shared/FirebaseContrats';
 import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
 

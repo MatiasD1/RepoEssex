@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menubar } from 'primereact/menubar';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
@@ -89,6 +89,11 @@ const Navbar = ({user}) => {
                     command: () => navigate('/administrator/reports')
                 }
             ]
+        },
+        {
+            label:'Usuarios Deshabilitados',
+            icon:'pi pi-users',
+            command:()=> navigate('/administrator/disabled')
         }
     ];
 
