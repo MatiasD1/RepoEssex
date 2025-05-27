@@ -46,14 +46,16 @@ export const createUser = async (formData) => {
       "123123"
     );
     const newUser = userCredential.user;
-    await signOut(auth);
-    await sendPasswordResetEmail(auth, formData.email);
-
     await setDoc(doc(db, "users", newUser.uid), {
       email: formData.email,
       role: formData.role,
-      name: formData.name
+      name: formData.name,
+      visible:true,
+      status: "active"
     });
+    await signOut(auth);
+    await sendPasswordResetEmail(auth, formData.email);
+    
     //instrucciones al admin
     showSuccess("Usuario creado. Por favor, inicia sesión nuevamente como admin.");
   } catch (error) {

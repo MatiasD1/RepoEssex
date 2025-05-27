@@ -8,6 +8,8 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { getUserContracts, deleteContract, formatDate } from '../Shared/FirebaseContrats';
 import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
+import { getDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase'; // Asegúrate de tener exportado `db` desde tu config
 
 const Sellers = () => {
   const [contracts, setContracts] = useState([]);
@@ -60,6 +62,24 @@ const Sellers = () => {
       onClick={() => handleDelete(rowData.id)}
     />
   );
+  
+  const [userName, setUserName] = useState(null);
+
+  const getUserName = async (uid) => {
+  try {
+    const userRef = doc(db, 'users', uid);
+    const userSnap = await getDoc(userRef);
+    console.log("Documento de usuario:", userSnap.exists(), userSnap.data());
+
+    if (userSnap.exists()) {
+      return userSnap.data().name || null;
+    }
+    return null;
+  } catch (error) {
+    console.error("Error obteniendo nombre del usuario:", error);
+    return null;
+  }
+};
 
   const columns = [
     { field: 'titulo', header: 'Título' },
@@ -95,15 +115,22 @@ const Sellers = () => {
     };
 
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setUser(user);
-        await fetchContracts(user.uid);
-      } else {
-        setUser(null);
-        setContracts([]);
-        setLoading(false);
-      }
-    });
+  if (user) {
+    setUser(user);
+
+    const name = await getUserName(user.uid);
+    console.log("Nombre obtenido desde Firestore:", name);
+    setUserName(name);
+
+    await fetchContracts(user.uid);
+  } else {
+    setUser(null);
+    setUserName(null);
+    setContracts([]);
+    setLoading(false);
+  }
+});
+
 
     return () => unsubscribe();
   }, []);
@@ -119,15 +146,15 @@ const Sellers = () => {
   return (
     <div className="surface-ground p-6 shadow-4 border-round-lg animate__animated animate__fadeIn">
       <Toast ref={toast} />
-
+    {/* 
       <h1 className="text-3xl font-bold text-primary text-center mb-5 animate__animated animate__fadeInDown">
-        Bienvenido {user?.email || 'Usuario'}
+        Bienvenido {userName || 'Usuario'}
       </h1>
-
+*/}
       <div className="flex justify-content-between align-items-center mb-4">
         <h2 className="text-xl font-medium text-700">Mis Contratos</h2>
       </div>
-
+    
       <DataTable
         value={contracts}
         paginator
