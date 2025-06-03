@@ -21,7 +21,11 @@ export const createContract = async (contractData) => {
     firma: contractData.firma, // Guardamos la firma en base64
     userUID: auth.currentUser.uid,
     createdAt: serverTimestamp(),
-    status: contractData.firma?"activo":"inactivo"
+    status: contractData.firma?"activo":"inactivo",
+    provincia:contractData.provincia,
+    localidad:contractData.localidad,
+    codPostal:contractData.codPostal,
+    email:contractData.email
   };
 
   const docRef = await addDoc(collection(db, "contracts"), contractDoc);

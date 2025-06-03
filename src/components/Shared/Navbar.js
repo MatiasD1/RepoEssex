@@ -87,14 +87,14 @@ const Navbar = ({user}) => {
                     label: 'Reportes',
                     icon: 'pi pi-chart-bar',
                     command: () => navigate('/administrator/reports')
+                },
+                {
+                    label:'Usuarios Deshabilitados',
+                    icon:'pi pi-users',
+                    command:()=> navigate('/administrator/disabled')
                 }
             ]
-        },
-        {
-            label:'Usuarios Deshabilitados',
-            icon:'pi pi-users',
-            command:()=> navigate('/administrator/disabled')
-        }
+        }        
     ];
 
     if (loading) {

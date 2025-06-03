@@ -9,6 +9,7 @@ import { Toast } from 'primereact/toast';
 import { getUserContracts, formatDate, generatePDF } from '../Shared/FirebaseContrats'; 
 import ContractDetail from '../Shared/ContractDetail'; 
 import { saveAs } from 'file-saver';
+import { showError } from '../Administrator/FirebaseSellers';
 
 const ContractsList = () => {
   const [contracts, setContracts] = useState([]);
@@ -38,18 +39,7 @@ const ContractsList = () => {
     };
 
     fetchContracts();
-  }, []);
-
-  const showError = (message) => {
-    toast.current.show({
-      severity: 'error',
-      summary: 'Error',
-      detail: message,
-      life: 5000
-    });
-  };
-
-  
+  }, []); 
 
   const handleDownloadPDF = async (contract) => {
     try {

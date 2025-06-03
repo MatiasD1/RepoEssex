@@ -7,10 +7,12 @@ import { Fieldset } from 'primereact/fieldset';
 import { Checkbox } from 'primereact/checkbox';
 import { Divider } from 'primereact/divider';
 import { Card } from 'primereact/card';
+import { Dropdown } from 'primereact/dropdown'
 import { useNavigate,useLocation } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { createContract } from './FirebaseContrats';
 import SignatureCanvas from 'react-signature-canvas';
+import { showError, showSuccess} from "../Administrator/FirebaseSellers";
 
 const NewContract = () => {
   const [formData, setFormData] = useState({
@@ -24,15 +26,27 @@ const NewContract = () => {
     monto: 0,
     incluyePenalizacion: false,
     firma: '',
-    aceptaTerminos: false
+    aceptaTerminos: false,
+    provincia:'',
+    localidad:'',
+    codPostal:'',
+    email:'',
+    //servicioAdicional:'',
+    //equipos:''
   });
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [showSignatureDialog, setShowSignatureDialog] = useState(false);
+  const [selectedPro, setSelectedPro] = useState(null);
   const toast = useRef(null);
   const signatureRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation(); 
+
+  const provincias = ["Buenos Aires","Santa Fé","Santiago del Estero",
+    "Córdoba","Catamarca","La Rioja","Río Negro","San Luis","San Juan",
+    "Mendoza","Neuquén","Santa Cruz","Chubut","Chaco","Misiones","Corrientes",
+    "Salta","Jujuy","Tierra del Fuego","Tucumán","Formosa","Entre Ríos","La Pampa"]
 
   useEffect(() => {
     if (location.state?.user) {
@@ -45,24 +59,6 @@ const NewContract = () => {
       }
     }
   }, [location.state]);
-
-  const showError = (message) => {
-    toast.current?.show({
-      severity: 'error',
-      summary: 'Error',
-      detail: message,
-      life: 5000
-    });
-  };
-
-  const showSuccess = (message) => {
-    toast.current?.show({
-      severity: 'success',
-      summary: 'Éxito',
-      detail: message,
-      life: 5000
-    });
-  };
 
   const handleSaveSignature = () => {
     if (signatureRef.current.isEmpty()) {
@@ -119,7 +115,7 @@ const NewContract = () => {
         <form onSubmit={handleSubmit}>
           {/* Sección de Título */}
           <div className="field mb-4">
-            <label htmlFor="titulo" className="block font-bold mb-2">Título del Contrato *</label>
+            <label htmlFor="titulo" className="block font-bold mb-2">Título del Contrato: </label>
             <InputText
               id="titulo"
               name="titulo"
@@ -134,7 +130,7 @@ const NewContract = () => {
           <Fieldset legend="Partes Contratantes" className="mb-4">
             <div className="grid">
               <div className="col-12 md:col-4">
-                <label htmlFor="nombre" className="block mb-2">Nombre *</label>
+                <label htmlFor="nombre" className="block mb-2">Nombre: </label>
                 <InputText
                   id="nombre"
                   name="nombre"
@@ -145,7 +141,7 @@ const NewContract = () => {
                 />
               </div>
               <div className="col-12 md:col-4">
-                <label htmlFor="apellido" className="block mb-2">Apellido *</label>
+                <label htmlFor="apellido" className="block mb-2">Apellido: </label>
                 <InputText
                   id="apellido"
                   name="apellido"
@@ -156,7 +152,7 @@ const NewContract = () => {
                 />
               </div>
               <div className="col-12 md:col-4">
-                <label htmlFor="dni" className="block mb-2">DNI *</label>
+                <label htmlFor="dni" className="block mb-2">DNI: </label>
                 <InputMask
                   id="dni"
                   name="dni"
@@ -177,7 +173,7 @@ const NewContract = () => {
           <Fieldset legend="Datos del Contrato" className="mb-4">
             <div className="grid">
               <div className="col-12 md:col-6">
-                <label htmlFor="fechaInicio" className="block mb-2">Fecha de Inicio *</label>
+                <label htmlFor="fechaInicio" className="block mb-2">Fecha de Inicio: </label>
                 <Calendar
                   id="fechaInicio"
                   name="fechaInicio"
@@ -190,7 +186,7 @@ const NewContract = () => {
                 />
               </div>
               <div className="col-12 md:col-6">
-                <label htmlFor="fechaFin" className="block mb-2">Fecha de Fin *</label>
+                <label htmlFor="fechaFin" className="block mb-2">Fecha de Fin: </label>
                 <Calendar
                   id="fechaFin"
                   name="fechaFin"
@@ -210,7 +206,7 @@ const NewContract = () => {
           {/* Sección de Cláusulas */}
           <Fieldset legend="Cláusulas" className="mb-4">
             <div className="field">
-              <label htmlFor="monto" className="block mb-2">Monto Mensual (USD) *</label>
+              <label htmlFor="monto" className="block mb-2">Monto Mensual (USD): </label>
               <InputNumber
                 id="monto"
                 name="monto"
@@ -231,11 +227,11 @@ const NewContract = () => {
                 checked={formData.incluyePenalizacion}
                 onChange={handleInputChange}
               />
-              <label htmlFor="incluyePenalizacion" className="ml-2">Incluir penalización por mora</label>
+              <label htmlFor="incluyePenalizacion" className="ml-2">Incluir penalización por mora: </label>
             </div>
             
             <div className="field mt-4">
-              <label htmlFor="contenido" className="block mb-2">Contenido Adicional *</label>
+              <label htmlFor="contenido" className="block mb-2">Contenido Adicional: </label>
               <Editor
                 id="contenido"
                 name="contenido"
@@ -246,6 +242,67 @@ const NewContract = () => {
               />
             </div>
           </Fieldset>
+
+          <Divider />
+          {/*Sección de datos de ubicación*/}
+          <Fieldset legend="Ubicación" className='mb.4'>
+            <div className='grid'>
+              <div className="col-12 md:col-6">
+                <label>Provincia *</label>
+                <Dropdown 
+                  value={selectedPro} 
+                  options={provincias} 
+                  onChange={(e)=>setSelectedPro(e.value)}
+                  placeholder='Seleccioná una provincia'
+                />
+              </div>
+              <div className="col-12 md:col-6">
+                <label htmlFor="localidad" className="block mb-2">Localidad: </label>
+                  <InputText
+                    id="localidad"
+                    name="localidad"
+                    value={formData.nombre}
+                    onChange={handleInputChange}
+                    className="w-full"
+                    required
+                  />
+              </div>
+              <div className="col-12 md:col-6">
+                <label htmlFor='altura' className='block mb-2'>Altura: </label>
+                <InputNumber
+                  id="monto"
+                  name="monto"
+                  value={formData.monto}
+                  onValueChange={(e) => setFormData({...formData, monto: e.value})}
+                  className="w-full"
+                  required
+                />
+              </div>
+              <div className="col-12 md:col-6">
+                <label htmlFor="codPostal" className="block mb-2">Código Postal: </label>
+                  <InputText
+                    id="codigo postal"
+                    name="codigo postal"
+                    value={formData.codPostal}
+                    onChange={handleInputChange}
+                    className="w-full"
+                    required
+                  />
+              </div>
+              <div className="col-12 md:col-6">
+                <label htmlFor="email" className="block mb-2">Email del Contratante: </label>
+                  <InputText
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="w-full"
+                    required
+                  />
+              </div>
+            </div>
+          </Fieldset>
+          
 
           <Divider />
 
@@ -259,12 +316,12 @@ const NewContract = () => {
                 onChange={handleInputChange}
                 required
               />
-              <label htmlFor="aceptaTerminos" className="ml-2">Ambas partes aceptan los términos y condiciones *</label>
+              <label htmlFor="aceptaTerminos" className="ml-2">Ambas partes aceptan los términos y condiciones: </label>
             </div>
             
             <div className="flex flex-column md:flex-row justify-content-between gap-4">
               <div className="flex flex-column align-items-center">
-                <label className="block mb-2">Firma del Cliente *</label>
+                <label className="block mb-2">Firma del Cliente: </label>
                 {formData.firma ? (
                   <img 
                     src={formData.firma} 
@@ -312,7 +369,7 @@ const NewContract = () => {
         </form>
       </Card>
 
-      {/* Diálogo para firma digital (mantén el mismo que ya tienes) */}
+      {/* Diálogo para firma digital*/}
       <Dialog
         header="Firma Digital"
         visible={showSignatureDialog}
