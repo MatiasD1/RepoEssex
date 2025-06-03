@@ -17,40 +17,39 @@ html, body, #root {
 
 .content {
   flex: 1;
-  padding: 20px;
+  padding: 40px;
 }
 
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
-  color: black;
+  color: #F8A145 !important;
   font-size: 23px;
 }
 
 .p-button.p-button-text.p-button-plain {
-  color: black !important;
+  color: #F8A145 !important;
   font-size: 20px;
 }
 
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
-  color: black !important;
+  color: #F8A145 !important;
   font-size: 20px;
 }
 
 .pi {
-  color: black;
+  color: #F8A145 !important;
   font-size: 20px;
 }
 
 .navbar-custom {
-  background-color: rgba(211, 81, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.7);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  color: black !important;
+  color: #F8A145 !important;
   border-bottom: none !important;
 }
 
 .p-button.p-button-danger, .p-button-group.p-button-danger > .p-button, .p-splitbutton.p-button-danger > .p-button, .p-fileupload-choose.p-button-danger {
   color: #ffffff;
-  background: #F07900;
-  border: 1px solid #D35100;
+  background: #000000;
 }
 
 .navbar-custom .p-menubar-root-list {
@@ -75,7 +74,7 @@ html, body, #root {
   display: flex;
   flex-direction: column-reverse;
   width: 100%;
-  background-color: rgba(211, 81, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.7);
   text-align: center;
   padding: 0.5rem;
   font-size: 0.875rem;
@@ -128,7 +127,7 @@ html, body, #root {
 h2 {
   margin-left: 20px;
   font-size: 2rem; /* Tamaño destacado */
-  font-weight: 700; /* Negrita */
+  font-weight: 400; /* Negrita */
   color: #F8A145; /* Azul profundo */
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Sombra más suave */
   letter-spacing: 0.5px; /* Espaciado de letras */
@@ -141,25 +140,89 @@ h2 {
 .sellers-subtitle {
   font-size: 1.25rem; /* text-xl */
   font-weight: 600;
-  color: #374151; /* gris oscuro */
+  color: #F8A145; /* gris oscuro */
   margin-bottom: 1rem;
 }
 
-.p-datatable {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+/* Contenedor del paginador */
+.p-paginator {
+  background-color: rgba(0, 0, 0, 0.9);
+  border: none !important;
+  padding: 0.5rem;
+  justify-content: center;
+}
+.p-paginator .p-paginator-pages .p-paginator-page {
+  color: #F8A145;
+  background-color: rgba(255, 193, 128, 0.9);
+  border: 1px solid #F8A145;
+  margin: 0 2px;
+  border-radius: 5px;
+  padding: 0.4rem 0.6rem;
+  transition: all 0.3s ease;
+}
+.p-paginator .p-paginator-pages .p-paginator-page:hover {
+  background-color: #F07900;
+  color: white;
+}
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background-color: #F8A145;
+  color: white;
+  font-weight: bold;
+}
+.p-paginator .p-paginator-first,
+.p-paginator .p-paginator-prev,
+.p-paginator .p-paginator-next,
+.p-paginator .p-paginator-last {
+  color: #F8A145;
+  border: none;
+  background: transparent;
+  margin: 0 5px;
+  font-size: 1.2rem;
+}
+.p-paginator .p-paginator-first:hover,
+.p-paginator .p-paginator-prev:hover,
+.p-paginator .p-paginator-next:hover,
+.p-paginator .p-paginator-last:hover {
+  color: #F07900;
+}
+.p-paginator .p-paginator-first.p-disabled,
+.p-paginator .p-paginator-prev.p-disabled,
+.p-paginator .p-paginator-next.p-disabled,
+.p-paginator .p-paginator-last.p-disabled {
+  color: #F8A145;
+  opacity: 0.5;
+}
+.p-paginator .p-dropdown {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #F8A145;
+  border: 1px solid #F8A145;
+}
+.p-paginator .p-paginator-current {
+  color: #F8A145;
+  font-style: italic;
+  margin-left: 10px;
+}
+
+.p-datatable-thead > tr:first-child > th:first-child {
+  border-top-left-radius: 12px;
+}
+
+.p-datatable-thead > tr:first-child > th:last-child {
+  border-top-right-radius: 12px;
 }
 
 /* Encabezado de la tabla */
 .p-datatable-thead > tr > th {
-  background-color: rgba(248, 161, 69, 0.95) !important; /* azul claro */
-  color: black; /* azul oscuro */
+  background-color: black; /* azul claro */
+  color: rgba(248, 161, 69, 0.95);
   font-weight: 600;
   border: 1px solid #F8A145;
 }
 
 .p-datatable .p-datatable-tbody > tr > td {
+  color: #F8A145;
+  background: black !important; /* Si saco el negro aparece un blanco que no encuentro como desactivar */
+  background-color: rgba(0, 0, 0, 0.9);
   border: 1px solid #F8A145;
 }
 
@@ -180,7 +243,7 @@ h2 {
 /* Etiquetas de estado no activas */
 .tag-inactivo {
   background-color: rgba(211, 81, 0, 0.9); /* amarillo claro */
-  color: #b45309; /* amarillo oscuro */
+  color: #F8A145; /* amarillo oscuro */
   border-radius: 0.375rem;
   padding: 0.25rem 0.5rem;
   font-weight: 600;
@@ -189,7 +252,7 @@ h2 {
 /* Botón eliminar */
 .p-button-danger {
   color: #b91c1c !important; /* rojo oscuro */
-  border-color: rgba(211, 81, 0, 0.9);
+  border-color: rgba(248, 161, 69, 0.9);
 }
 
 .p-button-danger:hover {
@@ -198,13 +261,12 @@ h2 {
 }
 
 .p-paginator {
-  background-color: rgba(248, 161, 69, 0.9);
+  background-color: rgba(0, 0, 0, 0.9);
   border: none !important;
 }
 
 .p-datatable .p-datatable-tbody > tr {
   color: black;
-  background-color: rgba(255, 193, 128, 0.9);
 }
 
 /*# sourceMappingURL=styles.css.map */
