@@ -43,7 +43,7 @@ const ContractsList = () => {
 
   const handleDownloadPDF = async (contract) => {
     try {
-      const blob = await generatePDF(contract);
+      const blob = await generatePDF(contract,formatDate);
       saveAs(blob, `contrato_${contract.nombre}_${contract.apellido}.pdf`);
     } catch (error) {
       showError(`Error al generar PDF: ${error.message}`);
@@ -52,7 +52,7 @@ const ContractsList = () => {
 
   const handlePreviewPDF = async (contract) => {
     try {
-      const blob = await generatePDF(contract);
+      const blob = await generatePDF(contract,formatDate);
       const url = URL.createObjectURL(blob);
       setPdfUrl(url);
       setSelectedContract(contract);
@@ -146,14 +146,16 @@ const ContractsList = () => {
         onHide={() => {
           setShowPDFDialog(false);
           if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+          setPdfUrl(null);
         }}
       >
         {pdfUrl && (
-          <iframe 
-            src={pdfUrl} 
-            style={{ width: '100%', height: '100%', border: 'none' }}
-            title="Vista previa del contrato"
-          />
+        <iframe
+          key={pdfUrl} // 🔑 Fuerza re-render
+          src={pdfUrl}
+          style={{ width: '100%', height: '100%', border: 'none' }}
+          title="Vista previa del contrato"
+        />
         )}
       </Dialog>
     </div>
