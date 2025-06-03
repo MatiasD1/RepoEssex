@@ -20,23 +20,31 @@ html, body, #root {
   padding: 40px;
 }
 
+.spinner .p-progress-spinner-circle {
+  width: 60px;
+  height: 60px;
+  stroke: #F8A145 !important; /* Tu color personalizado */
+  animation: p-progress-spinner-dash 1.5s ease-in-out infinite !important;
+}
+
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
-  color: #F8A145 !important;
+  color: #F07900 !important;
   font-size: 23px;
 }
 
 .p-button.p-button-text.p-button-plain {
-  color: #F8A145 !important;
+  color: #F07900 !important;
   font-size: 20px;
 }
 
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
-  color: #F8A145 !important;
+  color: #F07900 !important;
   font-size: 20px;
 }
 
 .pi {
-  color: #F8A145 !important;
+  display: none;
+  color: white !important;
   font-size: 20px;
 }
 
@@ -70,6 +78,82 @@ html, body, #root {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
+.login-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.login-card {
+  width: 400px !important;
+  margin: 0 auto !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  padding: 2rem !important;
+}
+.login-card .p-card-title {
+  color: #F07900 !important;
+  margin-bottom: 1.5rem;
+}
+.login-card .p-card-content {
+  color: #F8A145 !important;
+}
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.login-card form .p-field label {
+  display: block;
+  color: #F07900 !important;
+  margin-bottom: 0.5rem;
+}
+.login-card form .p-field .p-inputtext,
+.login-card form .p-field .p-password-input {
+  width: 100% !important;
+  color: #F8A145 !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid #F8A145 !important;
+  padding: 0.75rem !important;
+  border-radius: 6px !important;
+}
+.login-card form .p-message {
+  color: #F07900 !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  border-color: #F07900 !important;
+}
+.login-card form .p-button {
+  width: 100% !important;
+  background-color: #F07900 !important;
+  border: none !important;
+  padding: 0.75rem !important;
+}
+.login-card form .p-button:hover {
+  filter: brightness(1.1) !important;
+}
+.login-card .p-password {
+  position: relative;
+  display: block;
+}
+.login-card .p-divider {
+  margin: 2rem 0 !important;
+}
+.login-card .p-text-secondary {
+  color: #F8A145 !important;
+}
+.login-card .p-text-primary {
+  color: #F07900 !important;
+  text-decoration: underline !important;
+}
+.login-card .p-text-primary:hover {
+  color: rgb(255, 146.4125, 36) !important;
+}
+.login-card .p-divider.p-divider-horizontal:before {
+  border-top: 1px solid #F8A145;
+}
+
 .footer {
   display: flex;
   flex-direction: column-reverse;
@@ -80,7 +164,7 @@ html, body, #root {
   font-size: 0.875rem;
   position: relative;
   bottom: 0;
-  color: #F8A145;
+  color: #F07900;
 }
 .footer .columnaFooter {
   display: flex;
@@ -128,7 +212,7 @@ h2 {
   margin-left: 20px;
   font-size: 2rem; /* Tamaño destacado */
   font-weight: 400; /* Negrita */
-  color: #F8A145; /* Azul profundo */
+  color: #F07900; /* Azul profundo */
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Sombra más suave */
   letter-spacing: 0.5px; /* Espaciado de letras */
   margin-bottom: 1rem;

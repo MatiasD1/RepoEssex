@@ -1,26 +1,27 @@
 @use 'variables';
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
-     color: variables.$Primario !important;
+     color: variables.$Secundario !important;
      font-size: 23px;
 }
 .p-button.p-button-text.p-button-plain {
-    color: variables.$Primario !important;
+    color: variables.$Secundario !important;
      font-size: 20px;
 }
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon
  {
-    color: variables.$Primario !important;
+    color: variables.$Secundario !important;
      font-size: 20px;
 }
 .pi {
-    color: variables.$Primario !important;
-     font-size: 20px;
+    display: none;
+    color: white !important;
+    font-size: 20px;
 }
 .navbar-custom {
     background-color: rgba(variables.$Black, 0.7);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     color: variables.$Primario !important;
-        border-bottom: none !important;
+    border-bottom: none !important;
 }
 .p-button.p-button-danger, .p-button-group.p-button-danger > .p-button, .p-splitbutton.p-button-danger > .p-button, .p-fileupload-choose.p-button-danger {
     color: #ffffff;

@@ -55,9 +55,12 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <div className="flex justify-content-center align-items-center min-h-screen bg-blue-50">
-        <ProgressSpinner style={{ width: '60px', height: '60px' }} strokeWidth="4" />
-      </div> 
+    return <div className="flex justify-center items-center min-h-screen bg-blue-50">
+  <ProgressSpinner 
+    strokeWidth="4"
+    className="spinner"
+  />
+</div> 
   }
 
   return (

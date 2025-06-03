@@ -19,3 +19,10 @@ html, body, #root {
   flex: 1;
   padding: 40px; // opcional
 }
+
+.spinner .p-progress-spinner-circle {
+  width: 60px;
+  height: 60px;
+  stroke: variables.$Primario !important; /* Tu color personalizado */
+  animation: p-progress-spinner-dash 1.5s ease-in-out infinite !important;
+}
