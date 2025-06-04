@@ -1,7 +1,8 @@
 // firebaseContracts.js
 import { collection, query, where, getDocs, doc, getDoc, updateDoc, deleteDoc, serverTimestamp, addDoc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
-import { Text, View, Document, Page, pdf, Image } from "@react-pdf/renderer"
+import { StyleSheet, Text, View, Document, Page, pdf, Image } from "@react-pdf/renderer";
+
 
 
 export const createContract = async (contractData) => {
@@ -97,106 +98,110 @@ export const deleteUserContract = async (contractId) => {
   await deleteDoc(doc(db, "contracts", contractId));
 };
 
-export const generatePDF = async (contract) => {
-    try {
-      const styles = StyleSheet.create({
-        page: { 
-          padding: 40,
-          fontFamily: 'Times-Roman',
-          fontSize: 12,
-          lineHeight: 1.5
-        },
-        title: { 
-          fontSize: 16,
-          fontWeight: 'bold',
-          marginBottom: 20,
-          textAlign: 'center',
-          textDecoration: 'underline'
-        },
-        sectionTitle: {
-          fontSize: 14,
-          fontWeight: 'bold',
-          marginTop: 15,
-          marginBottom: 10
-        },
-        signatureSection: {
-          marginTop: 40,
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between'
-        },
-        signatureLine: {
-          width: 200,
-          borderBottom: '1px solid black',
-          marginBottom: 5
-        }
-      });
-    
-      const MyDocument = () => (
-        <Document>
-          <Page style={styles.page}>
-            <Text style={styles.title}>{contract.titulo}</Text>
-            
-            <Text style={styles.sectionTitle}>PARTES CONTRATANTES:</Text>
-            <Text>
-              {`Entre ${contract.nombre} ${contract.apellido}, identificado con DNI ${contract.dni}, `}
-              {`y [NOMBRE_EMPRESA], celebran el presente contrato con fecha ${formatDate(contract.fechaInicio)}.`}
-            </Text>
-    
-            <Text style={styles.sectionTitle}>DATOS DEL CONTRATO:</Text>
-            <Text>
-              {`- Fecha de inicio: ${formatDate(contract.fechaInicio)}`}
-              {'\n'}
-              {`- Fecha de fin: ${formatDate(contract.fechaFin)}`}
-              {'\n'}
-              {`- Monto mensual: $${contract.monto} USD`}
-              {'\n'}
-              {contract.incluyePenalizacion && '- Incluye penalización por mora'}
-            </Text>
-    
-            <Text style={styles.sectionTitle}>CLÁUSULAS:</Text>
-            <Text>
-              {contract.contenido.replace(/<[^>]*>/g, '')}
-            </Text>
-    
-            <Text style={styles.sectionTitle}>TÉRMINOS Y CONDICIONES:</Text>
-            <Text>
-              Ambas partes aceptan los términos y condiciones establecidos en este contrato.
-            </Text>
-    
-            <View style={styles.signatureSection}>
-              <View>
-                <Text>Firma del Cliente:</Text>
-                {contract.firma && (
-                  <Image 
-                    src={contract.firma} 
-                    style={{ width: 150, height: 60, marginTop: 10 }} 
-                  />
-                )}
-                <Text style={{ marginTop: 20 }}>
-                  {`${contract.nombre} ${contract.apellido}`}
-                  {'\n'}
-                  DNI: {contract.dni}
-                </Text>
-              </View>
-    
-              <View>
-                <Text>Firma del Representante:</Text>
-                <View style={styles.signatureLine}></View>
-                <Text style={{ marginTop: 20 }}>
-                  {contract.userName || '[Nombre Representante]'}
-                  {'\n'}
-                  [Cargo]
-                </Text>
-              </View>
-            </View>
-          </Page>
-        </Document>
-      );
-    
-      const blob = await pdf(<MyDocument />).toBlob();
-      return blob;
-    } catch (error) {
-      throw error;
-    }
-  };
+
+// Estilos
+const styles = StyleSheet.create({
+  page: { 
+    padding: 40,
+    fontFamily: 'Times-Roman',
+    fontSize: 12,
+    lineHeight: 1.5
+  },
+  title: { 
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+    textDecoration: 'underline'
+  },
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginTop: 15,
+    marginBottom: 10
+  },
+  signatureSection: {
+    marginTop: 40,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  signatureLine: {
+    width: 200,
+    borderBottom: '1px solid black',
+    marginBottom: 5
+  }
+});
+
+// Componente PDF separado
+const MyDocument = ({ contract, formatDate }) => (
+  <Document>
+    <Page style={styles.page}>
+      <Text style={styles.title}>{contract.titulo}</Text>
+      
+      <Text style={styles.sectionTitle}>PARTES CONTRATANTES:</Text>
+      <Text>
+        {`Entre ${contract.nombre} ${contract.apellido}, identificado con DNI ${contract.dni}, `}
+        {`y [NOMBRE_EMPRESA], celebran el presente contrato con fecha ${formatDate(contract.fechaInicio)}.`}
+      </Text>
+
+      <Text style={styles.sectionTitle}>DATOS DEL CONTRATO:</Text>
+      <Text>
+        {`- Fecha de inicio: ${formatDate(contract.fechaInicio)}`}
+        {'\n'}
+        {`- Fecha de fin: ${formatDate(contract.fechaFin)}`}
+        {'\n'}
+        {`- Monto mensual: $${contract.monto} USD`}
+        {'\n'}
+        {contract.incluyePenalizacion ? '- Incluye penalización por mora' : ''}
+      </Text>
+
+      <Text style={styles.sectionTitle}>CLÁUSULAS:</Text>
+      <Text>
+        {contract.contenido.replace(/<[^>]*>/g, '')}
+      </Text>
+
+      <Text style={styles.sectionTitle}>TÉRMINOS Y CONDICIONES:</Text>
+      <Text>
+        Ambas partes aceptan los términos y condiciones establecidos en este contrato.
+      </Text>
+
+      <View style={styles.signatureSection}>
+        <View>
+          <Text>Firma del Cliente:</Text>
+          {contract.firma && (
+            <Image 
+              src={contract.firma} 
+              style={{ width: 150, height: 60, marginTop: 10 }} 
+            />
+          )}
+          <Text style={{ marginTop: 20 }}>
+            {`${contract.nombre} ${contract.apellido}`}
+            {'\n'}
+            DNI: {contract.dni}
+          </Text>
+        </View>
+
+        <View>
+          <Text>Firma del Representante:</Text>
+          <View style={styles.signatureLine}></View>
+          <Text style={{ marginTop: 20 }}>
+            {contract.userName || '[Nombre Representante]'}
+            {'\n'}
+            [Cargo]
+          </Text>
+        </View>
+      </View>
+    </Page>
+  </Document>
+);
+
+// Función para generar el PDF
+export const generatePDF = async (contract, formatDate) => {
+  try {
+    const blob = await pdf(<MyDocument contract={contract} formatDate={formatDate} />).toBlob();
+    return blob;
+  } catch (error) {
+    throw error;
+  }
+};

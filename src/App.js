@@ -68,8 +68,8 @@ const App = () => {
       <Toast ref={toast} />
       <Router>
         <div className="appContainer">
-        {isAuthenticated && <Navbar user={currentUser}/>}
-         <main className="content">
+          {isAuthenticated && <Navbar user={currentUser}/>}
+          <main className="content">
           <Routes>
            
             <Route path="/" element={<Navigate to="/login" />} />
