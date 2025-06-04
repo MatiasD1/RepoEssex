@@ -43,8 +43,7 @@ html, body, #root {
 }
 
 .pi {
-  display: none;
-  color: white !important;
+  color: #F07900 !important;
   font-size: 20px;
 }
 
