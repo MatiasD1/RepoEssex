@@ -2,6 +2,12 @@
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
      color: variables.$Secundario !important;
      font-size: 23px;
+    font-family: 'Open Sans', sans-serif !important;
+
+}
+.p-button .p-button-label {
+    transition-duration: 0.2s;
+    font-family: 'Open Sans', sans-serif !important;
 }
 .p-button.p-button-text.p-button-plain {
     color: variables.$Secundario !important;
@@ -26,6 +32,10 @@
     color: #ffffff;
     background: variables.$Black;
 }
+.botonCerrar{
+    background-color: variables.$Black !important;
+    border: 1px solid variables.$Secundario !important;
+}
 .navbar-custom .p-menubar-root-list {
     margin-left: 2rem;
 }
@@ -36,7 +46,7 @@
 }
 
 .navbar-custom .p-menuitem-link:hover {
-    background-color: variables.$Secundario;
+    background-color: white;
 }
 
 .navbar-custom .p-submenu-list {

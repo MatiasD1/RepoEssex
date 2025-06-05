@@ -5,18 +5,24 @@
   padding: 1.5rem; /* p-6 */
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   animation: fadeIn 0.6s ease;
+  font-family: 'Open Sans', sans-serif !important;
 }
 
 /* Título principal */
 .sellers-title {
-  font-size: 1.875rem; /* text-3xl */
+  font-size: 2rem; /* text-3xl */
   font-weight: 700;
   color: variables.$Terciario !important; /* azul 700 */
   text-align: center;
   margin-bottom: 1.25rem; /* mb-5 */
   animation: fadeInDown 0.6s ease;
 }
-
+.p-card {
+    background: none;
+  }
+.p-card-title{
+  color: variables.$Secundario;
+}
 h2 {
   margin-left: 20px;
   font-size: 2rem; /* Tamaño destacado */
@@ -27,6 +33,7 @@ h2 {
   margin-bottom: 1rem;
   border-left: 5px solid variables.$Secundario; /* Barra decorativa a la izquierda */
   padding-left: 15px;
+  font-family: 'Open Sans', sans-serif !important;
 }
 
 /* Subtítulo "Mis Contratos" */
@@ -60,9 +67,11 @@ h2 {
     }
 
     &.p-highlight {
-      background-color: variables.$Primario;
-      color: white;
+      background-color: transparent;
+      color: variables.$Primario;
       font-weight: bold;
+      border: none;
+      font-family: 'Open Sans', sans-serif !important;
     }
   }
 
@@ -114,12 +123,14 @@ h2 {
   color: rgba(variables.$Primario, 0.95); 
   font-weight: 600;
   border: 1px solid variables.$Primario;
+  font-family: 'Open Sans', sans-serif !important;
 }
 .p-datatable .p-datatable-tbody > tr > td {
     color: variables.$Primario;
     background: black !important;/* Si saco el negro aparece un blanco que no encuentro como desactivar */
     background-color:rgba(variables.$Black, 0.9);
     border: 1px solid variables.$Primario;
+    font-family: 'Open Sans', sans-serif !important;
 }
 
 /* Filas de la tabla con efecto hover */
@@ -147,8 +158,10 @@ h2 {
 
 /* Botón eliminar */
 .p-button-danger {
-  color: #b91c1c !important; /* rojo oscuro */
+  color: #b91c1c !important;
   border-color: rgba(variables.$Primario, 0.9);
+  display: block;
+  margin: 0 auto;
 }
 
 .p-button-danger:hover {

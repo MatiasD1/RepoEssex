@@ -114,7 +114,7 @@ const Navbar = ({user}) => {
             />
             <Button 
                 icon="pi pi-sign-out" 
-                className="p-button-danger" 
+                className="botonCerrar" 
                 tooltip="Cerrar sesión"
                 tooltipOptions={{ position: 'bottom' }}
                 onClick={handleLogout}

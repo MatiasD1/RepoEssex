@@ -1,12 +1,14 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 html, body, #root {
   height: 100%;
   margin: 0;
   background-image: url("../img/fondo.png");
   background-size: cover; /* para que cubra todo el contenedor */
   background-position: center; /* para centrar la imagen */
-  background-repeat: no-repeat;
   color: #F07900;
+  border: #F8A145;
+  font-family: "Open Sans", sans-serif !important;
 }
 
 .appContainer {
@@ -27,9 +29,27 @@ html, body, #root {
   animation: p-progress-spinner-dash 1.5s ease-in-out infinite !important;
 }
 
+.p-datatable .p-datatable-header {
+  background: none;
+  font-size: 2rem;
+  font-family: "Open Sans", sans-serif !important;
+  color: #F07900;
+  border: 1px solid #F07900;
+  border-width: 1px 0 1px 0;
+  padding: 1rem 1rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
   color: #F07900 !important;
   font-size: 23px;
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.p-button .p-button-label {
+  transition-duration: 0.2s;
+  font-family: "Open Sans", sans-serif !important;
 }
 
 .p-button.p-button-text.p-button-plain {
@@ -59,6 +79,11 @@ html, body, #root {
   background: #000000;
 }
 
+.botonCerrar {
+  background-color: #000000 !important;
+  border: 1px solid #F07900 !important;
+}
+
 .navbar-custom .p-menubar-root-list {
   margin-left: 2rem;
 }
@@ -69,7 +94,7 @@ html, body, #root {
 }
 
 .navbar-custom .p-menuitem-link:hover {
-  background-color: #F07900;
+  background-color: white;
 }
 
 .navbar-custom .p-submenu-list {
@@ -195,16 +220,25 @@ html, body, #root {
   padding: 1.5rem; /* p-6 */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.6s ease;
+  font-family: "Open Sans", sans-serif !important;
 }
 
 /* Título principal */
 .sellers-title {
-  font-size: 1.875rem; /* text-3xl */
+  font-size: 2rem; /* text-3xl */
   font-weight: 700;
   color: #D35100 !important; /* azul 700 */
   text-align: center;
   margin-bottom: 1.25rem; /* mb-5 */
   animation: fadeInDown 0.6s ease;
+}
+
+.p-card {
+  background: none;
+}
+
+.p-card-title {
+  color: #F07900;
 }
 
 h2 {
@@ -217,6 +251,7 @@ h2 {
   margin-bottom: 1rem;
   border-left: 5px solid #F07900; /* Barra decorativa a la izquierda */
   padding-left: 15px;
+  font-family: "Open Sans", sans-serif !important;
 }
 
 /* Subtítulo "Mis Contratos" */
@@ -248,9 +283,11 @@ h2 {
   color: white;
 }
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  background-color: #F8A145;
-  color: white;
+  background-color: transparent;
+  color: #F8A145;
   font-weight: bold;
+  border: none;
+  font-family: "Open Sans", sans-serif !important;
 }
 .p-paginator .p-paginator-first,
 .p-paginator .p-paginator-prev,
@@ -300,6 +337,7 @@ h2 {
   color: rgba(248, 161, 69, 0.95);
   font-weight: 600;
   border: 1px solid #F8A145;
+  font-family: "Open Sans", sans-serif !important;
 }
 
 .p-datatable .p-datatable-tbody > tr > td {
@@ -307,6 +345,7 @@ h2 {
   background: black !important; /* Si saco el negro aparece un blanco que no encuentro como desactivar */
   background-color: rgba(0, 0, 0, 0.9);
   border: 1px solid #F8A145;
+  font-family: "Open Sans", sans-serif !important;
 }
 
 /* Filas de la tabla con efecto hover */
@@ -334,8 +373,10 @@ h2 {
 
 /* Botón eliminar */
 .p-button-danger {
-  color: #b91c1c !important; /* rojo oscuro */
+  color: #b91c1c !important;
   border-color: rgba(248, 161, 69, 0.9);
+  display: block;
+  margin: 0 auto;
 }
 
 .p-button-danger:hover {
@@ -350,6 +391,127 @@ h2 {
 
 .p-datatable .p-datatable-tbody > tr {
   color: black;
+}
+
+.p-card {
+  border-radius: 10px;
+  color: #F8A145;
+  font-family: "Open Sans", sans-serif;
+}
+
+.p-card-title {
+  font-size: 1.75rem;
+  color: #F07900;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.field label,
+.p-field label {
+  color: #F8A145;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.p-divider-solid.p-divider-horizontal:before {
+  display: none;
+}
+
+.p-paginator .p-dropdown .p-dropdown-label {
+  padding-right: 0.8rem; /* Centra el numerito de la paginación */
+  font-family: "Open Sans", sans-serif !important;
+}
+
+.p-inputtext,
+.p-inputnumber,
+.p-dropdown,
+.p-calendar,
+.p-checkbox {
+  background-color: rgba(255, 193, 128, 0.1);
+  border: 1px solid #F8A145;
+  color: #F8A145;
+  border-radius: 5px;
+}
+
+.p-inputtext:focus,
+.p-inputnumber:focus,
+.p-dropdown:focus,
+.p-calendar:focus {
+  border-color: #F07900;
+  box-shadow: 0 0 0 1px #F07900;
+}
+
+.p-fieldset {
+  border: 1px solid #F8A145;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #F8A145;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.p-fieldset .p-fieldset-legend {
+  background-color: #D35100;
+  color: black;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+}
+
+.p-editor-container {
+  background-color: rgba(255, 193, 128, 0.05);
+  border: 1px solid #F8A145;
+  border-radius: 5px;
+  color: #F8A145;
+}
+
+.signature-canvas {
+  border: 2px dashed #F8A145;
+  border-radius: 8px;
+  background-color: rgba(255, 193, 128, 0.05);
+}
+
+.p-dialog {
+  background-color: rgba(0, 0, 0, 0.95);
+  border: 1px solid #F8A145;
+}
+.p-dialog .p-dialog-header {
+  background-color: #D35100;
+  color: black;
+}
+
+.p-button {
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+.p-button:hover {
+  background-color: rgb(189, 95.2875, 0);
+}
+.p-button.p-button-secondary {
+  background-color: #F8A145;
+  color: white;
+}
+.p-button.p-button-danger {
+  background-color: #7f1d1d;
+}
+
+.p-divider {
+  border-color: #F8A145;
+  margin: 1.5rem 0;
+}
+
+.checkbox-label {
+  color: #F8A145;
+  font-weight: 500;
+}
+
+.submit-section {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+#administrador .pi {
+  display: block !important;
+  margin: 0 auto !important;
 }
 
 /*# sourceMappingURL=styles.css.map */

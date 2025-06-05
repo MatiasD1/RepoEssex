@@ -5,8 +5,9 @@ html, body, #root {
   background-image:  url('../img/fondo.png') ;
   background-size: cover;      /* para que cubra todo el contenedor */
   background-position: center; /* para centrar la imagen */
-  background-repeat: no-repeat;
   color: variables.$Secundario;
+  border: variables.$Primario;
+  font-family: 'Open Sans', sans-serif !important;
 }
 
 .appContainer {
@@ -26,3 +27,15 @@ html, body, #root {
   stroke: variables.$Primario !important; /* Tu color personalizado */
   animation: p-progress-spinner-dash 1.5s ease-in-out infinite !important;
 }
+
+  .p-datatable .p-datatable-header {
+    background: none;
+    font-size: 2rem;
+    font-family: 'Open Sans', sans-serif !important;
+    color: variables.$Secundario;
+    border: 1px solid variables.$Secundario;
+    border-width: 1px 0 1px 0;
+    padding: 1rem 1rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+  }
