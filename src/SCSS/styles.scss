@@ -1,4 +1,9 @@
 @use 'app';
 @use 'navbar';
+@use 'login';
 @use 'footer';
 @use 'sellers';
+@use 'newContract';
+@use 'administrador';
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');

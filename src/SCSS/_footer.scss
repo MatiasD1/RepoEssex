@@ -5,13 +5,13 @@
   display: flex;
   flex-direction: column-reverse;
   width: 100%;
-  background-color: rgb(variables.$Terciario,0.9);
+  background-color: rgb(variables.$Black,0.7);
   text-align: center;
   padding: 0.5rem;
   font-size: 0.875rem; // text-sm en Tailwind
   position: relative;
   bottom: 0;
-  color: variables.$Primario;
+  color: variables.$Secundario;
 
   .columnaFooter {
     display: flex;

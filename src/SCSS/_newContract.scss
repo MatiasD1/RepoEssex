@@ -1,0 +1,120 @@
+@use 'variables';
+
+  .p-card {
+    border-radius: 10px;
+    color: variables.$Primario;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .p-card-title {
+    font-size: 1.75rem;
+    color: variables.$Secundario;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .field label,
+  .p-field label {
+    color: variables.$Primario;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+.p-divider-solid.p-divider-horizontal:before {
+    display: none;
+}
+.p-paginator .p-dropdown .p-dropdown-label {
+    padding-right: 0.8rem; /* Centra el numerito de la paginación */
+    font-family: 'Open Sans', sans-serif !important;
+}
+  .p-inputtext,
+  .p-inputnumber,
+  .p-dropdown,
+  .p-calendar,
+  .p-checkbox {
+    background-color: rgba(variables.$Zero, 0.1);
+    border: 1px solid variables.$Primario;
+    color: variables.$Primario;
+    border-radius: 5px;
+  }
+
+  .p-inputtext:focus,
+  .p-inputnumber:focus,
+  .p-dropdown:focus,
+  .p-calendar:focus {
+    border-color: variables.$Secundario;
+    box-shadow: 0 0 0 1px variables.$Secundario;
+  }
+
+  .p-fieldset {
+    border: 1px solid variables.$Primario;
+    background-color: rgba(variables.$Black, 0.6);
+    color: variables.$Primario;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+
+    .p-fieldset-legend {
+      background-color: variables.$Terciario;
+      color: black;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+    }
+  }
+
+  .p-editor-container {
+    background-color: rgba(variables.$Zero, 0.05);
+    border: 1px solid variables.$Primario;
+    border-radius: 5px;
+    color: variables.$Primario;
+  }
+
+  .signature-canvas {
+    border: 2px dashed variables.$Primario;
+    border-radius: 8px;
+    background-color: rgba(variables.$Zero, 0.05);
+  }
+
+  .p-dialog {
+    background-color: rgba(variables.$Black, 0.95);
+    border: 1px solid variables.$Primario;
+
+    .p-dialog-header {
+      background-color: variables.$Terciario;
+      color: black;
+    }
+  }
+
+  .p-button {
+    color: white;
+    border: none;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: darken(variables.$Secundario, 10%);
+    }
+
+    &.p-button-secondary {
+      background-color: variables.$Primario;
+      color: white;
+    }
+
+    &.p-button-danger {
+      background-color: #7f1d1d;
+    }
+  }
+
+  .p-divider {
+    border-color: variables.$Primario;
+    margin: 1.5rem 0;
+  }
+
+  .checkbox-label {
+    color: variables.$Primario;
+    font-weight: 500;
+  }
+
+  .submit-section {
+    text-align: center;
+    margin-top: 2rem;
+  }
+

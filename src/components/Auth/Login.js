@@ -40,8 +40,8 @@ const Login = () => {
   );
 
   return (
-    <div className="h-screen flex align-items-center justify-content-center p-4" style={{ minHeight: '80vh', padding: '5rem' }}>
-      <Card title="Iniciar Sesión" footer={footer} className="w-25rem" style={{ width: '400px', margin: '0 auto' }}>
+    <div className="login-container">
+  <Card title="Iniciar Sesión" footer={footer} className="login-card">
         <form onSubmit={handleLogin}>
           <div className="p-field">
             <label htmlFor="email" className="p-d-block">Email</label>

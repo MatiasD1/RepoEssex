@@ -183,17 +183,19 @@ const Administrator = () => {
         paginator
         rows={10}
         rowsPerPageOptions={[5, 10, 25]}
+        id="administrador"
         tableStyle={{ minWidth: '50rem' }}
       >
         <Column field='email' header="Email" />
         <Column field='role' header="Rol" />
         <Column field='name' header="Nombre" />
-        <Column field='deleteUser' body={
+        <Column field='deleteUser' id="administrador" body={
           <Button
             icon="pi pi-times"
             rounded
             severity="danger"
             aria-label="Cancel"
+            id="administrador"
             onClick={() => HandleBaja()} />
         }
         />

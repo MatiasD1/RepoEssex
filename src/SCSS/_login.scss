@@ -1,0 +1,91 @@
+@use 'variables' as variables;
+
+.login-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem;
+  background-color: rgba(variables.$Black, 0.7) !important;
+}
+
+.login-card {
+  width: 400px !important;
+  margin: 0 auto !important;
+  background-color: rgba(variables.$Black, 0.7) !important;
+  padding: 2rem !important;
+
+  .p-card-title {
+    color: variables.$Secundario !important;
+    margin-bottom: 1.5rem;
+  }
+
+  .p-card-content {
+    color: variables.$Primario !important;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .p-field {
+      label {
+        display: block;
+        color: variables.$Secundario !important;
+        margin-bottom: 0.5rem;
+      }
+
+      .p-inputtext,
+      .p-password-input {
+        width: 100% !important;
+        color: variables.$Primario !important;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid variables.$Primario !important;
+        padding: 0.75rem !important;
+        border-radius: 6px !important;
+        
+      }
+    }
+
+    .p-message {
+      color: variables.$Secundario !important;
+      background-color: rgba(variables.$Black, 0.7) !important;
+      border-color: variables.$Secundario !important;
+    }
+
+    .p-button {
+      width: 100% !important;
+      background-color: variables.$Secundario !important;
+      border: none !important;
+      padding: 0.75rem !important;
+
+      &:hover {
+        filter: brightness(1.1) !important;
+      }
+    }
+  }
+  .p-password {
+        position: relative;
+        display: block;
+  }
+  .p-divider {
+    margin: 2rem 0 !important;
+  }
+
+  .p-text-secondary {
+    color: variables.$Primario !important;
+  }
+
+  .p-text-primary {
+    color: variables.$Secundario !important;
+    text-decoration: underline !important;
+
+    &:hover {
+      color: lighten(variables.$Secundario, 10%) !important;
+    }
+  }
+  .p-divider.p-divider-horizontal:before{   
+        border-top: 1px solid variables.$Primario;
+  }
+}
