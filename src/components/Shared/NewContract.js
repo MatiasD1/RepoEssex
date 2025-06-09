@@ -261,7 +261,7 @@ const NewContract = () => {
                   <InputText
                     id="localidad"
                     name="localidad"
-                    value={formData.nombre}
+                    value={formData.localidad}
                     onChange={handleInputChange}
                     className="w-full"
                     required
@@ -270,25 +270,25 @@ const NewContract = () => {
               <div className="col-12 md:col-6">
                 <label htmlFor='altura' className='block mb-2'>Altura: </label>
                 <InputNumber
-                  id="monto"
-                  name="monto"
+                  id="altura"
+                  name="altura"
                   value={formData.monto}
                   onValueChange={(e) => setFormData({...formData, monto: e.value})}
                   className="w-full"
                   required
                 />
               </div>
-          {/*    <div className="col-12 md:col-6">
+              <div className="col-12 md:col-6">
                 <label htmlFor="codPostal" className="block mb-2">Código Postal: </label>
                   <InputText
-                    id="codigo postal"
-                    name="codigo postal"
+                    id="codPostal"
+                    name="codPostal"
                     value={formData.codPostal}
                     onChange={handleInputChange}
                     className="w-full"
                     required
                   />
-              </div>*/}
+              </div>
                <div className="col-12 md:col-6">
                 <label htmlFor="email" className="block mb-2">Email del Contratante: </label>
                   <InputText
