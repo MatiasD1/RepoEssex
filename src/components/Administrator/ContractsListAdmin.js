@@ -12,6 +12,10 @@ const ContractsListAdmin = () => {
     const [loading, setLoading] = useState(true);
     const toast = useRef(null);
     const columns = [
+        {
+            header: 'Dueño del Contrato',
+            body: (rowData) => `${rowData.nombre} ${rowData.apellido}`
+        },
         {field: 'titulo', header: 'Título'},
         {field: 'contenido', header: 'Contenido'},
         {field: 'createdAt', header: 'Fecha Creación'},
@@ -66,8 +70,8 @@ const ContractsListAdmin = () => {
             header="Lista de Contratos"
             emptyMessage="No se encontraron contratos"
         >
-            {columns.map((col) => (
-                <Column key={col.field} field={col.field} header={col.header} sortable />
+            {columns.map((col, i) => (
+                <Column key={i} field={col.field} header={col.header} body={col.body} />
             ))}
         </DataTable>        
     </div>
