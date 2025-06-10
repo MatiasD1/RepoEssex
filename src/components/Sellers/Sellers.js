@@ -6,10 +6,18 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { getUserContracts, deleteContract, formatDate } from '../Shared/FirebaseContrats';
 import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
+import { Dialog } from 'primereact/dialog';
+import SignatureCanvas from 'react-signature-canvas';
+import { showSuccess } from '../Administrator/FirebaseSellers';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const Sellers = () => {
   const [contracts, setContracts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const signatureRef = useRef(null);
+  const [showFirmaDialog, setShowFirmaDialog] = useState(false)
+  const [firmaClienteTarget, setFirmaClienteTarget] = useState(null);
   const toast = useRef(null);
 
   const showError = (message) => {
@@ -59,13 +67,58 @@ const Sellers = () => {
   );
   
   
+  const firmaTemplate = (rowData) => {
+  return rowData.firmaCliente ? (
+    <p>Firmado</p>
+  ) : (
+    <Button
+      icon="pi pi-pencil"
+      severity="success"
+      rounded
+      outlined
+      tooltip="Firmar contrato"
+      onClick={() => {
+        setFirmaClienteTarget(rowData); 
+        setShowFirmaDialog(true);
+      }}
+    />
+  );
+};
+
+
+  const handleSaveSignature = async () => {
+    if (signatureRef.current.isEmpty()) {
+      showError('Por favor, proporcione una firma');
+      return;
+    }
+    const signatureData = signatureRef.current.toDataURL();
+    try {
+      const docRef = doc(db, "contracts", firmaClienteTarget.id);
+      await updateDoc(docRef, { firmaCliente: signatureData, status:"activo"});
+      setContracts((prev) =>
+        prev.map((c) =>
+          c.id === firmaClienteTarget.id ? { ...c, firmaCliente: signatureData } : c
+        )
+      );
+      setShowFirmaDialog(false);
+      showSuccess("Firma guardada correctamente");
+    } catch (error) {
+      console.error("Error guardando firma:", error);
+      showError("Error al guardar la firma");
+    }
+  };
+
+  const handleClearSignature = () => {
+    signatureRef.current.clear();
+  };
 
   const columns = [
     { field: 'titulo', header: 'Título' },
     { field: 'contenido', header: 'Contenido' },
     { field: 'createdAt', header: 'Fecha Creación' },
     { field: 'status', header: 'Estado', body: statusBodyTemplate },
-    { header: 'Eliminar', body: actionBodyTemplate }
+    { header: 'Eliminar', body: actionBodyTemplate },
+    { header: 'Firmar' , body: firmaTemplate }
   ];
 
   useEffect(() => {
@@ -132,6 +185,39 @@ const Sellers = () => {
           />
         ))}
       </DataTable>
+
+      {/*Firma del cliente*/}
+            <Dialog
+              header="Firma Digital"
+              visible={showFirmaDialog}
+              style={{ width: '80vw' }}
+              onHide={() => setShowFirmaDialog(false)}
+            >
+              <div className="signature-container">
+                <SignatureCanvas
+                  ref={signatureRef}
+                  canvasProps={{
+                    width: 500,
+                    height: 200,
+                    className: 'signature-canvas'
+                  }}
+                />
+                <div className="flex justify-content-end gap-2 mt-3">
+                  <Button
+                    label="Limpiar"
+                    icon="pi pi-trash"
+                    onClick={handleClearSignature}
+                    className="p-button-danger"
+                  />
+                  <Button
+                    label="Guardar Firma"
+                    icon="pi pi-check"
+                    onClick={handleSaveSignature}
+                    className="p-button-success"
+                  />
+                </div>
+              </div>
+            </Dialog>
     </div>
   );
 };
