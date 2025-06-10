@@ -287,8 +287,9 @@ const NewContract = () => {
                     className="w-full"
                     required
                   />
+
               </div>
-               <div className="col-12 md:col-6">
+              <div className="col-12 md:col-6">
                 <label htmlFor="email" className="block mb-2">Email del Contratante: </label>
                   <InputText
                     id="email"
@@ -301,6 +302,7 @@ const NewContract = () => {
               </div>
               
             </div>
+          
           </Fieldset>
           
 
