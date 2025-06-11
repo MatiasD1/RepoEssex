@@ -25,14 +25,13 @@ const NewContract = () => {
     contenido: '',
     monto: 0,
     incluyePenalizacion: false,
-    firma: '',
+    firmaCliente: '',
+    firmaVendedor:'',
     aceptaTerminos: false,
     provincia:'',
     localidad:'',
     codPostal:'',
-    email:'',
-    //servicioAdicional:'',
-    //equipos:''
+    email:''
   });
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
@@ -261,7 +260,7 @@ const NewContract = () => {
                   <InputText
                     id="localidad"
                     name="localidad"
-                    value={formData.nombre}
+                    value={formData.localidad}
                     onChange={handleInputChange}
                     className="w-full"
                     required
@@ -270,26 +269,27 @@ const NewContract = () => {
               <div className="col-12 md:col-6">
                 <label htmlFor='altura' className='block mb-2'>Altura: </label>
                 <InputNumber
-                  id="monto"
-                  name="monto"
+                  id="altura"
+                  name="altura"
                   value={formData.monto}
                   onValueChange={(e) => setFormData({...formData, monto: e.value})}
                   className="w-full"
                   required
                 />
               </div>
-          {/*    <div className="col-12 md:col-6">
+              <div className="col-12 md:col-6">
                 <label htmlFor="codPostal" className="block mb-2">Código Postal: </label>
                   <InputText
-                    id="codigo postal"
-                    name="codigo postal"
+                    id="codPostal"
+                    name="codPostal"
                     value={formData.codPostal}
                     onChange={handleInputChange}
                     className="w-full"
                     required
                   />
-              </div>*/}
-               <div className="col-12 md:col-6">
+
+              </div>
+              <div className="col-12 md:col-6">
                 <label htmlFor="email" className="block mb-2">Email del Contratante: </label>
                   <InputText
                     id="email"
@@ -302,6 +302,7 @@ const NewContract = () => {
               </div>
               
             </div>
+          
           </Fieldset>
           
 
@@ -322,10 +323,10 @@ const NewContract = () => {
             
             <div className="flex flex-column md:flex-row justify-content-between gap-4">
               <div className="flex flex-column align-items-center">
-                <label className="block mb-2">Firma del Cliente: </label>
-                {formData.firma ? (
+                <label className="block mb-2">Firma del Vendedor: </label>
+                {formData.firmaVendedor ? (
                   <img 
-                    src={formData.firma} 
+                    src={formData.firmaVendedor} 
                     alt="Firma" 
                     style={{ width: '200px', height: '80px', border: '1px solid #ccc' }} 
                   />
@@ -335,7 +336,7 @@ const NewContract = () => {
                   </div>
                 )}
                 <Button
-                  label={formData.firma ? "Cambiar Firma" : "Agregar Firma"}
+                  label={formData.firmaVendedor ? "Cambiar Firma" : "Agregar Firma"}
                   icon="pi pi-pencil"
                   onClick={() => setShowSignatureDialog(true)}
                   type="button"
@@ -344,9 +345,8 @@ const NewContract = () => {
               </div>
               
               <div className="flex flex-column align-items-center">
-                <label className="block mb-2">Firma del Representante</label>
-                <div style={{ width: '200px', height: '80px', borderBottom: '1px solid #000' }}></div>
-                <small className="mt-1 text-500">Nombre: {user?.displayName || 'Representante'}</small>
+                <label className="block mb-2">Firma del Cliente</label>
+                <small className="mt-1 text-500">Aclaración: {user?.displayName || 'Cliente'}</small>
               </div>
             </div>
           </Fieldset>
