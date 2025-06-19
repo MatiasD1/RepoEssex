@@ -9,6 +9,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { createUser, disableUser, getActiveUsers, showError, showSuccess } from './FirebaseSellers'
 import { Toast } from 'primereact/toast';
+import Swal from 'sweetalert2';
 
 const Administrator = () => {
   const [users, setUsers] = useState([]);
@@ -95,14 +96,14 @@ const Administrator = () => {
   }
 
 
-  const HandleBaja = async () => {
-    try {
-      await disableUser();
-      showSuccess("Usuario deshabilitado con éxito");
-    } catch (error) {
-      showError("Error al intentar deshabilitar el usuario");
-    }
+  const HandleBaja = async (id) => {
+  try {
+    await disableUser(id); 
+    showSuccess("Usuario deshabilitado con éxito");
+  } catch (error) {
+    showError("Error al intentar deshabilitar el usuario");
   }
+};
 
   if (loading) {
     return (
@@ -189,16 +190,45 @@ const Administrator = () => {
         <Column field='email' header="Email" />
         <Column field='role' header="Rol" />
         <Column field='name' header="Nombre" />
-        <Column field='deleteUser' id="administrador" body={
-          <Button
-            icon="pi pi-times"
-            rounded
-            severity="danger"
-            aria-label="Cancel"
-            id="administrador"
-            onClick={() => HandleBaja()} />
-        }
+        <Column
+          header="Dar de baja"
+          body={(rowData) => (
+            <Button
+              icon="pi pi-times"
+              className="p-button-rounded p-button-outlined border-yellow-500 text-yellow-400 hover:bg-yellow-600 hover:border-yellow-600 hover:text-black transition-all"
+              tooltip="Dar de baja"
+              tooltipOptions={{ position: 'left' }}
+              onClick={() => {
+                Swal.fire({
+                  title: '¿Estás seguro?',
+                  text: 'El usuario será deshabilitado',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Sí, deshabilitar',
+                  cancelButtonText: 'Cancelar',
+                  customClass: {
+                    popup: 'mi-popup',
+                    title: 'mi-titulo',
+                    confirmButton: 'mi-boton-confirmar',
+                    cancelButton: 'mi-boton-cancelar',
+                    icon: 'iconoSA',
+                  }
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    HandleBaja(rowData.id);
+                  }
+                });
+              }}
+            />
+          )}
+          style={{ width: '110px', whiteSpace: 'nowrap' }}
+          bodyStyle={{ textAlign: 'center'}}
         />
+
+
+
+
+
       </DataTable>
     </div>
   );

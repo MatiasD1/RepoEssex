@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { onSnapshot} from 'firebase/firestore';
+import { onSnapshot } from 'firebase/firestore';
 import { deleteUser, enableUser, getDisabledUsers, showError } from './FirebaseSellers';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
+import Swal from 'sweetalert2';
 
 const Disabled = () => {
     const [users, setUsers] = useState([]);
@@ -12,43 +13,104 @@ const Disabled = () => {
 
     useEffect(() => {
         getDisabledUsers()
-        .then(q => {
-            const unsubscribe = onSnapshot(q,(snapshot) => {
-                const usersData = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                }));
-                setUsers(usersData);
-                setLoading(false);
-            },
-            (error) => {
+            .then(q => {
+                const unsubscribe = onSnapshot(q, (snapshot) => {
+                    const usersData = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+                    setUsers(usersData);
+                    setLoading(false);
+                },
+                (error) => {
+                    showError(error);
+                    setLoading(true);
+                });
+                return () => unsubscribe();
+            })
+            .catch(error => {
                 showError(error);
-                setLoading(true);
+                setLoading(false);
             });
-            return () => unsubscribe();
-        })
-        .catch(error => {
-            showError(error);
-            setLoading(false);
-        });
     }, []);
 
+    const confirmAction = (message, callback) => {
+        Swal.fire({
+        title: '¿Eliminar usuario?',
+        text: 'Esta acción no se puede deshacer',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+        customClass: {
+            popup: 'mi-popup',
+            title: 'mi-titulo',
+            confirmButton: 'mi-boton-confirmar',
+            cancelButton: 'mi-boton-cancelar',
+            icon: 'iconoSA', 
+        }
+        });
+
+    };
+
     const actionTemplate = (rowData) => (
-        <div className="flex gap-2">
-            <Button
-                icon="pi pi-check"
-                severity='success'
-                tooltip="Habilitar usuario"
-                onClick={() => enableUser(rowData.id)}
-            />
-            <Button
-                icon="pi pi-trash"
-                severity="danger"
-                tooltip="Eliminar usuario"
-                onClick={() => deleteUser(rowData.id)}
-            />
-        </div>
-    );
+    <div className="flex justify-center gap-2">
+        <Button
+    icon="pi pi-check"
+    className="p-button-rounded p-button-outlined border-green-500 text-green-400 hover:bg-green-600 hover:border-green-600 hover:text-black transition-all"
+    tooltip="Habilitar usuario"
+    tooltipOptions={{ position: 'left' }}
+    onClick={() =>
+        Swal.fire({
+            title: '¿Habilitar usuario?',
+            text: '¿Estás seguro de habilitar este usuario?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, habilitar',
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                popup: 'mi-popup',
+                title: 'mi-titulo',
+                confirmButton: 'mi-boton-confirmar',
+                cancelButton: 'mi-boton-cancelar'
+            }
+        }).then(result => {
+            if (result.isConfirmed) {
+                enableUser(rowData.id).then(() => {
+                    setUsers(prev => prev.filter(user => user.id !== rowData.id));
+                });
+            }
+        })
+    }
+/>
+
+        <Button
+            icon="pi pi-trash"
+            className="p-button-rounded p-button-outlined border-red-500 text-red-400 hover:bg-red-600 hover:border-red-600 hover:text-black transition-all"
+            tooltip="Eliminar usuario"
+            tooltipOptions={{ position: 'left' }}
+            onClick={() =>
+                Swal.fire({
+                    title: '¿Eliminar usuario?',
+                    text: 'Esta acción no se puede deshacer',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar',
+                    customClass: {
+                        popup: 'mi-popup',
+                        title: 'mi-titulo',
+                        confirmButton: 'mi-boton-confirmar',
+                        cancelButton: 'mi-boton-cancelar'
+                    }
+                }).then(result => {
+                    if (result.isConfirmed) deleteUser(rowData.id);
+                })
+            }
+        />
+    </div>
+);
+
 
     if (loading) {
         return (
@@ -83,6 +145,6 @@ const Disabled = () => {
             )}
         </div>
     );
-}
+};
 
 export default Disabled;

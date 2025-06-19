@@ -514,4 +514,30 @@ h2 {
   margin: 0 auto !important;
 }
 
+.mi-popup {
+  background-color: rgb(17, 17, 17);
+  color: #F8A145;
+  border-radius: 12px;
+}
+
+.mi-titulo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.mi-boton-confirmar {
+  background-color: #D35100 !important;
+  color: #fff !important;
+}
+
+.mi-boton-cancelar {
+  background-color: #910513 !important;
+  color: #fff !important;
+}
+
+.swal2-icon.iconoSA {
+  color: #d97706 !important; /* por ejemplo, naranja */
+  border-color: #d97706 !important;
+}
+
 /*# sourceMappingURL=styles.css.map */

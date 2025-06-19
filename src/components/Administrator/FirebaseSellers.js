@@ -111,17 +111,13 @@ export const enableUser = async (id)=>{
     }
 }
 
-export const disableUser = async (docId) => {
-    try {
-        await updateDoc(doc(db,"users",docId),{
-            status:"disabled",
-            visible:false
-        })
-        showSuccess("Usuario deshabilitado con éxito");
-    } catch (error) {
-        showError("Error al deshabilitar el usuario");
-    }
-}
+    export const disableUser = async (userId) => {
+    const userRef = doc(db, 'users', userId);
+    await updateDoc(userRef, {
+        disabled: true,
+        visible: false
+    });
+    };
 
 export const deleteUser = async (id)=>{
     try {
