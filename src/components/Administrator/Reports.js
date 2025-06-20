@@ -119,7 +119,15 @@ const Reports = () => {
       {/* Tabla Top Vendedores */}
       <div className="card p-4 shadow">
         <h3>Top Vendedores</h3>
-        <DataTable value={stats.topVendedores} paginator rows={5}>
+        <DataTable 
+          value={stats.topVendedores} 
+          paginator 
+          rows={5}
+          rowClassName={(rowData) => {
+            const index = stats.topVendedores.findIndex(v => v.uid === rowData.uid);
+            return index % 2 === 0 ? 'fila-par' : 'fila-impar';
+          }}
+        >
           <Column field="uid" header="UID" />
           <Column field="contratos" header="Contratos Creados" sortable />
         </DataTable>

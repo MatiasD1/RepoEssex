@@ -61,18 +61,29 @@ const ContractsListAdmin = () => {
 
     return (
     <div>
+        <h2 className="text-2xl font-bold mb-4">Lista de Contratos</h2>
         <DataTable
             value={contracts}
             loading={loading}
             paginator
             rows={10}
             rowsPerPageOptions={[5, 10, 25]}
-            header="Lista de Contratos"
-            emptyMessage="No se encontraron contratos"
+            emptyMessage="No se encontraron contratos"   
+             rowClassName={(rowData) => {
+                const index = contracts.findIndex(c => c.id === rowData.id);
+                return index % 2 === 0 ? 'fila-par' : 'fila-impar';
+            }}
         >
+            
             {columns.map((col, i) => (
-                <Column key={i} field={col.field} header={col.header} body={col.body} />
+            <Column
+                key={i}
+                field={col.field}
+                header={col.header}
+                {...(col.body && { body: col.body })}
+            />
             ))}
+            
         </DataTable>        
     </div>
   )

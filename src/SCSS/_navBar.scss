@@ -1,7 +1,7 @@
 @use 'variables';
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
-     color: variables.$Secundario !important;
-     font-size: 23px;
+    color: variables.$Secundario !important;
+    font-size: 1.2rem;
     font-family: 'Open Sans', sans-serif !important;
 
 }
@@ -11,15 +11,15 @@
 }
 .p-button.p-button-text.p-button-plain {
     color: variables.$Secundario !important;
-     font-size: 20px;
+     font-size: 1.2rem;
 }
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon
  {
     color: variables.$Secundario !important;
      font-size: 20px;
 }
-.pi {
-    color: variables.$Secundario !important;
+#navbar .pi {
+    color: variables.$Secundario;
     font-size: 20px;
 }
 .navbar-custom {

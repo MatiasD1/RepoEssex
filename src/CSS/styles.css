@@ -43,7 +43,7 @@ html, body, #root {
 
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
   color: #F07900 !important;
-  font-size: 23px;
+  font-size: 1.2rem;
   font-family: "Open Sans", sans-serif !important;
 }
 
@@ -54,7 +54,7 @@ html, body, #root {
 
 .p-button.p-button-text.p-button-plain {
   color: #F07900 !important;
-  font-size: 20px;
+  font-size: 1.2rem;
 }
 
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
@@ -62,8 +62,8 @@ html, body, #root {
   font-size: 20px;
 }
 
-.pi {
-  color: #F07900 !important;
+#navbar .pi {
+  color: #F07900;
   font-size: 20px;
 }
 
@@ -323,6 +323,14 @@ h2 {
   margin-left: 10px;
 }
 
+.p-datatable .p-datatable-tbody > tr.fila-par > td {
+  background-color: rgba(17, 17, 17, 0.9) !important;
+}
+
+.p-datatable .p-datatable-tbody > tr.fila-impar > td {
+  background-color: rgba(24, 24, 24, 0.9) !important;
+}
+
 .p-datatable-thead > tr:first-child > th:first-child {
   border-top-left-radius: 12px;
 }
@@ -342,10 +350,14 @@ h2 {
 
 .p-datatable .p-datatable-tbody > tr > td {
   color: #F8A145;
-  background: black !important; /* Si saco el negro aparece un blanco que no encuentro como desactivar */
   background-color: rgba(0, 0, 0, 0.9);
   border: 1px solid #F8A145;
   font-family: "Open Sans", sans-serif !important;
+}
+
+#sellers .pi {
+  color: #F07900;
+  font-size: 20px;
 }
 
 /* Filas de la tabla con efecto hover */
@@ -514,10 +526,28 @@ h2 {
   margin: 0 auto !important;
 }
 
+.botonMas {
+  padding: 1rem;
+  border: 1px solid #F8A145;
+  border-radius: 100%;
+  background-color: #000000;
+  margin: 10px 0px;
+}
+
+#administrador .pi {
+  color: #F07900;
+  font-size: 20px;
+}
+
 .mi-popup {
   background-color: rgb(17, 17, 17);
   color: #F8A145;
   border-radius: 12px;
+}
+
+#disabled .pi {
+  color: #F07900;
+  font-size: 20px;
 }
 
 .mi-titulo {

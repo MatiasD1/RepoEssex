@@ -1,7 +1,16 @@
+@use 'variables';
 #administrador .pi { 
     display: block !important;
     margin: 0 auto !important;
 }
-
-
-
+.botonMas{
+    padding: 1rem;
+    border: 1px solid variables.$Primario;
+    border-radius: 100%;
+    background-color: variables.$Black;
+    margin: 10px 0px;
+}
+#administrador .pi {
+    color: variables.$Secundario;
+    font-size: 20px;
+}

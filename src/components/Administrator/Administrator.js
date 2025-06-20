@@ -114,15 +114,16 @@ const Administrator = () => {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Panel de Administración</h1>
+    <div className="p-4" id='administrador'>
+      <h2 className="text-2xl font-bold mb-4">Panel de Administración</h2>
       <Toast ref={toast} />
       <Button
+        className='botonMas'
         icon="pi pi-plus"
         severity="success"
         rounded
         outlined
-        toolip="Agregar Usuario"
+        tooltip="Agregar Usuario"
         onClick={() => handleUserAdd()}
       />
 
@@ -186,6 +187,10 @@ const Administrator = () => {
         rowsPerPageOptions={[5, 10, 25]}
         id="administrador"
         tableStyle={{ minWidth: '50rem' }}
+        rowClassName={(rowData) => {
+          const index = users.findIndex(u => u.id === rowData.id);
+          return index % 2 === 0 ? 'fila-par' : 'fila-impar';
+        }}
       >
         <Column field='email' header="Email" />
         <Column field='role' header="Rol" />

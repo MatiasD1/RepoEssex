@@ -116,6 +116,10 @@ const ContractsList = () => {
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} contratos"
           emptyMessage="No se encontraron contratos"
           scrollable
+          rowClassName={(rowData) => {
+            const index = contracts.findIndex(c => c.id === rowData.id);
+            return index % 2 === 0 ? 'fila-par' : 'fila-impar';
+          }}
         >
           <Column field="titulo" header="Título" sortable></Column>
           <Column header="Cliente" body={clientBodyTemplate} sortable></Column>
