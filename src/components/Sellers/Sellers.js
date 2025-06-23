@@ -159,7 +159,7 @@ const Sellers = () => {
   }
 
   return (
-    <div className="surface-ground p-6 shadow-4 border-round-lg animate__animated animate__fadeIn">
+    <div className="surface-ground p-6 shadow-4 border-round-lg animate__animated animate__fadeIn" id='sellers'>
       <Toast ref={toast} />
       <div className="flex justify-content-between align-items-center mb-4">
         <h2 className="text-xl font-medium text-700">Mis Contratos</h2>
@@ -167,13 +167,18 @@ const Sellers = () => {
     
       <DataTable
         value={contracts}
+        dataKey="id"
         paginator
         rows={10}
         rowsPerPageOptions={[5, 10, 25]}
         className="w-full animate__animated animate__fadeInUp"
         emptyMessage="No se encontraron contratos"
-        rowClassName={() => "hover:surface-hover"}
+        rowClassName={(rowData) => {
+          const index = contracts.findIndex(c => c.id === rowData.id);
+          return index % 2 === 0 ? 'fila-par' : 'fila-impar';
+        }}
       >
+
         {columns.map((col) => (
           <Column
             key={col.field || col.header}
@@ -181,7 +186,7 @@ const Sellers = () => {
             header={col.header}
             sortable
             body={col.body}
-            headerClassName="bg-gray-100 font-medium"
+            headerClassName="font-medium"
           />
         ))}
       </DataTable>

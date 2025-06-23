@@ -136,7 +136,7 @@ const Navbar = ({user}) => {
     );
 
     return (
-        <div className='navbar'>
+        <div className='navbar' id='navbar'>
             <Menubar 
                 model={items} 
                 end={endItems}

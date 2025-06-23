@@ -1,37 +1,28 @@
-import  { useEffect, useState, useRef } from 'react';
-import { InputText, Button, Toast, Editor, Dialog } from 'primereact';
+// NewContract.jsx (Simplificado)
+import { useEffect, useState, useRef } from 'react';
+import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { InputMask } from 'primereact/inputmask';
 import { InputNumber } from 'primereact/inputnumber';
-import { Fieldset } from 'primereact/fieldset';
+import { Dropdown } from 'primereact/dropdown';
 import { Checkbox } from 'primereact/checkbox';
-import { Divider } from 'primereact/divider';
+import { Editor } from 'primereact/editor';
+import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
+import { Toast } from 'primereact/toast';
 import { Card } from 'primereact/card';
-import { Dropdown } from 'primereact/dropdown'
-import { useNavigate,useLocation } from 'react-router-dom';
+import SignatureCanvas from 'react-signature-canvas';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { createContract } from './FirebaseContrats';
-import SignatureCanvas from 'react-signature-canvas';
-import { showError, showSuccess} from "../Administrator/FirebaseSellers";
+import { showError, showSuccess } from '../Administrator/FirebaseSellers';
 
 const NewContract = () => {
   const [formData, setFormData] = useState({
-    titulo: 'Contrato de Servicios',
-    nombre: '',
-    apellido: '',
-    dni: '',
-    fechaInicio: '',
-    fechaFin: '',
-    contenido: '',
-    monto: 0,
-    incluyePenalizacion: false,
-    firmaCliente: '',
-    firmaVendedor:'',
-    aceptaTerminos: false,
-    provincia:'',
-    localidad:'',
-    codPostal:'',
-    email:''
+    titulo: '', nombre: '', apellido: '', dni: '',
+    fechaInicio: '', fechaFin: '', contenido: '', monto: 0,
+    incluyePenalizacion: false, firma: '', aceptaTerminos: false,
+    provincia: '', localidad: '', codPostal: '', altura: '', email: ''
   });
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
@@ -40,364 +31,107 @@ const NewContract = () => {
   const toast = useRef(null);
   const signatureRef = useRef(null);
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
 
-  const provincias = ["Buenos Aires","Santa Fé","Santiago del Estero",
-    "Córdoba","Catamarca","La Rioja","Río Negro","San Luis","San Juan",
-    "Mendoza","Neuquén","Santa Cruz","Chubut","Chaco","Misiones","Corrientes",
-    "Salta","Jujuy","Tierra del Fuego","Tucumán","Formosa","Entre Ríos","La Pampa"]
+  const provincias = ["Buenos Aires", "Santa Fé", "Córdoba", "Mendoza", "Salta"];
 
   useEffect(() => {
-    if (location.state?.user) {
-      setUser(location.state.user);
-    } 
-    else {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        setUser(currentUser);
-      }
-    }
+    const currentUser = location.state?.user || auth.currentUser;
+    if (currentUser) setUser(currentUser);
   }, [location.state]);
 
-  const handleSaveSignature = () => {
-    if (signatureRef.current.isEmpty()) {
-      showError('Por favor, proporcione una firma');
-      return;
-    }
-    const signatureData = signatureRef.current.toDataURL();
-    setFormData({...formData, firma: signatureData});
-    setShowSignatureDialog(false);
-    showSuccess('Firma guardada correctamente');
-  };
-
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: name === 'incluyePenalizacion' || name === 'aceptaTerminos' ? checked : value
-    }));
+    setFormData(prev => ({ ...prev, [name]: name.includes('Penalizacion') || name.includes('Terminos') ? checked : value }));
   };
 
-  const handleClearSignature = () => {
-    signatureRef.current.clear();
+  const handleSaveSignature = () => {
+    if (signatureRef.current.isEmpty()) return showError('Proporcione una firma');
+    setFormData({ ...formData, firma: signatureRef.current.toDataURL() });
+    setShowSignatureDialog(false);
+    showSuccess('Firma guardada');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!user) {
-      showError("Debes iniciar sesión para crear contratos");
-      return;
-    }
-    if (!formData.firma) {
-      showError("Por favor, agregue una firma al contrato");
-      return;
-    }
+    if (!user) return showError("Debes iniciar sesión");
+    if (!formData.firma) return showError("Agregue una firma");
+
     setLoading(true);
     try {
-      const contractId = await createContract({
-        ...formData, 
-      });
-      showSuccess(`Contrato creado con ID: ${contractId}`);
+      const id = await createContract({ ...formData });
+      showSuccess(`Contrato creado (ID: ${id})`);
       navigate('/sellers');
     } catch (error) {
-      showError(`Error al crear contrato: ${error.message}`);
-      console.error("Detalles del error:", error);
+      showError(error.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="p-4">
+    <div className="form-container">
       <Toast ref={toast} />
-      <Card title="Generador de Contratos" className="shadow-2">
-        <form onSubmit={handleSubmit}>
-          {/* Sección de Título */}
-          <div className="field mb-4">
-            <label htmlFor="titulo" className="block font-bold mb-2">Título del Contrato: </label>
-            <InputText
-              id="titulo"
-              name="titulo"
-              value={formData.titulo}
-              onChange={handleInputChange}
-              className="w-full"
-              required
-            />
+      <h2>Generador de Contratos</h2>
+      <Card>
+        <form onSubmit={handleSubmit} className="contract-form">
+          <div className="primeraParteContrato">
+            <InputText name="titulo" value={formData.titulo} onChange={handleChange} placeholder="Título del Contrato" required />
+            <InputNumber name="monto" value={formData.monto} onValueChange={(e) => setFormData({ ...formData, monto: e.value })} mode="currency" currency="USD" placeholder="Monto Mensual" required />
+
+            <InputText name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" required />
+            <InputText name="apellido" value={formData.apellido} onChange={handleChange} placeholder="Apellido" required />
+
+            <InputMask name="dni" value={formData.dni} onChange={handleChange} mask="99999999" placeholder="DNI" required />
+            <InputText name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
+
+            <Calendar name="fechaInicio" value={formData.fechaInicio} onChange={handleChange} placeholder="Fecha de Inicio" showIcon required />
+            <Calendar name="fechaFin" value={formData.fechaFin} onChange={handleChange} placeholder="Fecha de Fin" showIcon required />
           </div>
 
-          {/* Sección de Partes Contratantes */}
-          <Fieldset legend="Partes Contratantes" className="mb-4">
-            <div className="grid">
-              <div className="col-12 md:col-4">
-                <label htmlFor="nombre" className="block mb-2">Nombre: </label>
-                <InputText
-                  id="nombre"
-                  name="nombre"
-                  value={formData.nombre}
-                  onChange={handleInputChange}
-                  className="w-full"
-                  required
-                />
-              </div>
-              <div className="col-12 md:col-4">
-                <label htmlFor="apellido" className="block mb-2">Apellido: </label>
-                <InputText
-                  id="apellido"
-                  name="apellido"
-                  value={formData.apellido}
-                  onChange={handleInputChange}
-                  className="w-full"
-                  required
-                />
-              </div>
-              <div className="col-12 md:col-4">
-                <label htmlFor="dni" className="block mb-2">DNI: </label>
-                <InputMask
-                  id="dni"
-                  name="dni"
-                  value={formData.dni}
-                  onChange={handleInputChange}
-                  mask="99999999"
-                  placeholder="12345678"
-                  className="w-full"
-                  required
-                />
-              </div>
-            </div>
-          </Fieldset>
+          <div className='checkboxPenalizacion'>
+            <div className="campoCheckbox">
+              <span>Incluir penalización</span>
+              <Checkbox name="incluyePenalizacion" checked={formData.incluyePenalizacion} onChange={handleChange} />
+            </div>          
+          </div>
+          <Editor value={formData.contenido} onTextChange={(e) => setFormData({ ...formData, contenido: e.htmlValue })} style={{ height: '200px' }} />
+          <Dropdown value={selectedPro} options={provincias} onChange={(e) => setSelectedPro(e.value)} placeholder="Provincia" required />
+          <InputText name="localidad" value={formData.localidad} onChange={handleChange} placeholder="Localidad" required />
+          <InputText name="codPostal" value={formData.codPostal} onChange={handleChange} placeholder="Código Postal" required />
+          <InputNumber name="altura" value={formData.altura} onValueChange={(e) => setFormData({ ...formData, altura: e.value })} placeholder="Altura" required />
+          <InputText name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
 
-          <Divider />
+          <div className="campoCheckbox">
+            <span>Acepto los términos</span>
+            <Checkbox name="aceptaTerminos" checked={formData.aceptaTerminos} onChange={handleChange} required />
+          </div>
 
-          {/* Sección de Fechas */}
-          <Fieldset legend="Datos del Contrato" className="mb-4">
-            <div className="grid">
-              <div className="col-12 md:col-6">
-                <label htmlFor="fechaInicio" className="block mb-2">Fecha de Inicio: </label>
-                <Calendar
-                  id="fechaInicio"
-                  name="fechaInicio"
-                  value={formData.fechaInicio}
-                  onChange={handleInputChange}
-                  dateFormat="dd/mm/yy"
-                  className="w-full"
-                  showIcon
-                  required
-                />
-              </div>
-              <div className="col-12 md:col-6">
-                <label htmlFor="fechaFin" className="block mb-2">Fecha de Fin: </label>
-                <Calendar
-                  id="fechaFin"
-                  name="fechaFin"
-                  value={formData.fechaFin}
-                  onChange={handleInputChange}
-                  dateFormat="dd/mm/yy"
-                  className="w-full"
-                  showIcon
-                  required
-                />
-              </div>
-            </div>
-          </Fieldset>
+          <div className="firma-box">
+            <label>Firma del Vendedor:</label>
+            {formData.firma ? (
+              <img src={formData.firma} alt="Firma" className="firma-imagen" />
+            ) : (
+              <div className="firma-imagen">Sin firma</div>
+            )}
+            <Button label="Firmar" icon="pi pi-pencil" onClick={() => setShowSignatureDialog(true)} type="button" className="mt-2" />
+          </div>
 
-          <Divider />
-
-          {/* Sección de Cláusulas */}
-          <Fieldset legend="Cláusulas" className="mb-4">
-            <div className="field">
-              <label htmlFor="monto" className="block mb-2">Monto Mensual (USD): </label>
-              <InputNumber
-                id="monto"
-                name="monto"
-                value={formData.monto}
-                onValueChange={(e) => setFormData({...formData, monto: e.value})}
-                mode="currency"
-                currency="USD"
-                locale="en-US"
-                className="w-full"
-                required
-              />
-            </div>
-            
-            <div className="field-checkbox mt-3">
-              <Checkbox
-                inputId="incluyePenalizacion"
-                name="incluyePenalizacion"
-                checked={formData.incluyePenalizacion}
-                onChange={handleInputChange}
-              />
-              <label htmlFor="incluyePenalizacion" className="ml-2">Incluir penalización por mora: </label>
-            </div>
-            
-            <div className="field mt-4">
-              <label htmlFor="contenido" className="block mb-2">Contenido Adicional: </label>
-              <Editor
-                id="contenido"
-                name="contenido"
-                value={formData.contenido}
-                onTextChange={(e) => setFormData({...formData, contenido: e.htmlValue})}
-                style={{ height: '200px' }}
-                required
-              />
-            </div>
-          </Fieldset>
-
-          <Divider />
-          {/*Sección de datos de ubicación*/}
-          <Fieldset legend="Ubicación" className='mb.4'>
-            <div className='grid'>
-              <div className="col-12 md:col-6">
-                <label>Provincia *</label>
-                <Dropdown 
-                  value={selectedPro} 
-                  options={provincias} 
-                  onChange={(e)=>setSelectedPro(e.value)}
-                  placeholder='Seleccioná una provincia'
-                />
-              </div>
-              <div className="col-12 md:col-6">
-                <label htmlFor="localidad" className="block mb-2">Localidad: </label>
-                  <InputText
-                    id="localidad"
-                    name="localidad"
-                    value={formData.localidad}
-                    onChange={handleInputChange}
-                    className="w-full"
-                    required
-                  />
-              </div>
-              <div className="col-12 md:col-6">
-                <label htmlFor='altura' className='block mb-2'>Altura: </label>
-                <InputNumber
-                  id="altura"
-                  name="altura"
-                  value={formData.monto}
-                  onValueChange={(e) => setFormData({...formData, monto: e.value})}
-                  className="w-full"
-                  required
-                />
-              </div>
-              <div className="col-12 md:col-6">
-                <label htmlFor="codPostal" className="block mb-2">Código Postal: </label>
-                  <InputText
-                    id="codPostal"
-                    name="codPostal"
-                    value={formData.codPostal}
-                    onChange={handleInputChange}
-                    className="w-full"
-                    required
-                  />
-              </div>
-               <div className="col-12 md:col-6">
-                <label htmlFor="email" className="block mb-2">Email del Contratante: </label>
-                  <InputText
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full"
-                    required
-                  />
-              </div>
-              
-            </div>
-          </Fieldset>
-          
-
-          <Divider />
-
-          {/* Sección de Términos y Firmas */}
-          <Fieldset legend="Términos y Firmas" className="mb-4">
-            <div className="field-checkbox mb-4">
-              <Checkbox
-                inputId="aceptaTerminos"
-                name="aceptaTerminos"
-                checked={formData.aceptaTerminos}
-                onChange={handleInputChange}
-                required
-              />
-              <label htmlFor="aceptaTerminos" className="ml-2">Ambas partes aceptan los términos y condiciones: </label>
-            </div>
-            
-            <div className="flex flex-column md:flex-row justify-content-between gap-4">
-              <div className="flex flex-column align-items-center">
-                <label className="block mb-2">Firma del Vendedor: </label>
-                {formData.firmaVendedor ? (
-                  <img 
-                    src={formData.firmaVendedor} 
-                    alt="Firma" 
-                    style={{ width: '200px', height: '80px', border: '1px solid #ccc' }} 
-                  />
-                ) : (
-                  <div style={{ width: '200px', height: '80px', border: '1px dashed #ccc' }} className="flex align-items-center justify-content-center">
-                    <span>Sin firma</span>
-                  </div>
-                )}
-                <Button
-                  label={formData.firmaVendedor ? "Cambiar Firma" : "Agregar Firma"}
-                  icon="pi pi-pencil"
-                  onClick={() => setShowSignatureDialog(true)}
-                  type="button"
-                  className="mt-2"
-                />
-              </div>
-              
-              <div className="flex flex-column align-items-center">
-                <label className="block mb-2">Firma del Cliente</label>
-                <small className="mt-1 text-500">Aclaración: {user?.displayName || 'Cliente'}</small>
-              </div>
-            </div>
-          </Fieldset>
-
-          {/* Botones de Acción */}
-          <div className="flex justify-content-end gap-2 mt-4">
-            <Button 
-              label="Cancelar" 
-              className="p-button-secondary" 
-              onClick={() => navigate('/sellers')}
-              disabled={loading}
-            />
-            <Button 
-              label={loading ? 'Guardando...' : 'Guardar Contrato'} 
-              type="submit" 
-              icon="pi pi-save"
-              loading={loading}
-              disabled={!formData.aceptaTerminos || !formData.firma}
-            />
+          <div className="botones">
+            <Button label="Cancelar" className="p-button-secondary" onClick={() => navigate('/sellers')} disabled={loading} />
+            <Button label={loading ? 'Guardando...' : 'Guardar Contrato'} type="submit" loading={loading} disabled={!formData.aceptaTerminos || !formData.firma} />
           </div>
         </form>
       </Card>
 
-      {/* Diálogo para firma digital*/}
-      <Dialog
-        header="Firma Digital"
-        visible={showSignatureDialog}
-        style={{ width: '80vw' }}
-        onHide={() => setShowSignatureDialog(false)}
-      >
-        <div className="signature-container">
-          <SignatureCanvas
-            ref={signatureRef}
-            canvasProps={{
-              width: 500,
-              height: 200,
-              className: 'signature-canvas'
-            }}
-          />
-          <div className="flex justify-content-end gap-2 mt-3">
-            <Button
-              label="Limpiar"
-              icon="pi pi-trash"
-              onClick={handleClearSignature}
-              className="p-button-danger"
-            />
-            <Button
-              label="Guardar Firma"
-              icon="pi pi-check"
-              onClick={handleSaveSignature}
-              className="p-button-success"
-            />
-          </div>
+      <Dialog header="Firma Digital" visible={showSignatureDialog} style={{ width: '80vw' }} onHide={() => setShowSignatureDialog(false)}>
+        <SignatureCanvas
+          ref={signatureRef}
+          canvasProps={{ width: 500, height: 200, className: 'signature-canvas' }}
+        />
+        <div className="firma-acciones">
+          <Button label="Limpiar" icon="pi pi-trash" onClick={() => signatureRef.current.clear()} className="p-button-danger" />
+          <Button label="Guardar Firma" icon="pi pi-check" onClick={handleSaveSignature} className="p-button-success" />
         </div>
       </Dialog>
     </div>
@@ -405,4 +139,3 @@ const NewContract = () => {
 };
 
 export default NewContract;
-

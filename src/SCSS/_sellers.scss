@@ -23,18 +23,6 @@
 .p-card-title{
   color: variables.$Secundario;
 }
-h2 {
-  margin-left: 20px;
-  font-size: 2rem; /* Tamaño destacado */
-  font-weight: 400; /* Negrita */
-  color: variables.$Secundario; /* Azul profundo */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Sombra más suave */
-  letter-spacing: 0.5px; /* Espaciado de letras */
-  margin-bottom: 1rem;
-  border-left: 5px solid variables.$Secundario; /* Barra decorativa a la izquierda */
-  padding-left: 15px;
-  font-family: 'Open Sans', sans-serif !important;
-}
 
 /* Subtítulo "Mis Contratos" */
 .sellers-subtitle {
@@ -108,7 +96,13 @@ h2 {
   }
 }
 
+.p-datatable .p-datatable-tbody > tr.fila-par > td { // COLORES DE LAS FILAS PARES
+  background-color: rgb(17, 17, 17, 0.9) !important;
+}
 
+.p-datatable .p-datatable-tbody > tr.fila-impar > td { // COLORES DE LAS FILAS IMPARES
+  background-color: rgb(24, 24, 24, 0.9) !important;
+}
 // Esquinas redondeadas superiores (encabezado)
 .p-datatable-thead > tr:first-child > th:first-child {
   border-top-left-radius: 12px;
@@ -127,12 +121,14 @@ h2 {
 }
 .p-datatable .p-datatable-tbody > tr > td {
     color: variables.$Primario;
-    background: black !important;/* Si saco el negro aparece un blanco que no encuentro como desactivar */
     background-color:rgba(variables.$Black, 0.9);
     border: 1px solid variables.$Primario;
     font-family: 'Open Sans', sans-serif !important;
 }
-
+#sellers .pi {
+    color: variables.$Secundario;
+    font-size: 20px;
+}
 /* Filas de la tabla con efecto hover */
 .p-datatable-tbody > tr:hover {
   background-color: rgba(variables.$Zero, 0.95) !important; /* azul muy claro */

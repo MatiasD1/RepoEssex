@@ -1,0 +1,46 @@
+@use 'variables';
+
+
+.acciones-contrato {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 0.5rem;
+  width: 100%;
+
+  .btn-accion {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+
+    &.btn-ver {
+      background-color: variables.$Primario;
+
+      &:hover {
+        background-color: darken(variables.$Primario, 10%);
+      }
+    }
+
+    &.btn-descargar {
+      background-color: variables.$Secundario;
+
+      &:hover {
+        background-color: darken(variables.$Secundario, 10%);
+      }
+    }
+
+    &.btn-pdf {
+      background-color: variables.$Terciario;
+
+      &:hover {
+        background-color: darken(variables.$Terciario, 10%);
+      }
+    }
+  }
+}

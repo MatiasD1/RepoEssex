@@ -31,13 +31,13 @@ const Profile = () => {
 
   if (loading) {
         return (
-            <div className="flex align-items-center justify-content-center min-h-screen bg-gray-100">
+            <div className="flex align-items-center justify-content-center min-h-screen">
                 <ProgressSpinner />
             </div>
         );
     }  
   return (
-        <div className="flex align-items-center justify-content-center min-h-screen bg-gray-100">
+        <div className="flex align-items-center justify-content-center min-h-screen">
             <Toast ref={toast} position='top-right'/>
             <Card 
                 title="Información de Usuario" 
