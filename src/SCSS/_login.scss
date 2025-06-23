@@ -14,10 +14,13 @@
   margin: 0 auto !important;
   background-color: rgba(variables.$Black, 0.7) !important;
   padding: 2rem !important;
+  border: 1px solid variables.$Primario;
+  box-shadow: 0 0 12px rgba(variables.$Secundario, 0.5); // sombra con el color deseado
 
   .p-card-title {
     color: variables.$Secundario !important;
     margin-bottom: 1.5rem;
+    text-align: center;
   }
 
   .p-card-content {
@@ -28,7 +31,6 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-
     .p-field {
       label {
         display: block;

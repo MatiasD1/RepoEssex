@@ -1,120 +1,369 @@
 @use 'variables';
 
-  .p-card {
-    border-radius: 10px;
-    color: variables.$Primario;
-    font-family: 'Open Sans', sans-serif;
-  }
-
-  .p-card-title {
-    font-size: 1.75rem;
-    color: variables.$Secundario;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-
-  .field label,
-  .p-field label {
-    color: variables.$Primario;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-.p-divider-solid.p-divider-horizontal:before {
-    display: none;
+// === Tarjetas y títulos ===
+.p-card {
+  border-radius: 10px;
+  color: variables.$Primario;
+  font-family: 'Open Sans', sans-serif;
+  background-color: rgba(variables.$Black, 0.5);
 }
-.p-paginator .p-dropdown .p-dropdown-label {
-    padding-right: 0.8rem; /* Centra el numerito de la paginación */
-    font-family: 'Open Sans', sans-serif !important;
+
+.p-card-title {
+  font-size: 1.75rem;
+  color: variables.$Secundario;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
-  .p-inputtext,
-  .p-inputnumber,
-  .p-dropdown,
-  .p-calendar,
-  .p-checkbox {
-    background-color: rgba(variables.$Zero, 0.1);
-    border: 1px solid variables.$Primario;
-    color: variables.$Primario;
-    border-radius: 5px;
+
+// === Inputs generales ===
+// === Inputs generales corregidos ===
+
+// Textos y máscaras
+.primeraParteContrato {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // 2 columnas
+  gap: 1.5rem;
+
+  > * {
+    width: 100%;
   }
 
-  .p-inputtext:focus,
-  .p-inputnumber:focus,
-  .p-dropdown:focus,
-  .p-calendar:focus {
+  // Los que deben ocupar toda la fila
+  .col-2 {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+
+    .col-2 {
+      grid-column: span 1;
+    }
+  }
+}
+.campoCheckbox {
+  display: flex;
+  flex-direction: row; // checkbox a la derecha
+  align-items: center;
+  gap: 0.5rem; // espacio entre texto y checkbox
+  font-size: 1rem;
+}
+.p-inputtext,
+.p-inputmask input {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(variables.$Primario, 0.6);
+  color: variables.$Primario;
+  border-radius: 5px;
+  padding: 0.75rem;
+  width: 100%;
+}
+
+// Calendario
+.p-calendar input {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(variables.$Primario, 0.6);
+  color: variables.$Primario;
+  border-radius: 5px;
+  padding: 0.75rem;
+  width: 100%;
+}
+
+// InputNumber
+.p-inputnumber input {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(variables.$Primario, 0.6);
+  color: variables.$Primario;
+  border-radius: 5px;
+  padding: 0.75rem;
+  width: 100%;
+}
+
+// Dropdown
+// === Dropdown ===
+// === Dropdown ===
+.p-dropdown {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(variables.$Primario, 0.6);
+  border-radius: 5px;
+  color: variables.$Primario;
+  min-height: 3rem;
+
+  .p-dropdown-label {
+    background-color: transparent;
+    color: variables.$Primario;
+    padding: 0.75rem;
+  }
+
+  .p-dropdown-trigger {
+    color: variables.$Primario;
+  }
+
+  &.p-focus {
     border-color: variables.$Secundario;
     box-shadow: 0 0 0 1px variables.$Secundario;
   }
+}
 
-  .p-fieldset {
-    border: 1px solid variables.$Primario;
-    background-color: rgba(variables.$Black, 0.6);
-    color: variables.$Primario;
-    border-radius: 8px;
-    margin-bottom: 1rem;
+.p-dropdown-label.p-placeholder {
+  color: rgba(variables.$Primario, 0.6);
+}
 
-    .p-fieldset-legend {
-      background-color: variables.$Terciario;
-      color: black;
-      font-weight: bold;
-      padding: 0.5rem 1rem;
+
+// Placeholders (cuando el dropdown está vacío)
+.p-dropdown-label.p-placeholder {
+  color: rgba(variables.$Primario, 0.6);
+}
+
+.p-dropdown .p-dropdown-label {
+  border: 1px solid rgba(variables.$Primario, 0.6);
+  color: variables.$Primario;
+  border-radius: 5px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+// === Dropdown Panel Desplegable ===
+.p-dropdown-panel {
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(variables.$Primario, 0.6);
+  border-radius: 5px;
+  color: variables.$Primario;
+
+  .p-dropdown-items {
+    padding: 0;
+
+    .p-dropdown-item {
+      padding: 0.75rem 1rem;
+      color: variables.$Primario;
+      background-color: transparent;
+      border-bottom: 1px solid rgba(variables.$Primario, 0.1);
+
+      &:hover {
+        background-color: rgba(variables.$Primario, 0.1);
+      }
+
+      &.p-highlight {
+        background-color: rgba(variables.$Primario, 0.2);
+        color: variables.$Secundario;
+      }
     }
   }
+}
 
-  .p-editor-container {
-    background-color: rgba(variables.$Zero, 0.05);
-    border: 1px solid variables.$Primario;
-    border-radius: 5px;
-    color: variables.$Primario;
+// Placeholders
+.p-inputtext::placeholder,
+.p-dropdown-label {
+  color: rgba(variables.$Primario, 0.6);
+}
+
+
+.p-inputtext::placeholder,
+.p-dropdown-label {
+  color: rgba(variables.$Primario, 0.6);
+}
+
+.p-inputtext:focus,
+.p-inputnumber:focus,
+.p-dropdown:focus,
+.p-calendar:focus {
+  border-color: variables.$Secundario;
+  box-shadow: 0 0 0 1px variables.$Secundario;
+}
+
+// === Etiquetas de campos ===
+.field label,
+.p-field label {
+  color: variables.$Primario;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+// === Fieldset ===
+.p-fieldset {
+  border: 1px solid variables.$Primario;
+  background-color: rgba(variables.$Black, 0.6);
+  color: variables.$Primario;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  padding: 1.25rem;
+
+  .p-fieldset-legend {
+    background-color: variables.$Terciario;
+    color: black;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
   }
 
-  .signature-canvas {
-    border: 2px dashed variables.$Primario;
-    border-radius: 8px;
-    background-color: rgba(variables.$Zero, 0.05);
+  .p-fieldset-content {
+    margin-top: 1rem;
+  }
+}
+
+// === Editor ===
+.p-editor-container {
+  background-color: rgba(variables.$Zero, 0.05);
+  border: 1px solid variables.$Primario;
+  border-radius: 5px;
+  color: variables.$Primario;
+
+  .p-editor-content {
+    min-height: 200px;
+  }
+}
+
+// === Firma ===
+.signature-canvas {
+  border: 2px dashed variables.$Primario;
+  border-radius: 8px;
+  background-color: rgba(variables.$Zero, 0.05);
+}
+
+// === Diálogo de firma ===
+.p-dialog {
+  background-color: rgba(variables.$Black, 0.95);
+  border: 1px solid variables.$Primario;
+
+  .p-dialog-header {
+    background-color: variables.$Terciario;
+    color: black;
+  }
+}
+
+// === Botones ===
+.p-button {
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: darken(variables.$Secundario, 10%);
   }
 
-  .p-dialog {
-    background-color: rgba(variables.$Black, 0.95);
-    border: 1px solid variables.$Primario;
-
-    .p-dialog-header {
-      background-color: variables.$Terciario;
-      color: black;
-    }
-  }
-
-  .p-button {
+  &.p-button-secondary {
+    background-color: variables.$Primario;
     color: white;
-    border: none;
-    border-radius: 5px;
+  }
 
-    &:hover {
-      background-color: darken(variables.$Secundario, 10%);
+  &.p-button-danger {
+    background-color: #7f1d1d;
+  }
+}
+
+// === Divisor ===
+.p-divider {
+  border-color: variables.$Primario;
+  margin: 1.5rem 0;
+
+  &-solid.p-divider-horizontal:before {
+    display: none;
+  }
+}
+
+// === Paginador ===
+.p-paginator .p-dropdown .p-dropdown-label {
+  padding-right: 0.8rem;
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+// === Etiquetas de checkbox ===
+.checkbox-label {
+  color: variables.$Primario;
+  font-weight: 500;
+}
+
+// === Área de envío ===
+.submit-section {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+// === Formulario general ===
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .field,
+  .p-field {
+    margin-bottom: 1.5rem;
+
+    label {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .col-12 {
+      width: 100%;
     }
 
-    &.p-button-secondary {
-      background-color: variables.$Primario;
-      color: white;
+    @media (min-width: 768px) {
+      .md\:col-4 {
+        width: calc(33.333% - 1rem);
+      }
+
+      .md\:col-6 {
+        width: calc(50% - 1rem);
+      }
     }
 
-    &.p-button-danger {
-      background-color: #7f1d1d;
+    .col-12,
+    .md\:col-6 {
+      display: flex;
+      flex-direction: column;
     }
   }
 
-  .p-divider {
-    border-color: variables.$Primario;
-    margin: 1.5rem 0;
-  }
+  // === Firma adaptativa ===
+  .firma-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 
-  .checkbox-label {
-    color: variables.$Primario;
-    font-weight: 500;
-  }
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
 
-  .submit-section {
-    text-align: center;
-    margin-top: 2rem;
-  }
+    .firma-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
 
+      img,
+      .firma-placeholder {
+        width: 200px;
+        height: 80px;
+        border-radius: 4px;
+        border: 1px dashed rgba(variables.$Primario, 0.5);
+        background-color: rgba(255, 255, 255, 0.04);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: variables.$Primario;
+        font-size: 0.9rem;
+      }
+
+      button {
+        margin-top: 0.5rem;
+      }
+
+      small {
+        margin-top: 0.25rem;
+        font-size: 0.8rem;
+        color: #bbb;
+      }
+    }
+  }
+}

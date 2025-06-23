@@ -63,29 +63,30 @@ const ContractsList = () => {
   };
 
   const actionBodyTemplate = (rowData) => {
-    return (
-      <div className="flex gap-2">
-        <Button 
-          icon="pi pi-eye" 
-          className="p-button-rounded p-button-info"
-          onClick={() => {
-            setSelectedContract(rowData);
-            setShowDetailDialog(true);
-          }}
-        />
-        <Button 
-          icon="pi pi-download" 
-          className="p-button-rounded p-button-success"
-          onClick={() => handleDownloadPDF(rowData)}
-        />
-        <Button 
-          icon="pi pi-file-pdf" 
-          className="p-button-rounded p-button-help"
-          onClick={() => handlePreviewPDF(rowData)}
-        />
-      </div>
-    );
-  };
+  return (
+    <div className="acciones-contrato">
+      <Button
+        icon="pi pi-eye"
+        className="btn-accion btn-ver"
+        onClick={() => {
+          setSelectedContract(rowData);
+          setShowDetailDialog(true);
+        }}
+      />
+      <Button
+        icon="pi pi-download"
+        className="btn-accion btn-descargar"
+        onClick={() => handleDownloadPDF(rowData)}
+      />
+      <Button
+        icon="pi pi-file-pdf"
+        className="btn-accion btn-pdf"
+        onClick={() => handlePreviewPDF(rowData)}
+      />
+    </div>
+  );
+};
+
 
   const dateBodyTemplate = (rowData) => {
     return formatDate(rowData.fechaInicio);

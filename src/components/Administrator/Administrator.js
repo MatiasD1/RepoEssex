@@ -194,7 +194,10 @@ const Administrator = () => {
       >
         <Column field='email' header="Email" />
         <Column field='role' header="Rol" />
-        <Column field='name' header="Nombre" />
+        <Column
+          header="Nombre"
+          body={(rowData) => `${rowData.name} ${rowData.apellido || ''}`}
+        />
         <Column
           header="Dar de baja"
           body={(rowData) => (

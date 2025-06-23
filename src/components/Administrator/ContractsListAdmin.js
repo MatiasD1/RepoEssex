@@ -17,7 +17,10 @@ const ContractsListAdmin = () => {
             body: (rowData) => `${rowData.nombre} ${rowData.apellido}`
         },
         {field: 'titulo', header: 'Título'},
-        {field: 'contenido', header: 'Contenido'},
+        {
+            header: 'Contenido',
+            body: (rowData) => rowData.contenido?.replace(/<[^>]+>/g, '') || ''
+        },
         {field: 'createdAt', header: 'Fecha Creación'},
         {field: 'status', header: 'Estado'}
     ];

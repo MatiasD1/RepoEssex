@@ -15,7 +15,9 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [error, setError] = useState('');
-  const [name, setName] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
+
 
   const roles = [
     { label: 'Vendedor', value: 'sellers' },
@@ -32,7 +34,8 @@ const Register = () => {
         await setDoc(doc(db, "users", user.uid), {
           email: email,
           role: role,
-          name: name,
+          nombre: nombre,
+          apellido: apellido,
           status:"active",
           visible:true
         });
@@ -40,7 +43,8 @@ const Register = () => {
         await setDoc(doc(db,"users",user.uid),{
           email: email,
           role: role,
-          name: name,
+          nombre: nombre,
+          apellido: apellido,
           visible:true
         });
       }
@@ -59,75 +63,78 @@ const Register = () => {
   );
 
   return (
-    <div className="h-screen flex align-items-center justify-content-center p-4" style={{ minHeight: '80vh', padding: '5rem' }}>
-      <Card title="Registro" footer={footer} className="w-25rem" style={{ width: '400px',margin: '0 auto' }}>
+    <div className="register-wrapper">
+      <Card title="Registro" footer={footer} className="register-card">
         <form onSubmit={handleRegister}>
           <div className="p-field">
-            <label htmlFor="email" className="p-d-block">Correo Electrónico</label>
+            <label htmlFor="email">Correo Electrónico</label>
             <InputText
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="p-mb-3 p-d-block"
-              style={{ width: '100%' }}
               placeholder="tu@email.com"
               required
             />
           </div>
-          
+
           <div className="p-field">
-            <label htmlFor="password" className="p-d-block">Contraseña</label>
+            <label htmlFor="password">Contraseña</label>
             <Password
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               toggleMask
-              className="p-mb-3 p-d-block"
-              style={{ width: '100%' }}
               placeholder="Crea una contraseña"
               required
             />
           </div>
 
           <div className="p-field">
-            <label htmlFor="role" className="p-d-block">Rol</label>
+            <label htmlFor="role">Rol</label>
             <Dropdown
               id="role"
               value={role}
               options={roles}
               onChange={(e) => setRole(e.value)}
-              className="p-mb-3 p-d-block"
-              style={{ width: '100%' }}
             />
           </div>
 
           <div className="p-field">
-            <label htmlFor="Nombre de Usuario" className="p-d-block">Nombre de Usuario</label>
+            <label htmlFor="nombre">Nombre</label>
             <InputText
-              id="name"
-              type="name"
-              value={name}
-              onChange={(e)=>setName(e.value)}
-              className="p-mb-3 p-d-block"
-              style={{ width: '100%' }}
+              id="nombre"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+              placeholder="Tu nombre"
               required
             />
           </div>
 
-          {error && <Message severity="error" text={error} className="p-mb-3" />}
+          <div className="p-field">
+            <label htmlFor="apellido">Apellido</label>
+            <InputText
+              id="apellido"
+              value={apellido}
+              onChange={(e) => setApellido(e.target.value)}
+              placeholder="Tu apellido"
+              required
+            />
+          </div>
+
+          {error && <Message severity="error" text={error} />}
 
           <Button 
             label="Registrarse" 
             type="submit" 
             icon="pi pi-user-plus" 
-            className="p-button-raised p-button-success p-d-block"
-            style={{ width: '100%' }}
+            className="p-button-raised p-button-success"
           />
         </form>
       </Card>
     </div>
   );
+
 };
 
 export default Register;
