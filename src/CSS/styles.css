@@ -23,7 +23,7 @@ h2 {
   color: #F07900; /* Azul profundo */
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Sombra más suave */
   letter-spacing: 0.5px; /* Espaciado de letras */
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   border-left: 5px solid #F07900; /* Barra decorativa a la izquierda */
   padding-left: 15px;
   font-family: "Open Sans", sans-serif !important;
@@ -59,6 +59,11 @@ h2 {
   font-family: "Open Sans", sans-serif !important;
 }
 
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
+  color: #F07900 !important;
+  font-size: 20px;
+}
+
 .p-button .p-button-label {
   transition-duration: 0.2s;
   font-family: "Open Sans", sans-serif !important;
@@ -67,11 +72,14 @@ h2 {
 .p-button.p-button-text.p-button-plain {
   color: #F07900 !important;
   font-size: 1.2rem;
+  transition: all 0.3s ease;
 }
 
-.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
-  color: #F07900 !important;
-  font-size: 20px;
+.p-button.p-button-text.p-button-plain:hover {
+  color: var !important;
+  font-size: 1.2rem;
+  background-color: black;
+  text-shadow: 0 0 4px #ffc180;
 }
 
 #navbar .pi {
@@ -105,13 +113,50 @@ h2 {
   transition: all 0.3s ease;
 }
 
-.navbar-custom .p-menuitem-link:hover {
-  background-color: white;
-}
-
 .navbar-custom .p-submenu-list {
   border: 1px solid #D35100;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content {
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.p-menubar-root-list > .p-menuitem > .p-menuitem-content > .p-menuitem-link:hover {
+  color: #fff !important;
+  text-shadow: 0 0 4px #ffc180;
+}
+
+.p-menuitem-link {
+  background-color: black !important;
+}
+
+/*
+.p-menuitem-link:hover{
+    background-color: green !important; // color de fondo de los botones del navbar al hacer hover
+
+}*/
+.p-submenu-list {
+  background-color: black !important;
+  border-radius: 0px;
+  padding: 0;
+  min-width: 250px;
+}
+
+.p-submenu-list .p-menuitem-link:hover {
+  background-color: #222 !important;
+}
+
+.navbar-custom .p-menuitem-link {
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  border-radius: 0px;
+}
+
+.p-menuitem-text {
+  color: #F07900;
+  font-size: 1.5rem !important;
 }
 
 .login-container {
@@ -407,6 +452,11 @@ h2 {
   color: black;
 }
 
+.formNewContract {
+  padding: 0rem 9rem 0rem 9rem;
+  margin: 0rem 12rem 0rem 12rem;
+}
+
 .p-card {
   border-radius: 10px;
   color: #F8A145;
@@ -452,6 +502,7 @@ h2 {
 .p-inputtext,
 .p-inputmask input {
   background-color: rgba(255, 255, 255, 0.08);
+  font-size: 1.5rem;
   border: 1px solid rgba(248, 161, 69, 0.6);
   color: #F8A145;
   border-radius: 5px;
@@ -733,7 +784,7 @@ form .firma-section .firma-box small {
   border: 1px solid #F8A145;
   border-radius: 100%;
   background-color: #000000;
-  margin: 20px 0px 30px 0px;
+  margin-bottom: 30px;
 }
 
 #administrador .pi {
