@@ -128,7 +128,7 @@ const Register = () => {
             label="Registrarse" 
             type="submit" 
             icon="pi pi-user-plus" 
-            className="p-button-raised p-button-success"
+            className="p-button-raised p-button-success BotonRL"
           />
         </form>
       </Card>

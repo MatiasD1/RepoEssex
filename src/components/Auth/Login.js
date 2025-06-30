@@ -76,7 +76,7 @@ const Login = () => {
             label="Ingresar" 
             type="submit" 
             icon="pi pi-sign-in" 
-            className="p-button-raised p-button-primary p-d-block"
+            className="p-button-raised p-button-primary p-d-block BotonRL"
             style={{ width: '100%' }}
           />
         </form>

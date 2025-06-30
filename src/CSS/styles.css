@@ -687,6 +687,7 @@ h2 {
 .p-paginator .p-dropdown .p-dropdown-label {
   padding-right: 0.8rem;
   font-family: "Open Sans", sans-serif !important;
+  font-size: 16px;
 }
 
 .checkbox-label {
@@ -781,10 +782,11 @@ form .firma-section .firma-box small {
 
 .botonMas {
   padding: 1rem;
-  border: 1px solid #F8A145;
+  border: 3px solid #F07900;
   border-radius: 100%;
   background-color: #000000;
   margin-bottom: 30px;
+  transition: all 0.2s ease;
 }
 
 #administrador .pi {
@@ -897,9 +899,7 @@ form .firma-section .firma-box small {
   color: #F07900;
 }
 .register-card form .p-field input,
-.register-card form .p-field .p-inputtext,
-.register-card form .p-field .p-password,
-.register-card form .p-field .p-password input {
+.register-card form .p-field .p-inputtext {
   width: 100% !important;
   background-color: rgba(255, 255, 255, 0.08) !important;
   border: 1px solid rgba(248, 161, 69, 0.6) !important;
@@ -909,15 +909,59 @@ form .firma-section .firma-box small {
 }
 .register-card form .p-field .p-password {
   width: 100% !important;
+  display: block;
+}
+.register-card form .p-field .p-password input {
+  width: 100% !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(248, 161, 69, 0.6) !important;
+  color: #F8A145 !important;
+  border-radius: 5px !important;
+  padding: 0.75rem !important;
+  padding-right: 2.5rem !important;
+  box-sizing: border-box;
+}
+.register-card form .p-field .p-password .p-password-toggle-icon {
+  color: #F8A145 !important;
+  right: 0.75rem;
 }
 .register-card form .p-field .p-password .p-password-input {
   width: 100% !important;
 }
-.register-card form .p-message {
-  font-size: 0.9rem;
+.register-card form .p-field .p-password .p-password-panel {
+  display: none !important;
 }
 .register-card form .p-button {
-  width: 100%;
+  width: 100% !important;
+  padding: 0.75rem !important;
+  border-radius: 5px !important;
+  font-weight: 600;
+  font-size: 1rem;
+  box-sizing: border-box;
+  margin-top: 15px;
+}
+.register-card form input,
+.register-card form .p-inputtext,
+.register-card form .p-button {
+  height: 55px;
+}
+.register-card .p-card-footer {
+  padding: 0;
+}
+.register-card .p-text-secondary {
+  margin-top: 0 !important;
+}
+
+.p-card .p-card-content {
+  padding: 10px 0 0 0;
+}
+
+.BotonRL {
+  background-color: #F07900;
+}
+
+.BotonRL:hover {
+  background-color: #ff8c19 !important;
 }
 
 /*# sourceMappingURL=styles.css.map */
