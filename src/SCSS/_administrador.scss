@@ -5,10 +5,11 @@
 }
 .botonMas{
     padding: 1rem;
-    border: 1px solid variables.$Primario;
+    border: 3px solid variables.$Secundario;
     border-radius: 100%;
     background-color: variables.$Black;
-    margin: 20px 0px 30px 0px;
+    margin-bottom: 30px;
+    transition: all 0.2s ease;
 }
 #administrador .pi {
     color: variables.$Secundario;

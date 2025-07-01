@@ -74,7 +74,7 @@ const NewContract = () => {
       <Toast ref={toast} />
       <h2>Generador de Contratos</h2>
       <Card>
-        <form onSubmit={handleSubmit} className="contract-form">
+        <form onSubmit={handleSubmit} className="contract-form formNewContract">
           <div className="primeraParteContrato">
             <InputText name="titulo" value={formData.titulo} onChange={handleChange} placeholder="Título del Contrato" required />
             <InputNumber name="monto" value={formData.monto} onValueChange={(e) => setFormData({ ...formData, monto: e.value })} mode="currency" currency="USD" placeholder="Monto Mensual" required />

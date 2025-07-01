@@ -5,18 +5,26 @@
     font-family: 'Open Sans', sans-serif !important;
 
 }
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon{
+    color: variables.$Secundario !important;
+    font-size: 20px;
+}
+
 .p-button .p-button-label {
     transition-duration: 0.2s;
     font-family: 'Open Sans', sans-serif !important;
 }
 .p-button.p-button-text.p-button-plain {
     color: variables.$Secundario !important;
-     font-size: 1.2rem;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
 }
-.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon
- {
-    color: variables.$Secundario !important;
-     font-size: 20px;
+
+.p-button.p-button-text.p-button-plain:hover {
+    color: var !important;
+    font-size: 1.2rem;
+    background-color: black;
+    text-shadow: 0 0 4px variables.$Zero; // opcional: brillo
 }
 #navbar .pi {
     color: variables.$Secundario;
@@ -45,11 +53,45 @@
     transition: all 0.3s ease;
 }
 
-.navbar-custom .p-menuitem-link:hover {
-    background-color: white;
-}
-
 .navbar-custom .p-submenu-list {
     border: 1px solid  variables.$Terciario;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content
+ {
+    color: #fff;
+    transition: all 0.3s ease; 
+}
+
+.p-menubar-root-list > .p-menuitem > .p-menuitem-content > .p-menuitem-link:hover {
+  color: #fff !important; // opcional: buen contraste
+  text-shadow: 0 0 4px variables.$Zero; // opcional: brillo
+}
+.p-menuitem-link{
+    background-color: black !important; 
+}
+
+/*
+.p-menuitem-link:hover{
+    background-color: green !important; // color de fondo de los botones del navbar al hacer hover
+
+}*/
+.p-submenu-list {
+    background-color: black !important; 
+    border-radius: 0px;
+    padding: 0;
+    min-width: 250px; // o el ancho que necesites
+}
+
+.p-submenu-list .p-menuitem-link:hover {
+  background-color: #222 !important; // o el color que prefieras
+}
+.navbar-custom .p-menuitem-link {
+    border-radius: 6px;
+    transition: all 0.3s ease; border-radius: 0px;
+}
+
+.p-menuitem-text{
+    color: variables.$Secundario;
+    font-size: 1.5rem !important;
 }

@@ -1,11 +1,17 @@
 @use 'variables';
 
 // === Tarjetas y títulos ===
+
+.formNewContract{
+  padding: 0rem 9rem 0rem 9rem;
+  margin: 0rem 12rem 0rem 12rem;
+}
 .p-card {
   border-radius: 10px;
   color: variables.$Primario;
   font-family: 'Open Sans', sans-serif;
   background-color: rgba(variables.$Black, 0.5);
+
 }
 
 .p-card-title {
@@ -51,6 +57,7 @@
 .p-inputtext,
 .p-inputmask input {
   background-color: rgba(255, 255, 255, 0.08);
+  font-size: 1.5rem;
   border: 1px solid rgba(variables.$Primario, 0.6);
   color: variables.$Primario;
   border-radius: 5px;
@@ -267,6 +274,7 @@
 .p-paginator .p-dropdown .p-dropdown-label {
   padding-right: 0.8rem;
   font-family: 'Open Sans', sans-serif !important;
+  font-size: 16px;
 }
 
 // === Etiquetas de checkbox ===
