@@ -243,7 +243,7 @@
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 0.75rem;
   font-size: 1rem;
 
   &:hover {
@@ -259,7 +259,14 @@
     background-color: #7f1d1d;
   }
 }
-
+.p-calendar-w-btn-right .p-datepicker-trigger
+{
+   background-color: variables.$Secundario;
+}
+.p-calendar-w-btn-right .p-datepicker-trigger:hover
+{
+   background-color: variables.$Hover;
+}
 // === Divisor ===
 .p-divider {
   border-color: variables.$Primario;

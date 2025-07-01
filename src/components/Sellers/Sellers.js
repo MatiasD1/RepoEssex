@@ -212,7 +212,7 @@ const Sellers = () => {
                     label="Limpiar"
                     icon="pi pi-trash"
                     onClick={handleClearSignature}
-                    className="p-button-danger"
+                    className="p-button-danger botonEliminar"
                   />
                   <Button
                     label="Guardar Firma"

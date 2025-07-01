@@ -452,6 +452,12 @@ h2 {
   color: black;
 }
 
+.botonEliminar {
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
 .formNewContract {
   padding: 0rem 9rem 0rem 9rem;
   margin: 0rem 12rem 0rem 12rem;
@@ -662,7 +668,7 @@ h2 {
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 0.75rem;
   font-size: 1rem;
 }
 .p-button:hover {
@@ -674,6 +680,14 @@ h2 {
 }
 .p-button.p-button-danger {
   background-color: #7f1d1d;
+}
+
+.p-calendar-w-btn-right .p-datepicker-trigger {
+  background-color: #F07900;
+}
+
+.p-calendar-w-btn-right .p-datepicker-trigger:hover {
+  background-color: #ff8c19;
 }
 
 .p-divider {

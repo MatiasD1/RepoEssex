@@ -13,7 +13,6 @@ import { Dropdown } from 'primereact/dropdown';
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('');
   const [error, setError] = useState('');
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
@@ -30,24 +29,14 @@ const Register = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      if (role==="sellers"){
-        await setDoc(doc(db, "users", user.uid), {
-          email: email,
-          role: role,
-          nombre: nombre,
-          apellido: apellido,
-          status:"active",
-          visible:true
-        });
-      }else{
-        await setDoc(doc(db,"users",user.uid),{
-          email: email,
-          role: role,
-          nombre: nombre,
-          apellido: apellido,
-          visible:true
-        });
-      }
+      await setDoc(doc(db, "users", user.uid), {
+      email: email,
+      role: "sellers", // Asigno el rol seller automáticamente
+      nombre: nombre,
+      apellido: apellido,
+      status: "active",
+      visible: true
+    });
         
 
     } catch (err) {
@@ -87,16 +76,6 @@ const Register = () => {
               toggleMask
               placeholder="Crea una contraseña"
               required
-            />
-          </div>
-
-          <div className="p-field">
-            <label htmlFor="role">Rol</label>
-            <Dropdown
-              id="role"
-              value={role}
-              options={roles}
-              onChange={(e) => setRole(e.value)}
             />
           </div>
 

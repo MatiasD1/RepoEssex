@@ -107,7 +107,7 @@ const Navbar = ({user}) => {
     const endItems = currentUser ? (
         <div className="flex align-items-center gap-2">
             <Button 
-                label={currentUser.name || 'Perfil'} 
+                label={currentUser.nombre || 'Perfil'} 
                 icon="pi pi-user" 
                 className="p-button-text p-button-plain" 
                 onClick={() => navigate(`/profile`, { state: { user: user } })}
