@@ -243,7 +243,7 @@
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 0.75rem;
   font-size: 1rem;
 
   &:hover {
@@ -259,7 +259,14 @@
     background-color: #7f1d1d;
   }
 }
-
+.p-calendar-w-btn-right .p-datepicker-trigger
+{
+   background-color: variables.$Secundario;
+}
+.p-calendar-w-btn-right .p-datepicker-trigger:hover
+{
+   background-color: variables.$Hover;
+}
 // === Divisor ===
 .p-divider {
   border-color: variables.$Primario;
@@ -374,4 +381,96 @@ form {
       }
     }
   }
+}
+.botonForm{
+  background-color: variables.$Secundario !important;
+    color: white;
+
+}
+.firma-dialog {
+  --dialog-border-radius: 12px;
+    color: white;
+
+}
+
+.firma-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: black;
+}
+
+.signature-canvas {
+  border: 2px dashed variables.$Primario;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  cursor: crosshair;  
+  background: black;
+}
+
+.firma-acciones {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;  
+
+}
+
+.p-dialog .p-dialog-content:last-of-type {
+  background: black;
+}
+.p-dialog .p-dialog-content {
+    background: variables.$Primario;
+    color: variables.$Primario;
+    padding: 1rem 1.5rem 2rem 1.5rem;
+}
+.firma-box {
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-left: 4px solid variables.$Primario;
+  border-radius: 6px;
+  max-width: 600px;
+}
+
+.firma-box label {
+  font-weight: 600;
+  color: variables.$Primario;
+  margin-bottom: 0.5rem;
+  display: block;
+  font-size: 1.1rem;
+}
+
+.firma-imagen {
+  min-height: 100px;
+  margin-bottom: 0.75rem;
+  background-color: #1a1a1a;
+  color: variables.$Primario;
+  font-style: italic;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 1px dashed variables.$Primario;
+}
+
+.firma-imagen img {
+  max-width: 100%;
+  max-height: 150px;
+  object-fit: contain;
+}
+
+.firma-box .p-button {
+  width: auto;
+  margin-top: 0.5rem;
+}
+
+.botones {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
 }

@@ -95,7 +95,12 @@ const NewContract = () => {
               <Checkbox name="incluyePenalizacion" checked={formData.incluyePenalizacion} onChange={handleChange} />
             </div>          
           </div>
-          <Editor value={formData.contenido} onTextChange={(e) => setFormData({ ...formData, contenido: e.htmlValue })} style={{ height: '200px' }} />
+          <Editor 
+            value={formData.contenido}
+            onTextChange={(e) => setFormData({ ...formData, contenido: e.htmlValue })}
+            className="editor-contrato"
+            style={{ height: '200px' }}
+          />          
           <Dropdown value={selectedPro} options={provincias} onChange={(e) => setSelectedPro(e.value)} placeholder="Provincia" required />
           <InputText name="localidad" value={formData.localidad} onChange={handleChange} placeholder="Localidad" required />
           <InputText name="codPostal" value={formData.codPostal} onChange={handleChange} placeholder="Código Postal" required />
@@ -107,33 +112,55 @@ const NewContract = () => {
             <Checkbox name="aceptaTerminos" checked={formData.aceptaTerminos} onChange={handleChange} required />
           </div>
 
-          <div className="firma-box">
-            <label>Firma del Vendedor:</label>
-            {formData.firma ? (
-              <img src={formData.firma} alt="Firma" className="firma-imagen" />
-            ) : (
-              <div className="firma-imagen">Sin firma</div>
-            )}
-            <Button label="Firmar" icon="pi pi-pencil" onClick={() => setShowSignatureDialog(true)} type="button" className="mt-2" />
-          </div>
+         <div className="firma-box">
+  <label>Firma del Vendedor:</label>
+  {formData.firma ? (
+    <img src={formData.firma} alt="Firma" className="firma-imagen" />
+  ) : (
+    <div className="firma-imagen">Sin firma</div>
+  )}
+  <Button label="Firmar" icon="pi pi-pencil" onClick={() => setShowSignatureDialog(true)} type="button" className="mt-2 botonForm" />
+</div>
 
-          <div className="botones">
-            <Button label="Cancelar" className="p-button-secondary" onClick={() => navigate('/sellers')} disabled={loading} />
-            <Button label={loading ? 'Guardando...' : 'Guardar Contrato'} type="submit" loading={loading} disabled={!formData.aceptaTerminos || !formData.firma} />
-          </div>
+<div className="botones">
+  <Button label="Cancelar" className="p-button-secondary" onClick={() => navigate('/sellers')} disabled={loading} />
+  <Button className="botonForm" label={loading ? 'Guardando...' : 'Guardar Contrato'} type="submit" loading={loading} disabled={!formData.aceptaTerminos || !formData.firma} />
+</div>
+
         </form>
       </Card>
 
-      <Dialog header="Firma Digital" visible={showSignatureDialog} style={{ width: '80vw' }} onHide={() => setShowSignatureDialog(false)}>
-        <SignatureCanvas
-          ref={signatureRef}
-          canvasProps={{ width: 500, height: 200, className: 'signature-canvas' }}
-        />
-        <div className="firma-acciones">
-          <Button label="Limpiar" icon="pi pi-trash" onClick={() => signatureRef.current.clear()} className="p-button-danger" />
-          <Button label="Guardar Firma" icon="pi pi-check" onClick={handleSaveSignature} className="p-button-success" />
-        </div>
-      </Dialog>
+    <Dialog 
+  header="Firma Digital" 
+  visible={showSignatureDialog} 
+  style={{ width: '600px', borderRadius: '12px', padding: '1rem' }}
+  className="firma-dialog"
+  onHide={() => setShowSignatureDialog(false)}
+  modal
+>
+  <div className="firma-contenedor">
+    <SignatureCanvas
+      ref={signatureRef}
+      penColor="#ffffff"
+      canvasProps={{ width: 500, height: 200, className: 'signature-canvas' }}
+    />
+    <div className="firma-acciones">
+      <Button 
+        label="Limpiar" 
+        icon="pi pi-trash" 
+        onClick={() => signatureRef.current.clear()} 
+        className="p-button-outlined p-button-danger botonForm" 
+      />
+      <Button 
+        label="Guardar Firma" 
+        icon="pi pi-check" 
+        onClick={handleSaveSignature} 
+        className="p-button-success botonForm" 
+      />
+    </div>
+  </div>
+</Dialog>
+
     </div>
   );
 };

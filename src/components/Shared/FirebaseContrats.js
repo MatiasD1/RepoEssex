@@ -8,7 +8,6 @@ import { showError } from "../Administrator/FirebaseSellers";
 
   export const createContract = async (contractData) => {
     if (!auth.currentUser) throw new Error("Usuario no autenticado");
-
     const contractDoc = {
       titulo: contractData.titulo,
       contenido: contractData.contenido,
@@ -20,17 +19,22 @@ import { showError } from "../Administrator/FirebaseSellers";
       fechaFin: contractData.fechaFin,
       incluyePenalizacion: contractData.incluyePenalizacion,
       aceptaTerminos: contractData.aceptaTerminos,
-      firmaCliente: contractData.firmaCliente, // Guardamos la firma en base64
-      firmaVendedor:contractData.firmaVendedor,
+      firmaVendedor: contractData.firma,
+      firmaCliente: "", // o lo que corresponda según tu lógica
       userUID: auth.currentUser.uid,
       createdAt: serverTimestamp(),
-      status: contractData.firmaCliente==='' && contractData.firmaVendedor ?"activo":"inactivo",
+      status: contractData.firma ? "activo" : "inactivo",
       provincia:contractData.provincia,
       localidad:contractData.localidad,
       codPostal:contractData.codPostal,
       email:contractData.email
     };
-    await addDoc(collection(db, "contracts"), contractDoc);
+    console.log("Guardando contrato:", contractDoc);
+
+    const docRef = await addDoc(collection(db, "contracts"), contractDoc);
+      return docRef.id;
+
+
   };
 
   export const formatDate = (dateString) => {

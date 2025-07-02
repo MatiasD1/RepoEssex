@@ -30,29 +30,45 @@ const App = () => {
   const toast = useRef(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setIsAuthenticated(true);
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        const userData = userDoc.data();
-        if (userData.status==="disabled"){
-          await signOut(auth);
-          showError('Tu usuario ha sido deshabilitado, comunicate con un administrador');
-          return;
-        }
-        setCurrentUser(userData);
-        const role = userDoc.exists() ? userDoc.data().role : null;
-        setUserRole(role);
-
-      } else {
-        setUserRole(null);
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      setIsAuthenticated(true);
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      
+      if (!userDoc.exists()) {
+        console.error("Usuario no encontrado en Firestore");
         setIsAuthenticated(false);
+        setCurrentUser(null);
+        setUserRole(null);
+        setLoading(false);
+        return;
       }
-      setLoading(false); 
-    });
 
-    return () => unsubscribe();
-  }, []);
+      const userData = { id: user.uid, ...userDoc.data() };
+
+      if (userData?.status === "disabled") {
+        await signOut(auth);
+        showError('Tu usuario ha sido deshabilitado, comunicate con un administrador');
+        setIsAuthenticated(false);
+        setCurrentUser(null);
+        setUserRole(null);
+        setLoading(false);
+        return;
+      }
+
+      setCurrentUser(userData);
+      setUserRole(userData.role);
+    } else {
+      setUserRole(null);
+      setIsAuthenticated(false);
+      setCurrentUser(null);
+    }
+    setLoading(false);
+  });
+
+  return () => unsubscribe();
+}, []);
+
 
   if (loading) {
     return <div className="flex justify-center items-center min-h-screen bg-blue-50">
