@@ -112,13 +112,34 @@ const Sellers = () => {
     signatureRef.current.clear();
   };
 
+  const accionesBodyTemplate = (rowData) => (
+  <div className="acciones-contrato" id='sellers'>
+    <Button
+      icon="pi pi-pencil"
+      className="btn-accion btn-ver"
+      tooltip="Firmar contrato"
+      onClick={() => {
+        setFirmaClienteTarget(rowData);
+        setShowFirmaDialog(true);
+      }}
+      disabled={!!rowData.firmaCliente}
+    />
+    <Button
+      icon="pi pi-trash"
+      className="btn-accion btn-pdf"
+      tooltip="Eliminar contrato"
+      onClick={() => handleDelete(rowData.id)}
+    />
+  </div>
+);
+
   const columns = [
     { field: 'titulo', header: 'Título' },
     { field: 'contenido', header: 'Contenido' },
     { field: 'createdAt', header: 'Fecha Creación' },
     { field: 'status', header: 'Estado', body: statusBodyTemplate },
-    { header: 'Eliminar', body: actionBodyTemplate },
-    { header: 'Firmar' , body: firmaTemplate }
+    { header: 'Acciones', body: accionesBodyTemplate }
+
   ];
 
   useEffect(() => {
@@ -179,16 +200,18 @@ const Sellers = () => {
         }}
       >
 
-        {columns.map((col) => (
-          <Column
-            key={col.field || col.header}
-            field={col.field}
-            header={col.header}
-            sortable
-            body={col.body}
-            headerClassName="font-medium"
-          />
-        ))}
+       {columns.map((col) => (
+  <Column
+    key={col.field || col.header}
+    field={col.field}
+    header={col.header}
+    sortable
+    body={col.body}
+    headerClassName={col.header === 'Acciones' ? 'col-acciones font-medium' : 'font-medium'}
+    bodyClassName={col.header === 'Acciones' ? 'col-acciones' : ''}
+  />
+))}
+
       </DataTable>
 
       {/*Firma del cliente*/}

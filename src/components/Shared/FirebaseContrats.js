@@ -27,13 +27,12 @@ import { showError } from "../Administrator/FirebaseSellers";
       provincia:contractData.provincia,
       localidad:contractData.localidad,
       codPostal:contractData.codPostal,
-      email:contractData.email
+      email:contractData.email,
     };
     console.log("Guardando contrato:", contractDoc);
 
     const docRef = await addDoc(collection(db, "contracts"), contractDoc);
       return docRef.id;
-
 
   };
 

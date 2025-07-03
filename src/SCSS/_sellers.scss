@@ -126,7 +126,6 @@
     font-family: 'Open Sans', sans-serif !important;
 }
 #sellers .pi {
-    color: variables.$Secundario;
     font-size: 20px;
 }
 /* Filas de la tabla con efecto hover */
@@ -178,4 +177,58 @@
     margin: 0 auto;
     display: block;
     text-align: center;
+}
+#sellers .acciones-contrato {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem; // más compacto
+  padding: 0;
+
+  .btn-accion {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+
+    &.btn-ver {
+      background-color: variables.$Primario;
+      &:hover {
+        background-color: darken(variables.$Primario, 10%);
+      }
+    }
+
+    &.btn-pdf {
+      background-color: variables.$Terciario;
+      &:hover {
+        background-color: darken(variables.$Terciario, 10%);
+      }
+    }
+  }
+}
+.col-acciones {
+  width: 160px !important;     // Fijás ancho máximo
+  min-width: 120px !important;
+  text-align: center;
+  padding: 0.2rem;
+
+  // Opcional: para el contenido interno que tenés en .acciones-contrato
+  & .acciones-contrato {
+    gap: 0.3rem;
+    padding: 0;
+    justify-content: center;
+  }
+}
+.col-acciones {
+  width: 80px !important;
+  max-width: 80px !important;
+  text-align: center;  // para centrar texto del header y del body
+
+  padding-left: 1rem;  // agregá padding similar al resto de columnas
+  padding-right: 1rem;
 }

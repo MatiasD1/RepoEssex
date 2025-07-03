@@ -403,7 +403,6 @@ h2 {
 }
 
 #sellers .pi {
-  color: #F07900;
   font-size: 20px;
 }
 
@@ -456,6 +455,57 @@ h2 {
   margin: 0 auto;
   display: block;
   text-align: center;
+}
+
+#sellers .acciones-contrato {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0;
+}
+#sellers .acciones-contrato .btn-accion {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+#sellers .acciones-contrato .btn-accion.btn-ver {
+  background-color: #F8A145;
+}
+#sellers .acciones-contrato .btn-accion.btn-ver:hover {
+  background-color: rgb(246.1502590674, 136.1606217617, 19.8497409326);
+}
+#sellers .acciones-contrato .btn-accion.btn-pdf {
+  background-color: #D35100;
+}
+#sellers .acciones-contrato .btn-accion.btn-pdf:hover {
+  background-color: rgb(160, 61.4218009479, 0);
+}
+
+.col-acciones {
+  width: 160px !important;
+  min-width: 120px !important;
+  text-align: center;
+  padding: 0.2rem;
+}
+.col-acciones .acciones-contrato {
+  gap: 0.3rem;
+  padding: 0;
+  justify-content: center;
+}
+
+.col-acciones {
+  width: 80px !important;
+  max-width: 80px !important;
+  text-align: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .formNewContract {
