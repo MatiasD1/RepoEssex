@@ -212,10 +212,12 @@
   }
 }
 .col-acciones {
-  width: 160px !important;     // Fijás ancho máximo
-  min-width: 120px !important;
-  text-align: center;
-  padding: 0.2rem;
+
+  width: 80px !important;
+  max-width: 80px !important;
+  text-align: center !important;
+  padding: 0.6rem 2rem !important; 
+
 
   // Opcional: para el contenido interno que tenés en .acciones-contrato
   & .acciones-contrato {
@@ -224,10 +226,11 @@
     justify-content: center;
   }
 }
-.col-acciones {
-  width: 80px !important;
-  max-width: 80px !important;
-  text-align: center;  // para centrar texto del header y del body
-  padding-left: 1rem;  // agregá padding similar al resto de columnas 
-  padding-right: 1rem;
+.p-datatable .p-datatable-tbody td div p {
+  margin: 0;
+}
+.p-datatable .p-datatable-thead > tr > th.col-acciones {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  text-align: center !important;
 }

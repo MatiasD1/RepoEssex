@@ -135,7 +135,13 @@ const Sellers = () => {
 
   const columns = [
     { field: 'titulo', header: 'Título' },
-    { field: 'contenido', header: 'Contenido' },
+     {
+    field: 'contenido',
+    header: 'Contenido',
+    body: (rowData) => (
+      <div dangerouslySetInnerHTML={{ __html: rowData.contenido }} />
+    )
+  },
     { field: 'createdAt', header: 'Fecha Creación' },
     { field: 'status', header: 'Estado', body: statusBodyTemplate },
     { header: 'Acciones', body: accionesBodyTemplate }
