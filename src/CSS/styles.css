@@ -457,14 +457,14 @@ h2 {
   text-align: center;
 }
 
-#sellers .acciones-contrato {
+.accionesBotones {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.4rem;
   padding: 0;
 }
-#sellers .acciones-contrato .btn-accion {
+.accionesBotones .btn-accion {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
@@ -475,16 +475,16 @@ h2 {
   justify-content: center;
   transition: background-color 0.3s ease;
 }
-#sellers .acciones-contrato .btn-accion.btn-ver {
+.accionesBotones .btn-accion.btn-ver {
   background-color: #F8A145;
 }
-#sellers .acciones-contrato .btn-accion.btn-ver:hover {
+.accionesBotones .btn-accion.btn-ver:hover {
   background-color: rgb(246.1502590674, 136.1606217617, 19.8497409326);
 }
-#sellers .acciones-contrato .btn-accion.btn-pdf {
+.accionesBotones .btn-accion.btn-pdf {
   background-color: #D35100;
 }
-#sellers .acciones-contrato .btn-accion.btn-pdf:hover {
+.accionesBotones .btn-accion.btn-pdf:hover {
   background-color: rgb(160, 61.4218009479, 0);
 }
 
@@ -937,20 +937,6 @@ form .firma-section .firma-box small {
   margin: 0 auto !important;
 }
 
-.botonMas {
-  padding: 1rem;
-  border: 3px solid #F07900;
-  border-radius: 100%;
-  background-color: #000000;
-  margin-bottom: 30px;
-  transition: all 0.2s ease;
-}
-
-#administrador .pi {
-  color: #F07900;
-  font-size: 20px;
-}
-
 .mi-popup {
   background-color: rgb(17, 17, 17);
   color: #F8A145;
@@ -958,7 +944,6 @@ form .firma-section .firma-box small {
 }
 
 #disabled .pi {
-  color: #F07900;
   font-size: 20px;
 }
 
@@ -982,14 +967,22 @@ form .firma-section .firma-box small {
   border-color: #d97706 !important;
 }
 
-.acciones-contrato {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 0.5rem;
-  width: 100%;
+.col-acciones {
+  width: 100px !important;
+  max-width: 100px !important;
+  padding: 0 0.25rem !important;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
 }
-.acciones-contrato .btn-accion {
+
+.acciones-contrato, .accionesBotones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+.acciones-contrato .btn-accion, .accionesBotones .btn-accion {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
@@ -1000,22 +993,22 @@ form .firma-section .firma-box small {
   justify-content: center;
   transition: background-color 0.3s ease;
 }
-.acciones-contrato .btn-accion.btn-ver {
+.acciones-contrato .btn-accion.btn-ver, .accionesBotones .btn-accion.btn-ver {
   background-color: #F8A145;
 }
-.acciones-contrato .btn-accion.btn-ver:hover {
+.acciones-contrato .btn-accion.btn-ver:hover, .accionesBotones .btn-accion.btn-ver:hover {
   background-color: rgb(246.1502590674, 136.1606217617, 19.8497409326);
 }
-.acciones-contrato .btn-accion.btn-descargar {
+.acciones-contrato .btn-accion.btn-descargar, .accionesBotones .btn-accion.btn-descargar {
   background-color: #F07900;
 }
-.acciones-contrato .btn-accion.btn-descargar:hover {
+.acciones-contrato .btn-accion.btn-descargar:hover, .accionesBotones .btn-accion.btn-descargar:hover {
   background-color: rgb(189, 95.2875, 0);
 }
-.acciones-contrato .btn-accion.btn-pdf {
+.acciones-contrato .btn-accion.btn-pdf, .accionesBotones .btn-accion.btn-pdf {
   background-color: #D35100;
 }
-.acciones-contrato .btn-accion.btn-pdf:hover {
+.acciones-contrato .btn-accion.btn-pdf:hover, .accionesBotones .btn-accion.btn-pdf:hover {
   background-color: rgb(160, 61.4218009479, 0);
 }
 

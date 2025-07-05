@@ -113,7 +113,7 @@ const Sellers = () => {
   };
 
   const accionesBodyTemplate = (rowData) => (
-  <div className="acciones-contrato" id='sellers'>
+  <div className="accionesBotones">
     <Button
       icon="pi pi-pencil"
       className="btn-accion btn-ver"
@@ -201,16 +201,16 @@ const Sellers = () => {
       >
 
        {columns.map((col) => (
-  <Column
-    key={col.field || col.header}
-    field={col.field}
-    header={col.header}
-    sortable
-    body={col.body}
-    headerClassName={col.header === 'Acciones' ? 'col-acciones font-medium' : 'font-medium'}
-    bodyClassName={col.header === 'Acciones' ? 'col-acciones' : ''}
-  />
-))}
+        <Column
+          key={col.field || col.header}
+          field={col.field}
+          header={col.header}
+          body={col.body}
+          sortable={col.header !== 'Acciones'} // La columna acciones no es ordenable
+          headerClassName={col.header === 'Acciones' ? 'col-acciones font-medium' : 'font-medium'}
+          bodyClassName={col.header === 'Acciones' ? 'col-acciones' : ''}
+        />
+      ))}
 
       </DataTable>
 

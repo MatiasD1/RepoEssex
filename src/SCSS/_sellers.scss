@@ -178,7 +178,7 @@
     display: block;
     text-align: center;
 }
-#sellers .acciones-contrato {
+.accionesBotones {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -228,7 +228,6 @@
   width: 80px !important;
   max-width: 80px !important;
   text-align: center;  // para centrar texto del header y del body
-
-  padding-left: 1rem;  // agregá padding similar al resto de columnas
+  padding-left: 1rem;  // agregá padding similar al resto de columnas 
   padding-right: 1rem;
 }

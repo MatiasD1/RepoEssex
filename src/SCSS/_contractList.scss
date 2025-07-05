@@ -1,12 +1,20 @@
 @use 'variables';
 
+.col-acciones {
+  width: 100px !important;  // menos ancho
+  max-width: 100px !important;
+  padding: 0 0.25rem !important;
+  text-align: center;
+  white-space: nowrap; // para evitar que el contenido haga crecer la celda
+  overflow: hidden;
+  
+}
 
-.acciones-contrato {
-  display: flex;
-  justify-content: space-around;
+.acciones-contrato, .accionesBotones {
+   display: flex;
+  justify-content: center;
   align-items: center;
-  padding: 0 0.5rem;
-  width: 100%;
+  padding: 0;
 
   .btn-accion {
     width: 2.5rem;

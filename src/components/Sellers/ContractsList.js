@@ -127,7 +127,12 @@ const ContractsList = () => {
           <Column field="dni" header="DNI" sortable></Column>
           <Column header="Fecha Inicio" body={dateBodyTemplate} sortable></Column>
           <Column field="monto" header="Monto (USD)" sortable></Column>
-          <Column body={actionBodyTemplate} header="Acciones"></Column>
+          <Column
+  body={actionBodyTemplate}
+  header="Acciones"
+  className="col-acciones"
+  style={{ width: '120px' }} // opcional, para hint
+/>
         </DataTable>
       </Card>
 
