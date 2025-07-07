@@ -197,41 +197,45 @@ const Administrator = () => {
         <Column
           header="Nombre"
           body={(rowData) => `${rowData.name} ${rowData.apellido || ''}`}
+
         />
         <Column
-          header="Dar de baja"
-          body={(rowData) => (
-            <Button
-              icon="pi pi-times"
-              className="p-button-rounded p-button-outlined border-yellow-500 text-yellow-400 hover:bg-yellow-600 hover:border-yellow-600 hover:text-black transition-all"
-              tooltip="Dar de baja"
-              tooltipOptions={{ position: 'left' }}
-              onClick={() => {
-                Swal.fire({
-                  title: '¿Estás seguro?',
-                  text: 'El usuario será deshabilitado',
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonText: 'Sí, deshabilitar',
-                  cancelButtonText: 'Cancelar',
-                  customClass: {
-                    popup: 'mi-popup',
-                    title: 'mi-titulo',
-                    confirmButton: 'mi-boton-confirmar',
-                    cancelButton: 'mi-boton-cancelar',
-                    icon: 'iconoSA',
-                  }
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    HandleBaja(rowData.id);
-                  }
-                });
-              }}
-            />
-          )}
-          style={{ width: '110px', whiteSpace: 'nowrap' }}
-          bodyStyle={{ textAlign: 'center'}}
-        />
+  header="Dar de baja"
+  body={(rowData) => (
+    <div className="accionesBotones">
+      <Button
+        icon="pi pi-times"
+        className="btn-accion btn-pdf"
+        tooltip="Dar de baja"
+        tooltipOptions={{ position: 'left' }}
+        onClick={() => {
+          Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'El usuario será deshabilitado',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, deshabilitar',
+            cancelButtonText: 'Cancelar',
+            customClass: {
+              popup: 'mi-popup',
+              title: 'mi-titulo',
+              confirmButton: 'mi-boton-confirmar',
+              cancelButton: 'mi-boton-cancelar',
+              icon: 'iconoSA',
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              HandleBaja(rowData.id);
+            }
+          });
+        }}
+      />
+    </div>
+  )}
+  style={{ width: '110px', whiteSpace: 'nowrap' }}
+  bodyStyle={{ textAlign: 'center' }}
+/>
+
 
 
 
