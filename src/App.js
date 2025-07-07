@@ -21,6 +21,9 @@ import './CSS/styles.css';
 import 'animate.css';
 import { showError } from './components/Administrator/FirebaseSellers';
 import Disabled from './components/Administrator/Disabled';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import ClientVerfication from './components/Shared/ClientVerfication';
 
 const App = () => {
   const [userRole,setUserRole] = useState(null);
@@ -82,6 +85,7 @@ const App = () => {
   return (
     <PrimeReactProvider>
       <Toast ref={toast} />
+      <ToastContainer/>
       <Router>
         <div className="appContainer">
           {isAuthenticated && <Navbar user={currentUser}/>}
@@ -101,7 +105,8 @@ const App = () => {
             <Route path="/sellers" element={userRole === "sellers" ? <Sellers /> : <Navigate to="/" />} />
             <Route path="/sellers/new" element={userRole === "sellers" ? <NewContract /> : <Navigate to="/" />} />
             <Route path="/sellers/contractsList" element={userRole === "sellers" ? <ContractsList /> : <Navigate to="/" />} />
-          
+            <Route path="/sellers/ClientVerification" element={<ClientVerfication/>}/>
+
           </Routes>
           </main>
           <Footer/>

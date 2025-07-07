@@ -58,9 +58,9 @@ const ContractDetail = ({ contract }) => {
         <div className="flex flex-column md:flex-row justify-content-between gap-4">
           <div className="flex flex-column align-items-center">
             <label className="block mb-2">Firma del Cliente</label>
-            {contract.firma ? (
+            {contract.firmaUsuario ? (
               <img 
-                src={contract.firma} 
+                src={contract.firmaUsuario} 
                 alt="Firma" 
                 style={{ width: '200px', height: '80px', border: '1px solid #ccc' }} 
               />
@@ -78,11 +78,13 @@ const ContractDetail = ({ contract }) => {
           
           <div className="flex flex-column align-items-center">
             <label className="block mb-2">Firma del Representante</label>
-            <div style={{ width: '200px', height: '80px', borderBottom: '1px solid #000' }}></div>
             <p className="mt-2">
-              {contract.userName || 'Representante'}
-              <br />
-              [Cargo]
+              {contract.nombreEmpresa || 'Representante'}
+              <img 
+                src={contract.firmaVendedor} 
+                alt="Firma" 
+                style={{ width: '200px', height: '80px', border: '1px solid #ccc' }} 
+              />
             </p>
           </div>
         </div>

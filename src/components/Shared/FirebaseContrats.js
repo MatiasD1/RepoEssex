@@ -11,30 +11,31 @@ import { showError } from "../Administrator/FirebaseSellers";
     const contractDoc = {
       titulo: contractData.titulo,
       contenido: contractData.contenido,
-      nombre: contractData.nombre,
-      apellido: contractData.apellido,
-      dni: contractData.dni,
+      nombre: contractData.nombre || "",
+      apellido: contractData.apellido || "",
+      dni: contractData.dni || "",
       monto: contractData.monto,
       fechaInicio: contractData.fechaInicio,
       fechaFin: contractData.fechaFin,
       incluyePenalizacion: contractData.incluyePenalizacion,
       aceptaTerminos: contractData.aceptaTerminos,
-      firmaVendedor: contractData.firma,
-      firmaCliente: "", // o lo que corresponda según tu lógica
+      firmaVendedor: contractData.firmaVendedor,
+      firmaUsuario: "", 
       userUID: auth.currentUser.uid,
       createdAt: serverTimestamp(),
-      status: contractData.firma ? "activo" : "inactivo",
-      provincia:contractData.provincia,
-      localidad:contractData.localidad,
-      codPostal:contractData.codPostal,
-      email:contractData.email
+      status: "inactivo",
+      provincia:contractData.provincia || "",
+      localidad:contractData.localidad || "",
+      codPostal:contractData.codPostal || "",
+      email:contractData.email,
+      telefono: contractData.telefono || "",
+      altura: contractData.altura || "",
+      nombreEmpresa: contractData.nombreEmpresa || "",
+      emailEmpresa: contractData.emailEmpresa || "",
     };
     console.log("Guardando contrato:", contractDoc);
-
     const docRef = await addDoc(collection(db, "contracts"), contractDoc);
-      return docRef.id;
-
-
+    return docRef.id;
   };
 
   export const formatDate = (dateString) => {
@@ -150,7 +151,7 @@ import { showError } from "../Administrator/FirebaseSellers";
   });
 
   // Componente PDF separado
-  const MyDocument = ({ contract, formatDate }) => (
+  const MyDocument = ({ contract, formatDate, user }) => (
     <Document>
       <Page style={styles.page}>
         <Text style={styles.title}>{contract.titulo}</Text>
@@ -158,7 +159,7 @@ import { showError } from "../Administrator/FirebaseSellers";
         <Text style={styles.sectionTitle}>PARTES CONTRATANTES:</Text>
         <Text>
           {`Entre ${contract.nombre} ${contract.apellido}, identificado con DNI ${contract.dni}, `}
-          {`y [NOMBRE_EMPRESA], celebran el presente contrato con fecha ${formatDate(contract.fechaInicio)}.`}
+          {`y ${user.name}, celebran el presente contrato con fecha ${formatDate(contract.fechaInicio)}.`}
         </Text>
 
         <Text style={styles.sectionTitle}>DATOS DEL CONTRATO:</Text>
@@ -183,11 +184,11 @@ import { showError } from "../Administrator/FirebaseSellers";
         </Text>
 
         <View style={styles.signatureSection}>
-          <View>
+          <View style={styles.signatureLine}>
             <Text>Firma del Cliente:</Text>
-            {contract.firma && (
+            {contract.firmaCliente && (
               <Image 
-                src={contract.firma} 
+                src={contract.firmaCliente} 
                 style={{ width: 150, height: 60, marginTop: 10 }} 
               />
             )}
@@ -199,14 +200,19 @@ import { showError } from "../Administrator/FirebaseSellers";
           </View>
 
           <View>
-            <Text>Firma del Representante:</Text>
-            <View style={styles.signatureLine}></View>
-            <Text style={{ marginTop: 20 }}>
-              {contract.userName || '[Nombre Representante]'}
-              {'\n'}
-              [Cargo]
-            </Text>
-          </View>
+            <Text>Firma de la Empresa:</Text>
+            <View style={styles.signatureLine}>
+            {contract.firmaVendedor && (
+              <Image 
+                src={contract.firmaVendedor} 
+                style={{ width: 150, height: 60, marginTop: 10 }} 
+              />
+            )}
+            </View>
+              <Text style={{ marginTop: 20 }}>
+                {user.name || '[Nombre Representante]'}
+              </Text>
+            </View>
         </View>
       </Page>
     </Document>

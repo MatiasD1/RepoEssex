@@ -4,12 +4,12 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import onAuthSta
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDJrWaEobA6jyCRovPVUsdtOxGG2WFO5mk",
-    authDomain: "essex-40828.firebaseapp.com",
-    projectId: "essex-40828",
-    storageBucket: "essex-40828.firebasestorage.app",
-    messagingSenderId: "250585294801",
-    appId: "1:250585294801:web:2286252f9ffa01d900e2f0"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);

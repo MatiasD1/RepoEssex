@@ -34,25 +34,6 @@ const Disabled = () => {
             });
     }, []);
 
-    const confirmAction = (message, callback) => {
-        Swal.fire({
-        title: '¿Eliminar usuario?',
-        text: 'Esta acción no se puede deshacer',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Eliminar',
-        cancelButtonText: 'Cancelar',
-        customClass: {
-            popup: 'mi-popup',
-            title: 'mi-titulo',
-            confirmButton: 'mi-boton-confirmar',
-            cancelButton: 'mi-boton-cancelar',
-            icon: 'iconoSA', 
-        }
-        });
-
-    };
-
     const actionTemplate = (rowData) => (
     <div className="flex justify-center gap-2">
         <Button

@@ -1,4 +1,4 @@
-import  { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
@@ -9,7 +9,7 @@ import { Toast } from 'primereact/toast';
 import { getUserContracts, formatDate, generatePDF } from '../Shared/FirebaseContrats'; 
 import ContractDetail from '../Shared/ContractDetail'; 
 import { saveAs } from 'file-saver';
-import { showError } from '../Administrator/FirebaseSellers';
+import { getUserById, showError } from '../Administrator/FirebaseSellers';
 
 const ContractsList = () => {
   const [contracts, setContracts] = useState([]);
@@ -52,7 +52,8 @@ const ContractsList = () => {
 
   const handlePreviewPDF = async (contract) => {
     try {
-      const blob = await generatePDF(contract,formatDate);
+      const user = await getUserById(contract.userUID);
+      const blob = await generatePDF(contract,formatDate,user);
       const url = URL.createObjectURL(blob);
       setPdfUrl(url);
       setSelectedContract(contract);
