@@ -35,7 +35,56 @@ const Disabled = () => {
     }, []);
 
 
+    const confirmAction = (message, callback) => {
+        Swal.fire({
+        title: '¿Eliminar usuario?',
+        text: 'Esta acción no se puede deshacer',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+        customClass: {
+            popup: 'mi-popup',
+            title: 'mi-titulo',
+            confirmButton: 'mi-boton-confirmar',
+            cancelButton: 'mi-boton-cancelar',
+            icon: 'iconoSA', 
+        }
+        });
+
+    };
+
     const actionTemplate = (rowData) => (
+
+  <div className="accionesBotones">
+    <Button
+      icon="pi pi-check"
+      className="btn-accion btn-ver"
+      tooltip="Habilitar usuario"
+      tooltipOptions={{ position: 'left' }}
+      onClick={() =>
+        Swal.fire({
+          title: '¿Habilitar usuario?',
+          text: '¿Estás seguro de habilitar este usuario?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, habilitar',
+          cancelButtonText: 'Cancelar',
+          customClass: {
+            popup: 'mi-popup',
+            title: 'mi-titulo',
+            confirmButton: 'mi-boton-confirmar',
+            cancelButton: 'mi-boton-cancelar'
+          }
+        }).then(result => {
+          if (result.isConfirmed) {
+            enableUser(rowData.id).then(() => {
+              setUsers(prev => prev.filter(user => user.id !== rowData.id));
+            });
+          }
+        })
+      }
+    />
 
   <div className="accionesBotones">
     <Button
@@ -89,7 +138,31 @@ const Disabled = () => {
           if (result.isConfirmed) deleteUser(rowData.id);
         })
       }
+      icon="pi pi-trash"
+      className="btn-accion btn-pdf"
+      tooltip="Eliminar usuario"
+      tooltipOptions={{ position: 'left' }}
+      onClick={() =>
+        Swal.fire({
+          title: '¿Eliminar usuario?',
+          text: 'Esta acción no se puede deshacer',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar',
+          customClass: {
+            popup: 'mi-popup',
+            title: 'mi-titulo',
+            confirmButton: 'mi-boton-confirmar',
+            cancelButton: 'mi-boton-cancelar'
+          }
+        }).then(result => {
+          if (result.isConfirmed) deleteUser(rowData.id);
+        })
+      }
     />
+  </div>
+);
   </div>
 );
 
@@ -121,6 +194,8 @@ const Disabled = () => {
                     <Column field='role' header='Rol' sortable />
                     <Column field='name' header='Nombre' sortable />
                     <Column 
+                        header="Acciones" 
+                        body={actionTemplate} 
                         header="Acciones" 
                         body={actionTemplate} 
                         style={{ width: '150px' }}

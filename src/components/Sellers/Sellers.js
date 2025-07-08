@@ -125,7 +125,14 @@ const Sellers = () => {
 
   const columns = [
     { field: 'titulo', header: 'Título' },
-    { field: 'contenido', header: 'Contenido' },
+     {
+    field: 'contenido',
+    header: 'Contenido',
+    body: (rowData) => (
+      <div dangerouslySetInnerHTML={{ __html: rowData.contenido }} />
+    )
+  },
+    { field: 'createdAt', header: 'Fecha Creación' },
     { field: 'status', header: 'Estado', body: statusBodyTemplate },
     { field: 'email', header: 'Email del Cliente' },
     { header: 'Acciones', body: actionCombinedTemplate }
@@ -190,17 +197,52 @@ const Sellers = () => {
         }}
       >
 
-        {columns.map((col) => (
-          <Column
-            key={col.field || col.header}
-            field={col.field}
-            header={col.header}
-            sortable
-            body={col.body}
-            headerClassName="font-medium"
-          />
-        ))}
+       {columns.map((col) => (
+        <Column
+          key={col.field || col.header}
+          field={col.field}
+          header={col.header}
+          body={col.body}
+          sortable={col.header !== 'Acciones'} // La columna acciones no es ordenable
+          headerClassName={col.header === 'Acciones' ? 'col-acciones font-medium' : 'font-medium'}
+          bodyClassName={col.header === 'Acciones' ? 'col-acciones' : ''}
+        />
+      ))}
+
       </DataTable>
+
+      {/*Firma del cliente*/}
+            <Dialog
+              header="Firma Digital"
+              visible={showFirmaDialog}
+              style={{ width: '80vw' }}
+              onHide={() => setShowFirmaDialog(false)}
+            >
+              <div className="signature-container">
+                <SignatureCanvas
+                  ref={signatureRef}
+                  canvasProps={{
+                    width: 500,
+                    height: 200,
+                    className: 'signature-canvas'
+                  }}
+                />
+                <div className="flex justify-content-end gap-2 mt-3">
+                  <Button
+                    label="Limpiar"
+                    icon="pi pi-trash"
+                    onClick={handleClearSignature}
+                    className="p-button-danger botonEliminar"
+                  />
+                  <Button
+                    label="Guardar Firma"
+                    icon="pi pi-check"
+                    onClick={handleSaveSignature}
+                    className="p-button-success"
+                  />
+                </div>
+              </div>
+            </Dialog>
     </div>
   );
 };
