@@ -17,7 +17,6 @@ const Register = () => {
   const [apellido, setApellido] = useState('');
 
 
-
  
 
   const handleRegister = async (e) => {
@@ -28,8 +27,7 @@ const Register = () => {
 
       await setDoc(doc(db, "users", user.uid), {
       email: email,
-
-      role: "sellers", // Asigno el rol seller automáticamente
+      role: "sellers", 
       nombre: nombre,
       apellido: apellido,
       status: "active",

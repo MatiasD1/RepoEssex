@@ -1,31 +1,12 @@
 @use 'variables';
 
-.col-acciones {
-  width: 100px !important;
-  max-width: 100px !important;
-  padding: 0 !important;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.p-datatable .p-datatable-tbody > tr > td {
-  padding: 1.5rem 1rem; // Aumenta altura vertical como en Sellers
-}
-#contractList .btn-accion {
-  width: 37.3px !important;
-  height: 40px !important;
-}
 
-#contractList .pi {
-  font-size: 20px !important;
-}
-/* Aplica a ambos contenedores si existen en distintos componentes */
-.accionesBotones, .acciones-contrato {
-
+.acciones-contrato {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  gap: 0.4rem;
+  padding: 0 0.5rem;
+  width: 100%;
 
   .btn-accion {
     width: 2.5rem;
@@ -62,8 +43,4 @@
       }
     }
   }
-}
-
-#contractList .pi {
-  font-size: 20px !important;
 }

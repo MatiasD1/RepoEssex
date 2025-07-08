@@ -19,22 +19,23 @@ import { showError } from "../Administrator/FirebaseSellers";
       fechaFin: contractData.fechaFin,
       incluyePenalizacion: contractData.incluyePenalizacion,
       aceptaTerminos: contractData.aceptaTerminos,
-
-      firmaVendedor: contractData.firma,
-      firmaCliente: "", // o lo que corresponda según tu lógica
+      firmaVendedor: contractData.firmaVendedor,
+      firmaUsuario: "", 
       userUID: auth.currentUser.uid,
       createdAt: serverTimestamp(),
-      status: contractData.firma ? "activo" : "inactivo",
-      provincia:contractData.provincia,
-      localidad:contractData.localidad,
-      codPostal:contractData.codPostal,
+      status: "inactivo",
+      provincia:contractData.provincia || "",
+      localidad:contractData.localidad || "",
+      codPostal:contractData.codPostal || "",
       email:contractData.email,
+      telefono: contractData.telefono || "",
+      altura: contractData.altura || "",
+      nombreEmpresa: contractData.nombreEmpresa || "",
+      emailEmpresa: contractData.emailEmpresa || "",
     };
     console.log("Guardando contrato:", contractDoc);
-
     const docRef = await addDoc(collection(db, "contracts"), contractDoc);
-      return docRef.id;
-
+    return docRef.id;
   };
 
   export const formatDate = (dateString) => {

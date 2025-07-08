@@ -57,85 +57,62 @@ const Sellers = () => {
   
   
   const firmaTemplate = (rowData) => {
-    if (rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "activo") {
-      return (
-        <Tag
-          value="Firmado"
-          severity="success"
-          style={{ height: '2.5rem', display: 'flex', alignItems: 'center' }}
-        />
-      );
-    }
-
-    if (rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "pendiente") {
-      return (
+  return <div className="flex justify-content-center">
+        {rowData.firmaUsuario && rowData.firmaVendedor && rowData.status ==="activo"? (
+        <p>Firmado</p>
+      ) : rowData.firmaUsuario && rowData.firmaVendedor && rowData.status ==="pendiente"?(
         <Button
-          icon="pi pi-code"
+            icon="pi pi-code"
+            severity="secondary"
+            rounded
+            outlined
+            tooltip="Enviar código"
+            onClick={async () => {
+              try {
+                await generarCodigo(rowData.id);
+                const contractDoc = await getDoc(doc(db, "contracts", rowData.id));
+                if (!contractDoc.exists()) {
+                  showError("No se pudo obtener el contrato actualizado");
+                  return;
+                }
+                const updatedContract = contractDoc.data();
+                setContracts(prev =>
+                  prev.map(c => (c.id === rowData.id ? { ...c, ...updatedContract } : c))
+                );
+                showSuccess("Código enviado correctamente");
+              } catch (error) {
+                showError(`Error al enviar el código: ${error.message}`);
+                throw new Error(`Error al enviar el código: ${error.message}`);
+              }
+            }}
+          />
+      ):(
+        <Button
+          icon="pi pi-file-edit"
           severity="secondary"
           rounded
           outlined
-          tooltip="Enviar código"
+          tooltip="Enviar formulario"
           onClick={async () => {
             try {
-              await generarCodigo(rowData.id);
-              const contractDoc = await getDoc(doc(db, "contracts", rowData.id));
-              if (!contractDoc.exists()) {
-                showError("No se pudo obtener el contrato actualizado");
-                return;
-              }
-              const updatedContract = contractDoc.data();
-              setContracts(prev =>
-                prev.map(c => (c.id === rowData.id ? { ...c, ...updatedContract } : c))
-              );
-              showSuccess("Código enviado correctamente");
+              console.log("Enviando formulario para contrato:", rowData.id, rowData.email);
+              await enviarFormulario(rowData.id, rowData.email);
             } catch (error) {
-              showError(`Error al enviar el código: ${error.message}`);
+              throw new Error(`Error al enviar el formulario: ${error.message}`);
             }
           }}
         />
-      );
-    }
-
-  return (
-    <Button
-      icon="pi pi-file-edit"
-      severity="secondary"
-      rounded
-      outlined
-      tooltip="Enviar formulario"
-      onClick={async () => {
-        try {
-          console.log("Enviando formulario para contrato:", rowData.id, rowData.email);
-          await enviarFormulario(rowData.id, rowData.email);
-        } catch (error) {
-          showError(`Error al enviar el formulario: ${error.message}`);
-        }
-      }}
-    />
-  );
-};
-
-
-  const actionCombinedTemplate = (rowData) => (
-  <div style={{ display: 'flex', gap: '0.5rem' }}>
-    {actionBodyTemplate(rowData)}
-    {firmaTemplate(rowData)}
-  </div>
-);
+      )}
+    </div>    
+  };
 
   const columns = [
     { field: 'titulo', header: 'Título' },
-     {
-    field: 'contenido',
-    header: 'Contenido',
-    body: (rowData) => (
-      <div dangerouslySetInnerHTML={{ __html: rowData.contenido }} />
-    )
-  },
-    { field: 'createdAt', header: 'Fecha Creación' },
+    { field: 'contenido', header: 'Contenido' },
     { field: 'status', header: 'Estado', body: statusBodyTemplate },
     { field: 'email', header: 'Email del Cliente' },
-    { header: 'Acciones', body: actionCombinedTemplate }
+    { header: 'Eliminar', body: actionBodyTemplate },
+    { header: 'Firmar' , body: firmaTemplate }
   ];
 
   useEffect(() => {
@@ -197,52 +174,17 @@ const Sellers = () => {
         }}
       >
 
-       {columns.map((col) => (
-        <Column
-          key={col.field || col.header}
-          field={col.field}
-          header={col.header}
-          body={col.body}
-          sortable={col.header !== 'Acciones'} // La columna acciones no es ordenable
-          headerClassName={col.header === 'Acciones' ? 'col-acciones font-medium' : 'font-medium'}
-          bodyClassName={col.header === 'Acciones' ? 'col-acciones' : ''}
-        />
-      ))}
-
+        {columns.map((col) => (
+          <Column
+            key={col.field || col.header}
+            field={col.field}
+            header={col.header}
+            sortable
+            body={col.body}
+            headerClassName="font-medium"
+          />
+        ))}
       </DataTable>
-
-      {/*Firma del cliente*/}
-            <Dialog
-              header="Firma Digital"
-              visible={showFirmaDialog}
-              style={{ width: '80vw' }}
-              onHide={() => setShowFirmaDialog(false)}
-            >
-              <div className="signature-container">
-                <SignatureCanvas
-                  ref={signatureRef}
-                  canvasProps={{
-                    width: 500,
-                    height: 200,
-                    className: 'signature-canvas'
-                  }}
-                />
-                <div className="flex justify-content-end gap-2 mt-3">
-                  <Button
-                    label="Limpiar"
-                    icon="pi pi-trash"
-                    onClick={handleClearSignature}
-                    className="p-button-danger botonEliminar"
-                  />
-                  <Button
-                    label="Guardar Firma"
-                    icon="pi pi-check"
-                    onClick={handleSaveSignature}
-                    className="p-button-success"
-                  />
-                </div>
-              </div>
-            </Dialog>
     </div>
   );
 };

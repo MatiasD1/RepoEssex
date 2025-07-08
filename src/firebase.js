@@ -18,4 +18,4 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app); // <-- inicializa Firestore
 
-export { app, auth, db, onAuthStateChanged }; // <-- exporta db también
+export { auth, db, onAuthStateChanged }; // <-- exporta db también

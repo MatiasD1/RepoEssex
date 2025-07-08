@@ -65,12 +65,10 @@ const ContractsList = () => {
 
   const actionBodyTemplate = (rowData) => {
   return (
-
-    <div className="accionesBotones">
+    <div className="acciones-contrato">
       <Button
         icon="pi pi-eye"
         className="btn-accion btn-ver"
-        tooltip="Ver detalles"
         onClick={() => {
           setSelectedContract(rowData);
           setShowDetailDialog(true);
@@ -78,21 +76,18 @@ const ContractsList = () => {
       />
       <Button
         icon="pi pi-download"
-
-        className="btn-accion btn-pdf"
-        tooltip="Descargar PDF"
+        className="btn-accion btn-descargar"
         onClick={() => handleDownloadPDF(rowData)}
       />
       <Button
         icon="pi pi-file-pdf"
         className="btn-accion btn-pdf"
-
-        tooltip="Vista previa PDF"
         onClick={() => handlePreviewPDF(rowData)}
       />
     </div>
   );
 };
+
 
   const dateBodyTemplate = (rowData) => {
     return formatDate(rowData.fechaInicio);
@@ -111,7 +106,7 @@ const ContractsList = () => {
   }
 
   return (
-    <div id="contractList" className="p-4">
+    <div className="p-4">
       <Toast ref={toast} />
       <Card title="Listado de Contratos">
         <DataTable
@@ -133,12 +128,7 @@ const ContractsList = () => {
           <Column field="dni" header="DNI" sortable></Column>
           <Column header="Fecha Inicio" body={dateBodyTemplate} sortable></Column>
           <Column field="monto" header="Monto (USD)" sortable></Column>
-          <Column
-  body={actionBodyTemplate}
-  header="Acciones"
-  className="col-acciones"
-  style={{ width: '140px' }} // opcional, para hint
-/>
+          <Column body={actionBodyTemplate} header="Acciones"></Column>
         </DataTable>
       </Card>
 
