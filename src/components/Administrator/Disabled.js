@@ -34,63 +34,64 @@ const Disabled = () => {
             });
     }, []);
 
-    const actionTemplate = (rowData) => (
-    <div className="flex justify-center gap-2">
-        <Button
-        icon="pi pi-check"
-        className="p-button-rounded p-button-outlined border-green-500 text-green-400 hover:bg-green-600 hover:border-green-600 hover:text-black transition-all"
-        tooltip="Habilitar usuario"
-        tooltipOptions={{ position: 'left' }}
-        onClick={() =>
-            Swal.fire({
-                title: '¿Habilitar usuario?',
-                text: '¿Estás seguro de habilitar este usuario?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, habilitar',
-                cancelButtonText: 'Cancelar',
-                customClass: {
-                    popup: 'mi-popup',
-                    title: 'mi-titulo',
-                    confirmButton: 'mi-boton-confirmar',
-                    cancelButton: 'mi-boton-cancelar'
-                }
-            }).then(result => {
-                if (result.isConfirmed) {
-                    enableUser(rowData.id).then(() => {
-                        setUsers(prev => prev.filter(user => user.id !== rowData.id));
-                    });
-                }
-            })
-}
-/>
 
+    const actionTemplate = (rowData) => (
+
+  <div className="accionesBotones">
     <Button
-        icon="pi pi-trash"
-        className="p-button-rounded p-button-outlined border-red-500 text-red-400 hover:bg-red-600 hover:border-red-600 hover:text-black transition-all"
-        tooltip="Eliminar usuario"
-        tooltipOptions={{ position: 'left' }}
-        onClick={() =>
-            Swal.fire({
-                title: '¿Eliminar usuario?',
-                text: 'Esta acción no se puede deshacer',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar',
-                customClass: {
-                    popup: 'mi-popup',
-                    title: 'mi-titulo',
-                    confirmButton: 'mi-boton-confirmar',
-                    cancelButton: 'mi-boton-cancelar'
-                }
-            }).then(result => {
-                if (result.isConfirmed) deleteUser(rowData.id);
-            })
-        }
+      icon="pi pi-check"
+      className="btn-accion btn-ver"
+      tooltip="Habilitar usuario"
+      tooltipOptions={{ position: 'left' }}
+      onClick={() =>
+        Swal.fire({
+          title: '¿Habilitar usuario?',
+          text: '¿Estás seguro de habilitar este usuario?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, habilitar',
+          cancelButtonText: 'Cancelar',
+          customClass: {
+            popup: 'mi-popup',
+            title: 'mi-titulo',
+            confirmButton: 'mi-boton-confirmar',
+            cancelButton: 'mi-boton-cancelar'
+          }
+        }).then(result => {
+          if (result.isConfirmed) {
+            enableUser(rowData.id).then(() => {
+              setUsers(prev => prev.filter(user => user.id !== rowData.id));
+            });
+          }
+        })
+      }
     />
-    </div>
-    );
+    <Button
+      icon="pi pi-trash"
+      className="btn-accion btn-pdf"
+      tooltip="Eliminar usuario"
+      tooltipOptions={{ position: 'left' }}
+      onClick={() =>
+        Swal.fire({
+          title: '¿Eliminar usuario?',
+          text: 'Esta acción no se puede deshacer',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar',
+          customClass: {
+            popup: 'mi-popup',
+            title: 'mi-titulo',
+            confirmButton: 'mi-boton-confirmar',
+            cancelButton: 'mi-boton-cancelar'
+          }
+        }).then(result => {
+          if (result.isConfirmed) deleteUser(rowData.id);
+        })
+      }
+    />
+  </div>
+);
 
 
     if (loading) {
@@ -120,8 +121,8 @@ const Disabled = () => {
                     <Column field='role' header='Rol' sortable />
                     <Column field='name' header='Nombre' sortable />
                     <Column 
-                        header='Acciones' 
-                        body={actionTemplate}
+                        header="Acciones" 
+                        body={actionTemplate} 
                         style={{ width: '150px' }}
                     />
                 </DataTable>

@@ -57,62 +57,78 @@ const Sellers = () => {
   
   
   const firmaTemplate = (rowData) => {
-  return <div className="flex justify-content-center">
-        {rowData.firmaUsuario && rowData.firmaVendedor && rowData.status ==="activo"? (
-        <p>Firmado</p>
-      ) : rowData.firmaUsuario && rowData.firmaVendedor && rowData.status ==="pendiente"?(
+    if (rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "activo") {
+      return (
+        <Tag
+          value="Firmado"
+          severity="success"
+          style={{ height: '2.5rem', display: 'flex', alignItems: 'center' }}
+        />
+      );
+    }
+
+    if (rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "pendiente") {
+      return (
         <Button
-            icon="pi pi-code"
-            severity="secondary"
-            rounded
-            outlined
-            tooltip="Enviar código"
-            onClick={async () => {
-              try {
-                await generarCodigo(rowData.id);
-                const contractDoc = await getDoc(doc(db, "contracts", rowData.id));
-                if (!contractDoc.exists()) {
-                  showError("No se pudo obtener el contrato actualizado");
-                  return;
-                }
-                const updatedContract = contractDoc.data();
-                setContracts(prev =>
-                  prev.map(c => (c.id === rowData.id ? { ...c, ...updatedContract } : c))
-                );
-                showSuccess("Código enviado correctamente");
-              } catch (error) {
-                showError(`Error al enviar el código: ${error.message}`);
-                throw new Error(`Error al enviar el código: ${error.message}`);
-              }
-            }}
-          />
-      ):(
-        <Button
-          icon="pi pi-file-edit"
+          icon="pi pi-code"
           severity="secondary"
           rounded
           outlined
-          tooltip="Enviar formulario"
+          tooltip="Enviar código"
           onClick={async () => {
             try {
-              console.log("Enviando formulario para contrato:", rowData.id, rowData.email);
-              await enviarFormulario(rowData.id, rowData.email);
+              await generarCodigo(rowData.id);
+              const contractDoc = await getDoc(doc(db, "contracts", rowData.id));
+              if (!contractDoc.exists()) {
+                showError("No se pudo obtener el contrato actualizado");
+                return;
+              }
+              const updatedContract = contractDoc.data();
+              setContracts(prev =>
+                prev.map(c => (c.id === rowData.id ? { ...c, ...updatedContract } : c))
+              );
+              showSuccess("Código enviado correctamente");
             } catch (error) {
-              throw new Error(`Error al enviar el formulario: ${error.message}`);
+              showError(`Error al enviar el código: ${error.message}`);
             }
           }}
         />
-      )}
-    </div>    
-  };
+      );
+    }
+
+  return (
+    <Button
+      icon="pi pi-file-edit"
+      severity="secondary"
+      rounded
+      outlined
+      tooltip="Enviar formulario"
+      onClick={async () => {
+        try {
+          console.log("Enviando formulario para contrato:", rowData.id, rowData.email);
+          await enviarFormulario(rowData.id, rowData.email);
+        } catch (error) {
+          showError(`Error al enviar el formulario: ${error.message}`);
+        }
+      }}
+    />
+  );
+};
+
+
+  const actionCombinedTemplate = (rowData) => (
+  <div style={{ display: 'flex', gap: '0.5rem' }}>
+    {actionBodyTemplate(rowData)}
+    {firmaTemplate(rowData)}
+  </div>
+);
 
   const columns = [
     { field: 'titulo', header: 'Título' },
     { field: 'contenido', header: 'Contenido' },
     { field: 'status', header: 'Estado', body: statusBodyTemplate },
     { field: 'email', header: 'Email del Cliente' },
-    { header: 'Eliminar', body: actionBodyTemplate },
-    { header: 'Firmar' , body: firmaTemplate }
+    { header: 'Acciones', body: actionCombinedTemplate }
   ];
 
   useEffect(() => {

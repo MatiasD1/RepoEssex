@@ -51,7 +51,7 @@ const NewContract = () => {
     fechaInicio: '', fechaFin: '', contenido: '', monto: 0,
     incluyePenalizacion: false, firma: '', aceptaTerminos: false,
     provincia: '', localidad: '', codPostal: '', altura: '', email: '',telefono:'',
-    emailEmpresa:user?.email, nombreEmpresa:user?.nombre, firmaVendedor: '', firmaUsuario: ''
+    emailEmpresa:user.email, nombreEmpresa:user.name, firmaVendedor: '', firmaUsuario: ''
   });
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
