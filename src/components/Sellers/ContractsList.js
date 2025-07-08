@@ -53,6 +53,7 @@ const ContractsList = () => {
   const handlePreviewPDF = async (contract) => {
     try {
       const user = await getUserById(contract.userUID);
+      console.log(user);
       const blob = await generatePDF(contract,formatDate,user);
       const url = URL.createObjectURL(blob);
       setPdfUrl(url);

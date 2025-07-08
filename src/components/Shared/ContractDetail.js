@@ -62,7 +62,7 @@ const ContractDetail = ({ contract }) => {
               <img 
                 src={contract.firmaUsuario} 
                 alt="Firma" 
-                style={{ width: '200px', height: '80px', border: '1px solid #ccc' }} 
+                style={{ width: '200px', height: '80px', border: '1px solid #ccc',backgroundColor:'white' }} 
               />
             ) : (
               <div style={{ width: '200px', height: '80px', border: '1px dashed #ccc' }} className="flex align-items-center justify-content-center">
@@ -83,7 +83,7 @@ const ContractDetail = ({ contract }) => {
               <img 
                 src={contract.firmaVendedor} 
                 alt="Firma" 
-                style={{ width: '200px', height: '80px', border: '1px solid #ccc' }} 
+                style={{ width: '200px', height: '80px', border: '1px solid #ccc',backgroundColor:'white' }} 
               />
             </p>
           </div>
