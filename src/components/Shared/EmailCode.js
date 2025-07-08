@@ -6,7 +6,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 export const generarCodigo = async (idContract) => {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const contractDoc = await getDoc(doc(db, "contracts", idContract));
-    const link = `http://localhost:3000/sellers/ClientVerification?id=${idContract}&code=${code}`;
+    const link = `https://essex-40828.web.app/sellers/ClientVerification?id=${idContract}&code=${code}`;
     if (!contractDoc.exists()) {
         throw new Error("Contrato no encontrado");
     }
@@ -39,7 +39,7 @@ export const generarCodigo = async (idContract) => {
 }
 
 export const enviarFormulario = async(idContract, email)=>{
-    const link = `http://localhost:3000/sellers/New?id=${idContract}&mode=usuario`;
+    const link = `https://essex-40828.web.app/sellers/New?id=${idContract}&mode=usuario`;
     const contractDoc = await getDoc(doc(db, "contracts", idContract));
     const contractData = contractDoc.data();
     const userDoc = await getDoc(doc(db, "users", contractData.userUID));
