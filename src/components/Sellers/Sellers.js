@@ -39,84 +39,88 @@ const Sellers = () => {
 
   const statusBodyTemplate = (rowData) => {
     const severity = rowData.status === 'pendiente' ? 'warning' : rowData.status === 'activo' ? 'success' : 'danger';
-    return <Tag value={rowData.status} severity={severity}/>;
+    return <Tag value={rowData.status} severity={severity} />;
   };
 
   const actionBodyTemplate = (rowData) => (
-    <div>      
-      <Button
-        icon="pi pi-trash"
-        severity="danger"
-        rounded
-        outlined
-        tooltip="Eliminar contrato"
-        onClick={() => handleDelete(rowData.id)}
-      />
-    </div>
+    <Button
+      icon="pi pi-trash"
+      severity="danger"
+      rounded
+      outlined
+      tooltip="Eliminar contrato"
+      onClick={() => handleDelete(rowData.id)}
+    />
   );
-  
-  
+
   const firmaTemplate = (rowData) => {
-  return <div className="flex justify-content-center">
-        {rowData.firmaUsuario && rowData.firmaVendedor && rowData.status ==="activo"? (
-        <p>Firmado</p>
-      ) : rowData.firmaUsuario && rowData.firmaVendedor && rowData.status ==="pendiente"?(
+    console.log('FIRMA TEMPLATE:', rowData);
+    if (rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "activo") {
+      return (
+        <Tag
+          value="Firmado"
+          severity="success"
+          style={{ height: '2.5rem', display: 'flex', alignItems: 'center' }}
+        />
+      );
+    }
+
+    if (rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "pendiente") {
+      return (
         <Button
-            icon="pi pi-code"
-            severity="secondary"
-            rounded
-            outlined
-            tooltip="Enviar código"
-            onClick={async () => {
-              try {
-                await generarCodigo(rowData.id);
-                const contractDoc = await getDoc(doc(db, "contracts", rowData.id));
-                if (!contractDoc.exists()) {
-                  showError("No se pudo obtener el contrato actualizado");
-                  return;
-                }
-                const updatedContract = contractDoc.data();
-                setContracts(prev =>
-                  prev.map(c => (c.id === rowData.id ? { ...c, ...updatedContract } : c))
-                );
-                showSuccess("Código enviado correctamente");
-              } catch (error) {
-                showError(`Error al enviar el código: ${error.message}`);
-                throw new Error(`Error al enviar el código: ${error.message}`);
-              }
-            }}
-          />
-      ):(
-        <Button
-          icon="pi pi-file-edit"
-          severity="secondary"
+          icon="pi pi-code"
+          severity="p-button-secondary"
           rounded
           outlined
-          tooltip="Enviar formulario"
+          tooltip="Enviar código"
           onClick={async () => {
             try {
-              console.log("Enviando formulario para contrato:", rowData.id, rowData.email);
-              await enviarFormulario(rowData.id, rowData.email);
+              await generarCodigo(rowData.id);
+              const contractDoc = await getDoc(doc(db, "contracts", rowData.id));
+              if (!contractDoc.exists()) {
+                showError("No se pudo obtener el contrato actualizado");
+                return;
+              }
+              const updatedContract = contractDoc.data();
+              setContracts(prev =>
+                prev.map(c => (c.id === rowData.id ? { ...c, ...updatedContract } : c))
+              );
+              showSuccess("Código enviado correctamente");
             } catch (error) {
-              throw new Error(`Error al enviar el formulario: ${error.message}`);
+              showError(`Error al enviar el código: ${error.message}`);
             }
           }}
         />
-      )}
-    </div>    
+      );
+    }
+
+    return (
+      <Button
+        icon="pi pi-file-edit"
+        severity="p-button-secondary"
+        rounded
+        outlined
+        tooltip="Enviar formulario"
+        onClick={async () => {
+          try {
+            console.log("Enviando formulario para contrato:", rowData.id, rowData.email);
+            await enviarFormulario(rowData.id, rowData.email);
+          } catch (error) {
+            showError(`Error al enviar el formulario: ${error.message}`);
+          }
+        }}
+      />
+    );
   };
 
-  const columns = [
-    { field: 'titulo', header: 'Título' },
-    { field: 'contenido', header: 'Contenido' },
-    { field: 'status', header: 'Estado', body: statusBodyTemplate },
-    { field: 'email', header: 'Email del Cliente' },
-    { header: 'Eliminar', body: actionBodyTemplate },
-    { header: 'Firmar' , body: firmaTemplate }
-  ];
+  const actionCombinedTemplate = (rowData) => (
+    <div style={{ display: 'flex', gap: '0.5rem' }}>
+      {actionBodyTemplate(rowData)}
+      {firmaTemplate(rowData)}
+    </div>
+  );
 
   useEffect(() => {
-    
     const fetchContracts = async () => {
       try {
         const contractsData = await getUserContracts();
@@ -142,7 +146,6 @@ const Sellers = () => {
     };
 
     fetchContracts();
-    
   }, []);
 
   if (loading) {
@@ -159,7 +162,7 @@ const Sellers = () => {
       <div className="flex justify-content-between align-items-center mb-4">
         <h2 className="text-xl font-medium text-700">Mis Contratos</h2>
       </div>
-    
+
       <DataTable
         value={contracts}
         dataKey="id"
@@ -173,17 +176,11 @@ const Sellers = () => {
           return index % 2 === 0 ? 'fila-par' : 'fila-impar';
         }}
       >
-
-        {columns.map((col) => (
-          <Column
-            key={col.field || col.header}
-            field={col.field}
-            header={col.header}
-            sortable
-            body={col.body}
-            headerClassName="font-medium"
-          />
-        ))}
+        <Column field="titulo" header="Título" sortable headerClassName="font-medium" />
+        <Column field="contenido" header="Contenido" sortable headerClassName="font-medium" />
+        <Column field="status" header="Estado" sortable body={statusBodyTemplate} headerClassName="font-medium" />
+        <Column field="email" header="Email del Cliente" sortable headerClassName="font-medium" />
+        <Column header="Acciones" body={actionCombinedTemplate} headerClassName="font-medium" style={{ width: '12rem' }} />
       </DataTable>
     </div>
   );
