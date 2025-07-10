@@ -180,18 +180,18 @@ const Administrator = () => {
       </Dialog>
 
       <DataTable
-        value={users}
-        loading={loading}
-        paginator
-        rows={10}
-        rowsPerPageOptions={[5, 10, 25]}
-        id="administrador"
-        tableStyle={{ minWidth: '50rem' }}
-        rowClassName={(rowData) => {
-          const index = users.findIndex(u => u.id === rowData.id);
-          return index % 2 === 0 ? 'fila-par' : 'fila-impar';
-        }}
-      >
+  value={users}
+  loading={loading}
+  paginator
+  rows={10}
+  rowsPerPageOptions={[5, 10, 25]}
+  responsiveLayout="scroll"  // <--- clave para mobile
+  tableStyle={{ minWidth: '100%' }}
+  rowClassName={(rowData) => {
+    const index = users.findIndex(u => u.id === rowData.id);
+    return index % 2 === 0 ? 'fila-par' : 'fila-impar';
+  }}
+>
         <Column field='email' header="Email" />
         <Column field='role' header="Rol" />
         <Column
@@ -204,9 +204,9 @@ const Administrator = () => {
     <div className="accionesBotones">
       <Button
         icon="pi pi-times"
-        className="btn-accion btn-pdf"
-        tooltip="Dar de baja"
-        tooltipOptions={{ position: 'left' }}
+  className="btn-accion btn-pdf"
+  tooltip="Dar de baja"
+  tooltipOptions={{ position: 'left' }}
         onClick={() => {
           Swal.fire({
             title: '¿Estás seguro?',

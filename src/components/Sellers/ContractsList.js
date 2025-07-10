@@ -113,19 +113,21 @@ const ContractsList = () => {
       <Toast ref={toast} />
       <Card title="Listado de Contratos">
         <DataTable
-          value={contracts}
-          paginator
-          rows={10}
-          rowsPerPageOptions={[5, 10, 25]}
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} contratos"
-          emptyMessage="No se encontraron contratos"
-          scrollable
-          rowClassName={(rowData) => {
-            const index = contracts.findIndex(c => c.id === rowData.id);
-            return index % 2 === 0 ? 'fila-par' : 'fila-impar';
-          }}
-        >
+  value={contracts}
+  paginator
+  rows={10}
+  rowsPerPageOptions={[5, 10, 25]}
+  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} contratos"
+  emptyMessage="No se encontraron contratos"
+  scrollable
+  responsiveLayout="scroll"  // <--- Esta línea es clave
+  rowClassName={(rowData) => {
+    const index = contracts.findIndex(c => c.id === rowData.id);
+    return index % 2 === 0 ? 'fila-par' : 'fila-impar';
+  }}
+>
+
           <Column field="titulo" header="Título" sortable></Column>
           <Column header="Cliente" body={clientBodyTemplate} sortable></Column>
           <Column field="dni" header="DNI" sortable></Column>

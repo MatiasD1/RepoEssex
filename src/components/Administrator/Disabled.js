@@ -125,16 +125,17 @@ const Disabled = () => {
             <h2 className='text-2xl font-bold mb-4'>Usuarios Deshabilitados</h2>
             {users.length > 0 ? (
                 <DataTable
-                    value={users}
-                    paginator
-                    rows={10}
-                    rowsPerPageOptions={[5, 10, 25]}
-                    tableStyle={{ minWidth: '50rem' }}
-                    rowClassName={(rowData) => {
-                        const index = users.findIndex(u => u.id === rowData.id);
-                        return index % 2 === 0 ? 'fila-par' : 'fila-impar';
-                    }}
-                    >
+                  value={users}
+                  paginator
+                  rows={10}
+                  rowsPerPageOptions={[5, 10, 25]}
+                  responsiveLayout="scroll"  // <--- clave para responsividad
+                  tableStyle={{ minWidth: '50rem' }}
+                  rowClassName={(rowData) => {
+                    const index = users.findIndex(u => u.id === rowData.id);
+                    return index % 2 === 0 ? 'fila-par' : 'fila-impar';
+                  }}
+                >
                     <Column field='email' header='Email' sortable />
                     <Column field='role' header='Rol' sortable />
                     <Column field='name' header='Nombre' sortable />

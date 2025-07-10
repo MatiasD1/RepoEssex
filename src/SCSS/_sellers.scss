@@ -42,7 +42,6 @@
 
   .p-paginator-pages .p-paginator-page {
     color: variables.$Primario;
-    background-color: rgba(variables.$Zero, 0.9);
     border: 1px solid variables.$Primario;
     margin: 0 2px;
     border-radius: 5px;
@@ -190,7 +189,7 @@
     height: 2.5rem;
     border-radius: 50%;
     border: none;
-    color: white;
+    color: white !important;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -53,6 +53,15 @@ h2 {
   font-weight: 700;
 }
 
+@media (max-width: 768px) {
+  .content {
+    flex: 1;
+    padding: 0px 40px;
+  }
+  h2 {
+    margin-top: 0.5rem;
+  }
+}
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
   color: #F07900 !important;
   font-size: 1.2rem;
@@ -159,6 +168,64 @@ h2 {
   font-size: 1.5rem !important;
 }
 
+/* Desactiva el botón hamburguesa automático de PrimeReact */
+.p-menubar-button {
+  display: none !important;
+  color: #F07900;
+}
+
+.desktop-navbar {
+  display: block;
+}
+
+.mobile-navbar {
+  display: none;
+  padding: 0.5rem 1rem;
+}
+
+@media (max-width: 1024px) {
+  .desktop-navbar {
+    display: none;
+  }
+  .mobile-navbar {
+    display: flex;
+    align-items: center;
+  }
+  .navbar-custom {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #F07900;
+  }
+  /* Estilos de items menú overlay */
+  .p-overlaypanel .p-menuitem-link, .p-overlaypanel div[role=menuitem] {
+    color: #F07900;
+    font-size: 1rem;
+    user-select: none;
+  }
+  .p-overlaypanel div[role=menuitem]:hover, .p-overlaypanel div[role=menuitem]:focus {
+    background-color: #333;
+    outline: none;
+  }
+  .pi {
+    color: #F07900;
+  }
+  .pi .pi-file {
+    color: #F07900 !important;
+  }
+  .p-overlaypanel .p-overlaypanel-close {
+    display: none;
+  }
+  .p-overlaypanel .p-overlaypanel-content {
+    background-color: #000000;
+  }
+  hr {
+    background-color: purple !important;
+    color: red !important;
+    border-color: #F8A145 !important;
+  }
+  .p-overlaypanel {
+    color: #F07900 !important;
+  }
+}
 .login-container {
   height: 100vh;
   display: flex;
@@ -318,7 +385,6 @@ h2 {
 }
 .p-paginator .p-paginator-pages .p-paginator-page {
   color: #F8A145;
-  background-color: rgba(255, 193, 128, 0.9);
   border: 1px solid #F8A145;
   margin: 0 2px;
   border-radius: 5px;
@@ -469,7 +535,7 @@ h2 {
   height: 2.5rem;
   border-radius: 50%;
   border: none;
-  color: white;
+  color: white !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -939,6 +1005,21 @@ form .firma-section .firma-box small {
   margin: 0 auto !important;
 }
 
+@media (max-width: 768px) {
+  .p-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+  .accionesBotones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .accionesBotones .pi {
+    color: white;
+  }
+}
 .mi-popup {
   background-color: rgb(17, 17, 17);
   color: #F8A145;
@@ -947,6 +1028,7 @@ form .firma-section .firma-box small {
 
 #disabled .pi {
   font-size: 20px;
+  color: #fff;
 }
 
 .mi-titulo {
@@ -969,6 +1051,26 @@ form .firma-section .firma-box small {
   border-color: #d97706 !important;
 }
 
+@media (max-width: 768px) {
+  #disabled .accionesBotones {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  #disabled .btn-accion {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding: 1rem 0.5rem;
+  }
+  .p-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+  #disabled .pi {
+    font-size: 1.2rem;
+  }
+}
 .col-acciones {
   width: 100px !important;
   max-width: 100px !important;
@@ -1003,7 +1105,7 @@ form .firma-section .firma-box small {
   height: 2.5rem;
   border-radius: 50%;
   border: none;
-  color: white;
+  color: white !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1032,6 +1134,30 @@ form .firma-section .firma-box small {
   font-size: 20px !important;
 }
 
+@media (max-width: 768px) {
+  #contractList .accionesBotones {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  #contractList .btn-accion {
+    width: 2.8rem !important;
+    height: 2.8rem !important;
+  }
+  .p-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding: 1rem 0.5rem;
+  }
+  .col-acciones {
+    max-width: 100% !important;
+    text-align: center;
+  }
+  #contractList .pi {
+    font-size: 1.2rem !important;
+  }
+}
 .register-wrapper {
   height: 100vh;
   display: flex;

@@ -4,3 +4,19 @@
     margin: 0 auto !important;
 }
 
+@media (max-width: 768px) {
+  .p-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+  .accionesBotones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+      
+    .pi{
+      color: white;
+    }
+  }
+}
