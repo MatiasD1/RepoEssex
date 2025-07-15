@@ -125,6 +125,7 @@
     font-family: 'Open Sans', sans-serif !important;
 }
 #sellers .pi {
+    color: variables.$Secundario;
     font-size: 20px;
 }
 /* Filas de la tabla con efecto hover */
@@ -181,41 +182,52 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.4rem; // más compacto
-  padding: 0;
+  gap: 0.4rem;
 
   .btn-accion {
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 50%;
-    border: none;
+    border-radius: 50% !important; // Asegura redondez
+    border: none !important;
+    background-color: transparent; // Valor por defecto si no se asigna
     color: white !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease;
+    padding: 0 !important;
+
+    .pi {
+      font-size: 1.2rem;
+      color: white !important;
+    }
 
     &.btn-ver {
-      background-color: variables.$Primario;
+      background-color: variables.$Primario !important;
+
       &:hover {
-        background-color: darken(variables.$Primario, 10%);
+        background-color: darken(variables.$Primario, 10%) !important;
       }
     }
 
     &.btn-pdf {
-      background-color: variables.$Terciario;
+      background-color: variables.$Terciario !important;
+
       &:hover {
-        background-color: darken(variables.$Terciario, 10%);
+        background-color: darken(variables.$Terciario, 10%) !important;
       }
     }
   }
 }
-.col-acciones {
 
-  width: 80px !important;
-  max-width: 80px !important;
+.col-acciones {
+  width: 110px !important;
+  max-width: 110px !important;
   text-align: center !important;
-  padding: 0.6rem 2rem !important; 
+  padding: 0.5rem 0.5rem !important;
+
+  .accionesBotones {
+    gap: 0.5rem;
+  }
 
 
   // Opcional: para el contenido interno que tenés en .acciones-contrato
@@ -232,4 +244,10 @@
   padding-left: 1rem !important;
   padding-right: 1rem !important;
   text-align: center !important;
+
+
+}
+
+.p-datatable .p-datatable-tbody > tr {
+    background: none;
 }

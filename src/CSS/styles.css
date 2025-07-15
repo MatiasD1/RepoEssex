@@ -469,6 +469,7 @@ h2 {
 }
 
 #sellers .pi {
+  color: #F07900;
   font-size: 20px;
 }
 
@@ -528,37 +529,44 @@ h2 {
   justify-content: center;
   align-items: center;
   gap: 0.4rem;
-  padding: 0;
 }
 .accionesBotones .btn-accion {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
-  border: none;
+  border-radius: 50% !important;
+  border: none !important;
+  background-color: transparent;
   color: white !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.3s ease;
+  padding: 0 !important;
+}
+.accionesBotones .btn-accion .pi {
+  font-size: 1.2rem;
+  color: white !important;
 }
 .accionesBotones .btn-accion.btn-ver {
-  background-color: #F8A145;
+  background-color: #F8A145 !important;
 }
 .accionesBotones .btn-accion.btn-ver:hover {
-  background-color: rgb(246.1502590674, 136.1606217617, 19.8497409326);
+  background-color: rgb(246.1502590674, 136.1606217617, 19.8497409326) !important;
 }
 .accionesBotones .btn-accion.btn-pdf {
-  background-color: #D35100;
+  background-color: #D35100 !important;
 }
 .accionesBotones .btn-accion.btn-pdf:hover {
-  background-color: rgb(160, 61.4218009479, 0);
+  background-color: rgb(160, 61.4218009479, 0) !important;
 }
 
 .col-acciones {
-  width: 80px !important;
-  max-width: 80px !important;
+  width: 110px !important;
+  max-width: 110px !important;
   text-align: center !important;
-  padding: 0.6rem 2rem !important;
+  padding: 0.5rem 0.5rem !important;
+}
+.col-acciones .accionesBotones {
+  gap: 0.5rem;
 }
 .col-acciones .acciones-contrato {
   gap: 0.3rem;
@@ -574,6 +582,10 @@ h2 {
   padding-left: 1rem !important;
   padding-right: 1rem !important;
   text-align: center !important;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  background: none;
 }
 
 .formNewContract {
@@ -1005,6 +1017,7 @@ form .firma-section .firma-box small {
   margin: 0 auto !important;
 }
 
+/* Acciones en móvil: columna y color iconos */
 @media (max-width: 768px) {
   .p-dialog {
     width: 95vw !important;
@@ -1020,6 +1033,120 @@ form .firma-section .firma-box small {
     color: white;
   }
 }
+/* =====================
+   BOTÓN “+” (botonMas)
+   ===================== */
+.botonMas {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  border: 2px solid #F8A145;
+  background-color: #F07900;
+  color: #F8A145;
+  font-size: 1.5rem;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.botonMas .pi {
+  line-height: 1;
+  color: black;
+}
+
+.botonMas:hover {
+  background-color: #F8A145;
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.botonMas:active {
+  transform: scale(0.95);
+}
+
+.botonMas .p-button-icon {
+  pointer-events: none;
+}
+
+/* Agrandar botón en pantallas más grandes */
+@media (min-width: 768px) {
+  .botonMas {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.75rem;
+  }
+}
+@media (min-width: 1024px) {
+  .botonMas {
+    width: 4rem;
+    height: 4rem;
+    font-size: 2rem;
+  }
+}
+/* ===========================================
+   ESTILOS PARA EL DIALOG “Crear Nuevo Usuario”
+   =========================================== */
+.p-dialog.custom-dialog {
+  border-radius: 0.5rem; /* esquinas redondeadas */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  padding: 0; /* eliminamos padding interno default */
+  overflow: hidden;
+  max-width: 400px; /* ancho máximo fijo */
+  width: 95vw; /* ancho responsive */
+  margin: 0 auto; /* centrar en móviles */
+}
+.p-dialog.custom-dialog .p-dialog-content {
+  padding: 1.5rem;
+  /* Espacio adicional bajo cada campo */
+}
+.p-dialog.custom-dialog .p-dialog-content .p-fluid .field {
+  margin-bottom: 1.5rem;
+}
+
+/* CABECERA */
+.p-dialog.custom-dialog .p-dialog-header {
+  padding: 1rem 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Ícono de cierre */
+.p-dialog.custom-dialog .p-dialog-header .p-dialog-header-icons {
+  top: 1rem;
+  right: 1rem;
+}
+
+.p-dialog.custom-dialog .p-dialog-header .p-dialog-header-icon {
+  margin-left: 0.5rem;
+}
+
+/* CONTENIDO */
+.p-dialog.custom-dialog .p-dialog-content {
+  padding: 1.5rem;
+}
+
+.crearUsuarioFooter {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.crearUsuarioFooter .crearUsuarioBtn {
+  background-color: #F07900;
+  border: 1px solid #F07900;
+  color: #ffffff;
+}
+.crearUsuarioFooter .crearUsuarioBtn:hover {
+  background-color: rgb(189, 95.2875, 0);
+  border-color: rgb(189, 95.2875, 0);
+}
+
 .mi-popup {
   background-color: rgb(17, 17, 17);
   color: #F8A145;
@@ -1071,93 +1198,43 @@ form .firma-section .firma-box small {
     font-size: 1.2rem;
   }
 }
-.col-acciones {
-  width: 100px !important;
-  max-width: 100px !important;
-  padding: 0 !important;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.p-datatable .p-datatable-tbody > tr > td {
-  padding: 1.5rem 1rem;
-}
-
-#contractList .btn-accion {
-  width: 37.3px !important;
-  height: 40px !important;
-}
-
-#contractList .pi {
-  font-size: 20px !important;
-}
-
-/* Aplica a ambos contenedores si existen en distintos componentes */
-.accionesBotones, .acciones-contrato {
+.acciones-contrato {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  gap: 0.4rem;
+  padding: 0 0.5rem;
+  width: 100%;
 }
-.accionesBotones .btn-accion, .acciones-contrato .btn-accion {
+.acciones-contrato .btn-accion {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
   border: none;
-  color: white !important;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
 }
-.accionesBotones .btn-accion.btn-ver, .acciones-contrato .btn-accion.btn-ver {
+.acciones-contrato .btn-accion.btn-ver {
   background-color: #F8A145;
 }
-.accionesBotones .btn-accion.btn-ver:hover, .acciones-contrato .btn-accion.btn-ver:hover {
+.acciones-contrato .btn-accion.btn-ver:hover {
   background-color: rgb(246.1502590674, 136.1606217617, 19.8497409326);
 }
-.accionesBotones .btn-accion.btn-descargar, .acciones-contrato .btn-accion.btn-descargar {
+.acciones-contrato .btn-accion.btn-descargar {
   background-color: #F07900;
 }
-.accionesBotones .btn-accion.btn-descargar:hover, .acciones-contrato .btn-accion.btn-descargar:hover {
+.acciones-contrato .btn-accion.btn-descargar:hover {
   background-color: rgb(189, 95.2875, 0);
 }
-.accionesBotones .btn-accion.btn-pdf, .acciones-contrato .btn-accion.btn-pdf {
+.acciones-contrato .btn-accion.btn-pdf {
   background-color: #D35100;
 }
-.accionesBotones .btn-accion.btn-pdf:hover, .acciones-contrato .btn-accion.btn-pdf:hover {
+.acciones-contrato .btn-accion.btn-pdf:hover {
   background-color: rgb(160, 61.4218009479, 0);
 }
 
-#contractList .pi {
-  font-size: 20px !important;
-}
-
-@media (max-width: 768px) {
-  #contractList .accionesBotones {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  #contractList .btn-accion {
-    width: 2.8rem !important;
-    height: 2.8rem !important;
-  }
-  .p-dialog {
-    width: 95vw !important;
-    max-width: 95vw !important;
-  }
-  .p-datatable .p-datatable-tbody > tr > td {
-    padding: 1rem 0.5rem;
-  }
-  .col-acciones {
-    max-width: 100% !important;
-    text-align: center;
-  }
-  #contractList .pi {
-    font-size: 1.2rem !important;
-  }
-}
 .register-wrapper {
   height: 100vh;
   display: flex;

@@ -128,7 +128,8 @@ const Administrator = () => {
       />
 
       <Dialog
-        header={`Nuevo Usuario`}
+      className="custom-dialog"
+        header={`Crear Nuevo Usuario`}
         visible={showUserDialog}
         style={{ width: '80vw' }}
         onHide={() => setShowUserDialog(false)}
@@ -139,7 +140,7 @@ const Administrator = () => {
             <InputText
               id='email'
               name='email'
-              placeholder='ingresa tu email'
+              placeholder='Ingresa un email'
               className='w-full'
               value={newUser.email}
               onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
@@ -150,7 +151,7 @@ const Administrator = () => {
             <Dropdown
               id='role'
               name='role'
-              placeholder='seleccioná el rol'
+              placeholder='Seleccioná el rol'
               className='w-full'
               value={selectedRole}
               options={roles}
@@ -165,18 +166,22 @@ const Administrator = () => {
             <InputText
               id='name'
               name='name'
-              placeholder='ingresa tu nombre de usuario'
+              placeholder='Ingresa un nombre de usuario'
               className='w-full'
               value={newUser.name}
               onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
             />
           </div>
         </div>
-        <Button
-          label='Crear Usuario'
-          className='p-button-raised p-button-success p-d-block'
-          onClick={() => HandleCreateUser()}
-        />
+     
+   <div className="crearUsuarioFooter">
+  <Button
+    label="Crear Usuario"
+    className="crearUsuarioBtn"
+    onClick={HandleCreateUser}
+  />
+</div>
+  
       </Dialog>
 
       <DataTable
