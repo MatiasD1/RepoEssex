@@ -111,7 +111,8 @@ const ContractsList = () => {
   return (
     <div id="contractList" className="p-4">
       <Toast ref={toast} />
-      <Card title="Listado de Contratos">
+      <Card>
+        <h2 className="text-xl font-medium text-700">Listado de Contratos</h2>
         <DataTable
   value={contracts}
   paginator

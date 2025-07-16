@@ -31,7 +31,7 @@ h2 {
 
 .content {
   flex: 1;
-  padding: 40px;
+  padding: 40px 120px;
 }
 
 .spinner .p-progress-spinner-circle {
@@ -1033,37 +1033,36 @@ form .firma-section .firma-box small {
     color: white;
   }
 }
-/* =====================
-   BOTÓN “+” (botonMas)
-   ===================== */
 .botonMas {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
   margin-bottom: 1rem;
   border-radius: 50%;
-  border: 2px solid #F8A145;
   background-color: #F07900;
   color: #F8A145;
-  font-size: 1.5rem;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  font-size: 1rem;
+  border: none;
+  padding: 0;
+  transition: all 0.2s ease;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .botonMas .pi {
+  font-size: 2rem;
+  color: #ffc180;
   line-height: 1;
-  color: black;
 }
 
 .botonMas:hover {
   background-color: #F8A145;
   color: #fff;
-  transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.botonMas:hover .pi {
+  color: white;
 }
 
 .botonMas:active {
@@ -1084,8 +1083,6 @@ form .firma-section .firma-box small {
 }
 @media (min-width: 1024px) {
   .botonMas {
-    width: 4rem;
-    height: 4rem;
     font-size: 2rem;
   }
 }
@@ -1235,6 +1232,10 @@ form .firma-section .firma-box small {
   background-color: rgb(160, 61.4218009479, 0);
 }
 
+.p-card .p-card-body {
+  padding: 0;
+}
+
 .register-wrapper {
   height: 100vh;
   display: flex;
@@ -1335,6 +1336,145 @@ form .firma-section .firma-box small {
 
 .BotonRL:hover {
   background-color: #ff8c19 !important;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 500px;
+}
+
+.read-only-input .p-inputtext {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #495057;
+  cursor: default;
+}
+.read-only-input .p-inputtext:enabled:focus {
+  box-shadow: none;
+  border-color: #dee2e6;
+}
+
+.field {
+  margin-bottom: 1.5rem;
+}
+.field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.field .p-inputtext {
+  width: 100%;
+}
+
+.info-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #000000;
+  color: #F07900;
+  display: flex;
+  align-items: center;
+}
+.info-box i {
+  margin-right: 0.5rem;
+}
+
+/* Media queries abajo */
+@media (max-width: 767px) {
+  .profile-card {
+    max-width: 90%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .profile-card {
+    max-width: 70%;
+  }
+}
+@media (min-width: 1025px) {
+  .profile-card {
+    max-width: 500px;
+  }
+}
+.reports-container {
+  padding: 2rem;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.filter-buttons button {
+  padding: 0.5rem 1rem;
+  border: none;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-buttons button.active {
+  background-color: #F8A145;
+  color: white;
+}
+.filter-buttons button:not(.active) {
+  background-color: #ccc;
+  color: #222;
+}
+.filter-buttons button:not(.active):hover {
+  background-color: #bbb;
+}
+
+.chart-wrapper {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.chart-wrapper canvas {
+  max-height: 300px !important;
+}
+
+.top-vendedores {
+  border-radius: 10px;
+  padding: 2rem;
+}
+.top-vendedores h3 {
+  font-size: 1.5rem;
+  color: #F07900;
+}
+
+/* Estilos alternos para filas de tabla */
+.fila-par {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.fila-impar {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .chart-wrapper {
+    padding: 1rem;
+    max-width: 100%;
+  }
+  .reports-container {
+    padding: 1rem;
+  }
+  .filter-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

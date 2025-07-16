@@ -1,10 +1,9 @@
-import  { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Toast } from 'primereact/toast';
 import { useLocation } from 'react-router-dom';
-
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -28,22 +27,19 @@ const Profile = () => {
         }
     }, [location.state]);
 
-
-  if (loading) {
+    if (loading) {
         return (
-            <div className="flex align-items-center justify-content-center min-h-screen">
+            <div className="profile-container">
                 <ProgressSpinner />
             </div>
         );
-    }  
-  return (
-        <div className="flex align-items-center justify-content-center min-h-screen">
-            <Toast ref={toast} position='top-right'/>
-            <Card 
-                title="Información de Usuario" 
-                className="w-full md:w-6 lg:w-4"
-                style={{ maxWidth: '500px' }}
-            >
+    }
+
+    return (
+        <div className="profile-container">
+            <Toast ref={toast} position="top-right" />
+            <Card className="profile-card">
+                <h2 className="text-2xl font-bold mb-4">Información de Usuario</h2>
                 <div className="p-fluid">
                     <div className="field mb-4">
                         <label htmlFor="email" className="block text-900 font-medium mb-2">
@@ -57,10 +53,10 @@ const Profile = () => {
                             className="w-full read-only-input"
                         />
                     </div>
-                    
+
                     <div className="field mb-4">
                         <label htmlFor="role" className="block text-900 font-medium mb-2">
-                            Role
+                            Rol
                         </label>
                         <InputText
                             id="role"
@@ -72,27 +68,13 @@ const Profile = () => {
                     </div>
                 </div>
 
-                <div className="mt-4 p-3 border-round bg-blue-100 text-blue-800 flex align-items-center">
-                    <i className="pi pi-info-circle mr-2"></i>
+                <div className="info-box">
+                    <i className="pi pi-info-circle"></i>
                     <span>Este formulario es solo para visualización</span>
                 </div>
             </Card>
-
-            {/* Estilos personalizados para los campos de solo lectura */}
-            <style jsx>{`
-                .read-only-input .p-inputtext {
-                    background-color: #f8f9fa;
-                    border-color: #dee2e6;
-                    color: #495057;
-                    cursor: default;
-                }
-                .read-only-input .p-inputtext:enabled:focus {
-                    box-shadow: none;
-                    border-color: #dee2e6;
-                }
-            `}</style>
         </div>
     );
-}
+};
 
-export default Profile
+export default Profile;

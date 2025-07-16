@@ -1,0 +1,72 @@
+@use 'variables';
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 500px;
+}
+
+.read-only-input .p-inputtext {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #495057;
+  cursor: default;
+
+  &:enabled:focus {
+    box-shadow: none;
+    border-color: #dee2e6;
+  }
+}
+
+.field {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .p-inputtext {
+    width: 100%;
+  }
+}
+
+.info-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: variables.$Black;
+  color: variables.$Secundario;
+  display: flex;
+  align-items: center;
+
+  i {
+    margin-right: 0.5rem;
+  }
+}
+
+/* Media queries abajo */
+@media (max-width: 767px) {
+  .profile-card {
+    max-width: 90%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .profile-card {
+    max-width: 70%;
+  }
+}
+
+@media (min-width: 1025px) {
+  .profile-card {
+    max-width: 500px;
+  }
+}

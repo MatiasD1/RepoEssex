@@ -24,45 +24,43 @@
   }
 }
 
-/* =====================
-   BOTÓN “+” (botonMas)
-   ===================== */
 .botonMas {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  margin-bottom: 1rem;           // separa abajo del resto
+  width: 2.5rem !important;         // más chico
+  height: 2.5rem !important;
+  margin-bottom: 1rem;
   border-radius: 50%;
-  border: 2px solid variables.$Primario;
   background-color: variables.$Secundario;
   color: variables.$Primario;
-  font-size: 1.5rem;
-  transition: background-color 0.2s ease,
-              color 0.2s ease,
-              transform 0.2s ease,
-              box-shadow 0.2s ease;
+  font-size: 1rem;        // ícono más grande
+  border: none;
+  padding: 0;
+  transition: all 0.2s ease;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .botonMas .pi {
+  font-size: 2rem;       // ícono aún más grande
+  color: variables.$Zero;
   line-height: 1;
-  color: black;
 }
 
 .botonMas:hover {
   background-color: variables.$Primario;
   color: #fff;
-  transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+
+  .pi {
+    color: white;
+  }
 }
 
 .botonMas:active {
   transform: scale(0.95);
 }
+
 
 .botonMas .p-button-icon {
   pointer-events: none;
@@ -79,8 +77,6 @@
 
 @media (min-width: 1024px) {
   .botonMas {
-    width: 4rem;
-    height: 4rem;
     font-size: 2rem;
   }
 }
