@@ -211,7 +211,7 @@ const Administrator = () => {
         icon="pi pi-times"
   className="btn-accion btn-pdf"
   tooltip="Dar de baja"
-  tooltipOptions={{ position: 'left' }}
+  tooltipOptions={{ position: 'bottom' }}
         onClick={() => {
           Swal.fire({
             title: '¿Estás seguro?',

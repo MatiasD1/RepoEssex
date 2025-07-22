@@ -52,7 +52,7 @@ const Register = () => {
   );
 
   return (
-    <div className="register-wrapper">
+    <div id="register" className="register-wrapper">
       <Card title="Registro" footer={footer} className="register-card">
         <form onSubmit={handleRegister}>
           <div className="p-field">

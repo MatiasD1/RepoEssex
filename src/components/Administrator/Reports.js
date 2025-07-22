@@ -89,10 +89,51 @@ const Reports = () => {
       {
         label: 'Resumen',
         data: [stats.totalContratos, stats.contratosActivos, stats.contratosPeriodo],
-        backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726'],
+        backgroundColor: ['#F8A145', '#D35100', '#ff8c19'],
       },
     ],
   };
+
+  const chartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      labels: {
+        color: '#ffc180',
+        font: {
+          size: 18,
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      ticks: {
+        color: '#ffc180',
+        font: {
+        size: 18,
+      },
+      },
+      grid: {
+        color: 'rgba(255,255,255,0.1)',
+      },
+    },
+    y: {
+      ticks: {
+        color: '#ffc180',
+        font: {
+        size: 18,
+      },
+        
+      },
+      grid: {
+        color: 'rgba(255,255,255,0.1)',
+      },
+    },
+    
+  },
+};
+
 
   if (loading) return <div>Cargando...</div>;
 
@@ -116,7 +157,8 @@ const Reports = () => {
     </div>
 
     <div className="chart-wrapper">
-      <Chart type="bar" data={chartData} options={{ responsive: true }} />
+      <Chart className="chart" type="bar" data={chartData} options={chartOptions} />
+
     </div>
 
     <div className="top-vendedores">

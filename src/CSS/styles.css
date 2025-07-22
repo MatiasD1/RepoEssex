@@ -1241,14 +1241,21 @@ form .firma-section .firma-box small {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6rem;
+  padding: 2rem;
   min-height: 80vh;
   margin: 20px;
+}
+
+#register .p-card .p-card-body {
+  padding: 2rem;
 }
 
 .register-card {
   width: 500px;
   margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
   border: 1px solid #F8A145;
   box-shadow: 0 0 12px rgba(240, 121, 0, 0.5);
 }
@@ -1278,8 +1285,15 @@ form .firma-section .firma-box small {
   background-color: rgba(255, 255, 255, 0.08) !important;
   border: 1px solid rgba(248, 161, 69, 0.6) !important;
   color: #F8A145 !important;
-  border-radius: 5px !important;
+  border-radius: 8px !important;
   padding: 0.75rem !important;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+.register-card form .p-field input:focus,
+.register-card form .p-field .p-inputtext:focus {
+  outline: none;
+  box-shadow: 0 0 8px #ff8c19;
 }
 .register-card form .p-field .p-password {
   width: 100% !important;
@@ -1290,10 +1304,15 @@ form .firma-section .firma-box small {
   background-color: rgba(255, 255, 255, 0.08) !important;
   border: 1px solid rgba(248, 161, 69, 0.6) !important;
   color: #F8A145 !important;
-  border-radius: 5px !important;
+  border-radius: 8px !important;
   padding: 0.75rem !important;
   padding-right: 2.5rem !important;
   box-sizing: border-box;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+.register-card form .p-field .p-password input:focus {
+  outline: none;
+  box-shadow: 0 0 8px #ff8c19;
 }
 .register-card form .p-field .p-password .p-password-toggle-icon {
   color: #F8A145 !important;
@@ -1308,11 +1327,12 @@ form .firma-section .firma-box small {
 .register-card form .p-button {
   width: 100% !important;
   padding: 0.75rem !important;
-  border-radius: 5px !important;
+  border-radius: 8px !important;
   font-weight: 600;
   font-size: 1rem;
   box-sizing: border-box;
   margin-top: 15px;
+  height: 55px;
 }
 .register-card form input,
 .register-card form .p-inputtext,
@@ -1323,7 +1343,17 @@ form .firma-section .firma-box small {
   padding: 0;
 }
 .register-card .p-text-secondary {
-  margin-top: 0 !important;
+  margin-top: 10px !important;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+.register-card .p-text-secondary a {
+  color: #ff8c19;
+  font-weight: bold;
+  text-decoration: none;
+}
+.register-card .p-text-secondary a:hover {
+  text-decoration: underline;
 }
 
 .p-card .p-card-content {
@@ -1331,11 +1361,17 @@ form .firma-section .firma-box small {
 }
 
 .BotonRL {
-  background-color: #F07900;
+  background: linear-gradient(90deg, #ff8c19, #d35100);
+  color: white !important;
+  border: none !important;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(255, 140, 25, 0.3);
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .BotonRL:hover {
-  background-color: #ff8c19 !important;
+  transform: scale(1.02);
+  background: linear-gradient(90deg, #ffa733, #f65d00) !important;
 }
 
 .profile-container {
@@ -1425,7 +1461,7 @@ form .firma-section .firma-box small {
 }
 .filter-buttons button:not(.active) {
   background-color: #ccc;
-  color: #222;
+  color: #ffc180 !important;
 }
 .filter-buttons button:not(.active):hover {
   background-color: #bbb;
@@ -1436,12 +1472,39 @@ form .firma-section .firma-box small {
   border-radius: 10px;
   padding: 2rem;
   margin-bottom: 2rem;
-  max-width: 700px;
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
 }
 .chart-wrapper canvas {
-  max-height: 300px !important;
+  max-height: 500px !important;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.filter-buttons button {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid #D35100;
+  border-radius: 5px;
+  background-color: black !important;
+  color: #D35100;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.filter-buttons button:hover {
+  background-color: #D35100;
+  color: white;
+}
+.filter-buttons button.active {
+  background-color: #D35100;
+  color: white;
+  border-color: #ff8c19;
+  font-weight: 700;
+  box-shadow: 0 0 8px #ff8c19;
 }
 
 .top-vendedores {

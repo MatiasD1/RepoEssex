@@ -59,7 +59,7 @@ const Disabled = () => {
       icon="pi pi-check"
       className="btn-accion btn-ver"
       tooltip="Habilitar usuario"
-      tooltipOptions={{ position: 'left' }}
+      tooltipOptions={{ position: 'bottom' }}
       onClick={() =>
         Swal.fire({
           title: '¿Habilitar usuario?',
@@ -87,7 +87,7 @@ const Disabled = () => {
       icon="pi pi-trash"
       className="btn-accion btn-pdf"
       tooltip="Eliminar usuario"
-      tooltipOptions={{ position: 'left' }}
+      tooltipOptions={{ position: 'bottom' }}
       onClick={() =>
         Swal.fire({
           title: '¿Eliminar usuario?',

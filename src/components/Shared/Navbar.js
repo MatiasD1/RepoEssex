@@ -113,7 +113,7 @@ const Navbar = ({ user }) => {
   const endItems = currentUser ? (
     <>
       <Button
-        label={currentUser.name || 'Perfil'}
+        label={currentUser.nombre || 'Perfil'}
         id='navbar'
         icon="pi pi-user"
         className="p-button-text p-button-plain"

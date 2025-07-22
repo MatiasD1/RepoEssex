@@ -69,6 +69,7 @@ const ContractsList = () => {
         icon="pi pi-eye"
         className="btn-accion btn-ver"
         tooltip="Ver detalles"
+        tooltipOptions={{ position: 'bottom' }}
         onClick={() => {
           setSelectedContract(rowData);
           setShowDetailDialog(true);
@@ -78,12 +79,14 @@ const ContractsList = () => {
         icon="pi pi-download"
         className="btn-accion btn-pdf"
         tooltip="Descargar PDF"
+        tooltipOptions={{ position: 'bottom' }}
         onClick={() => handleDownloadPDF(rowData)}
       />
       <Button
         icon="pi pi-file-pdf"
         className="btn-accion btn-pdf"
         tooltip="Vista previa PDF"
+        tooltipOptions={{ position: 'bottom' }}
         onClick={() => handlePreviewPDF(rowData)}
       />
     </div>

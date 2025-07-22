@@ -118,6 +118,7 @@ const Sellers = () => {
       icon="pi pi-pencil"
       className="btn-accion btn-ver"
       tooltip="Firmar contrato"
+      tooltipOptions={{ position: 'bottom' }}
       onClick={() => {
         setFirmaClienteTarget(rowData);
         setShowFirmaDialog(true);
@@ -128,6 +129,7 @@ const Sellers = () => {
       icon="pi pi-trash"
       className="btn-accion btn-pdf"
       tooltip="Eliminar contrato"
+      tooltipOptions={{ position: 'bottom' }}
       onClick={() => handleDelete(rowData.id)}
     />
   </div>
