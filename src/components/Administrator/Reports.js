@@ -138,7 +138,7 @@ const Reports = () => {
   if (loading) return <div>Cargando...</div>;
 
   return (
-  <div className="reports-container">
+  <div id="reports" className="reports-container">
     <h2 className="text-2xl font-bold mb-4">Panel de Estadísticas</h2>
 
     <div className="filter-buttons">

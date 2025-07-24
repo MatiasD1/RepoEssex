@@ -1,6 +1,8 @@
 @use 'variables';
 
 
+
+
 .acciones-contrato {
   display: flex;
   justify-content: space-around;
@@ -47,3 +49,39 @@
 .p-card .p-card-body {
     padding: 0;
 }
+
+@media (max-width: 768px) {
+ .p-paginator {
+  font-size: 0.75rem; // Reduce el tamaño general del texto
+
+  .p-paginator-pages .p-paginator-page,
+  .p-paginator-first,
+  .p-paginator-prev,
+  .p-paginator-next,
+  .p-paginator-last {
+    font-size: 0.75rem; // Tamaño de número y flechas
+    min-width: 1.5rem; // Ancho mínimo más chico
+    height: 1.5rem;     // Alto más chico
+    padding: 0.25rem;   // Menos padding
+    margin-bottom: 0.75rem;
+  }
+
+  .p-paginator-rpp-options {
+    font-size: 0.75rem;
+  }
+
+  .p-dropdown .p-dropdown-label {
+    font-size: 0.75rem;
+    padding: 0.25rem;
+  }
+    
+    .p-dropdown-label {
+      padding: 0.25rem;
+    }
+
+    .p-paginator-current {
+      display: none !important;
+    }
+  }
+}
+

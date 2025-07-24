@@ -1025,7 +1025,7 @@ form .firma-section .firma-box small {
   }
   .accionesBotones {
     display: flex;
-    flex-direction: column;
+    flex-direction: row !important;
     align-items: center;
     gap: 0.5rem;
   }
@@ -1236,6 +1236,35 @@ form .firma-section .firma-box small {
   padding: 0;
 }
 
+@media (max-width: 768px) {
+  .p-paginator {
+    font-size: 0.75rem;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page,
+  .p-paginator .p-paginator-first,
+  .p-paginator .p-paginator-prev,
+  .p-paginator .p-paginator-next,
+  .p-paginator .p-paginator-last {
+    font-size: 0.75rem;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .p-paginator .p-paginator-rpp-options {
+    font-size: 0.75rem;
+  }
+  .p-paginator .p-dropdown .p-dropdown-label {
+    font-size: 0.75rem;
+    padding: 0.25rem;
+  }
+  .p-paginator .p-dropdown-label {
+    padding: 0.25rem;
+  }
+  .p-paginator .p-paginator-current {
+    display: none !important;
+  }
+}
 .register-wrapper {
   height: 100vh;
   display: flex;
@@ -1527,6 +1556,14 @@ form .firma-section .firma-box small {
 
 /* Responsive */
 @media (max-width: 767px) {
+  h2 {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem;
+  }
+  .top-vendedores {
+    border-radius: 10px;
+    padding: 0;
+  }
   .chart-wrapper {
     padding: 1rem;
     max-width: 100%;
