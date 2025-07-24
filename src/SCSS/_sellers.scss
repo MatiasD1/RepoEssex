@@ -42,7 +42,6 @@
 
   .p-paginator-pages .p-paginator-page {
     color: variables.$Primario;
-    background-color: rgba(variables.$Zero, 0.9);
     border: 1px solid variables.$Primario;
     margin: 0 2px;
     border-radius: 5px;
@@ -178,4 +177,77 @@
     margin: 0 auto;
     display: block;
     text-align: center;
+}
+.accionesBotones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+
+  .btn-accion {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50% !important; // Asegura redondez
+    border: none !important;
+    background-color: transparent; // Valor por defecto si no se asigna
+    color: white !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+
+    .pi {
+      font-size: 1.2rem;
+      color: white !important;
+    }
+
+    &.btn-ver {
+      background-color: variables.$Primario !important;
+
+      &:hover {
+        background-color: darken(variables.$Primario, 10%) !important;
+      }
+    }
+
+    &.btn-pdf {
+      background-color: variables.$Terciario !important;
+
+      &:hover {
+        background-color: darken(variables.$Terciario, 10%) !important;
+      }
+    }
+  }
+}
+
+.col-acciones {
+  width: 110px !important;
+  max-width: 110px !important;
+  text-align: center !important;
+  padding: 0.5rem 0.5rem !important;
+
+  .accionesBotones {
+    gap: 0.5rem;
+  }
+
+
+  // Opcional: para el contenido interno que tenés en .acciones-contrato
+  & .acciones-contrato {
+    gap: 0.3rem;
+    padding: 0;
+    justify-content: center;
+  }
+}
+.p-datatable .p-datatable-tbody td div p {
+  margin: 0;
+}
+.p-datatable .p-datatable-thead > tr > th.col-acciones {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  text-align: center !important;
+
+
+}
+
+.p-datatable .p-datatable-tbody > tr {
+    background: none;
 }

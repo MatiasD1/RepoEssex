@@ -128,7 +128,8 @@ const Administrator = () => {
       />
 
       <Dialog
-        header={`Nuevo Usuario`}
+        className="custom-dialog"
+        header={`Crear Nuevo Usuario`}
         visible={showUserDialog}
         style={{ width: '80vw' }}
         onHide={() => setShowUserDialog(false)}
@@ -139,7 +140,7 @@ const Administrator = () => {
             <InputText
               id='email'
               name='email'
-              placeholder='ingresa tu email'
+              placeholder='Ingresa un email'
               className='w-full'
               value={newUser.email}
               onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
@@ -150,7 +151,7 @@ const Administrator = () => {
             <Dropdown
               id='role'
               name='role'
-              placeholder='seleccioná el rol'
+              placeholder='Seleccioná el rol'
               className='w-full'
               value={selectedRole}
               options={roles}
@@ -165,18 +166,21 @@ const Administrator = () => {
             <InputText
               id='name'
               name='name'
-              placeholder='ingresa tu nombre de usuario'
+              placeholder='Ingresa un nombre de usuario'
               className='w-full'
               value={newUser.name}
               onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
             />
           </div>
         </div>
-        <Button
-          label='Crear Usuario'
-          className='p-button-raised p-button-success p-d-block'
-          onClick={() => HandleCreateUser()}
-        />
+        <div className="crearUsuarioFooter">
+          <Button
+            label="Crear Usuario"
+            className="crearUsuarioBtn"
+            onClick={()=>HandleCreateUser}
+          />
+        </div>
+  
       </Dialog>
 
       <DataTable
@@ -185,8 +189,8 @@ const Administrator = () => {
         paginator
         rows={10}
         rowsPerPageOptions={[5, 10, 25]}
-        id="administrador"
-        tableStyle={{ minWidth: '50rem' }}
+        responsiveLayout="scroll" 
+        tableStyle={{ minWidth: '100%' }}
         rowClassName={(rowData) => {
           const index = users.findIndex(u => u.id === rowData.id);
           return index % 2 === 0 ? 'fila-par' : 'fila-impar';
@@ -201,11 +205,12 @@ const Administrator = () => {
         <Column
           header="Dar de baja"
           body={(rowData) => (
-            <Button
+            <div className='accionesBotones'>
+              <Button
               icon="pi pi-times"
-              className="p-button-rounded p-button-outlined border-yellow-500 text-yellow-400 hover:bg-yellow-600 hover:border-yellow-600 hover:text-black transition-all"
+              className="btn-accion btn-pdf"
               tooltip="Dar de baja"
-              tooltipOptions={{ position: 'left' }}
+              tooltipOptions={{ position: 'bottom' }}
               onClick={() => {
                 Swal.fire({
                   title: '¿Estás seguro?',
@@ -228,6 +233,7 @@ const Administrator = () => {
                 });
               }}
             />
+            </div>
           )}
           style={{ width: '110px', whiteSpace: 'nowrap' }}
           bodyStyle={{ textAlign: 'center'}}

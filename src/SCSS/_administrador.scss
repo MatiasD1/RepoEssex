@@ -1,17 +1,145 @@
 @use 'variables';
-#administrador .pi { 
-    display: block !important;
-    margin: 0 auto !important;
-}
-.botonMas{
-    padding: 1rem;
-    border: 3px solid variables.$Secundario;
-    border-radius: 100%;
-    background-color: variables.$Black;
-    margin-bottom: 30px;
-    transition: all 0.2s ease;
-}
+
 #administrador .pi {
-    color: variables.$Secundario;
-    font-size: 20px;
+  display: block !important;
+  margin: 0 auto !important;
 }
+
+/* Acciones en móvil: columna y color iconos */
+@media (max-width: 768px) {
+  .p-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+
+  .accionesBotones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    .pi {
+      color: white;
+    }
+  }
+}
+
+.botonMas {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem !important;         // más chico
+  height: 2.5rem !important;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background-color: variables.$Secundario;
+  color: variables.$Primario;
+  font-size: 1rem;        // ícono más grande
+  border: none;
+  padding: 0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.botonMas .pi {
+  font-size: 2rem;       // ícono aún más grande
+  color: variables.$Zero;
+  line-height: 1;
+}
+
+.botonMas:hover {
+  background-color: variables.$Primario;
+  color: #fff;
+
+  .pi {
+    color: white;
+  }
+}
+
+.botonMas:active {
+  transform: scale(0.95);
+}
+
+
+.botonMas .p-button-icon {
+  pointer-events: none;
+}
+
+/* Agrandar botón en pantallas más grandes */
+@media (min-width: 768px) {
+  .botonMas {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .botonMas {
+    font-size: 2rem;
+  }
+}
+
+/* ===========================================
+   ESTILOS PARA EL DIALOG “Crear Nuevo Usuario”
+   =========================================== */
+.p-dialog.custom-dialog {
+  border-radius: 0.5rem;        /* esquinas redondeadas */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+  padding: 0;                   /* eliminamos padding interno default */
+  overflow: hidden;
+  max-width: 400px;             /* ancho máximo fijo */
+  width: 95vw;                  /* ancho responsive */
+  margin: 0 auto;               /* centrar en móviles */
+  .p-dialog-content {
+    padding: 1.5rem;
+
+    /* Espacio adicional bajo cada campo */
+    .p-fluid {
+      .field {
+        margin-bottom: 1.5rem;  // ajusta este valor al espacio que quieras
+      }
+    }
+  }
+}
+
+/* CABECERA */
+.p-dialog.custom-dialog .p-dialog-header {
+  padding: 1rem 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Ícono de cierre */
+.p-dialog.custom-dialog .p-dialog-header .p-dialog-header-icons {
+  top: 1rem;
+  right: 1rem;
+}
+.p-dialog.custom-dialog .p-dialog-header .p-dialog-header-icon {
+  margin-left: 0.5rem;
+}
+
+/* CONTENIDO */
+.p-dialog.custom-dialog .p-dialog-content {
+  padding: 1.5rem;
+}
+
+.crearUsuarioFooter {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+
+  .crearUsuarioBtn {
+    background-color: #F07900;
+    border: 1px solid #F07900;
+    color: #ffffff;
+
+    &:hover {
+      background-color: darken(#F07900, 10%);
+      border-color: darken(#F07900, 10%);
+    }
+  }
+}
+

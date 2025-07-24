@@ -5,7 +5,7 @@
   border-radius: 12px;
 }
 #disabled .pi{
-  color: variables.$Secundario;
+  color: #fff;
   font-size: 20px;
 }
 .mi-titulo {
@@ -26,4 +26,29 @@
 .swal2-icon.iconoSA {
   color: #d97706 !important; /* por ejemplo, naranja */
   border-color: #d97706 !important;
+}
+
+@media (max-width: 768px) {
+  #disabled .accionesBotones {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  #disabled .btn-accion {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding: 1rem 0.5rem;
+  }
+
+  .p-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+
+  #disabled .pi {
+    font-size: 1.2rem;
+  }
 }

@@ -95,3 +95,61 @@
     color: variables.$Secundario;
     font-size: 1.5rem !important;
 }
+/* Desactiva el botón hamburguesa automático de PrimeReact */
+.p-menubar-button {
+  display: none !important;
+  color: variables.$Secundario;
+}
+   .desktop-navbar {
+          display: block;
+        }
+        .mobile-navbar {
+          display: none;
+          padding: 0.5rem 1rem;
+        }
+        @media (max-width: 1024px) {
+          .desktop-navbar {
+            display: none;
+          }
+          .mobile-navbar {
+            display: flex;
+            align-items: center;
+          }
+        
+        .navbar-custom {
+          background-color: rgba(0,0,0,0.7);
+          color: variables.$Secundario;
+        }
+        /* Estilos de items menú overlay */
+        .p-overlaypanel .p-menuitem-link, .p-overlaypanel div[role="menuitem"] {
+          color: variables.$Secundario;
+          font-size: 1rem;
+          user-select: none;
+        }
+        .p-overlaypanel div[role="menuitem"]:hover, .p-overlaypanel div[role="menuitem"]:focus {
+          background-color: #333;
+          outline: none;
+        }
+        .pi {
+            color: variables.$Secundario;
+        }
+
+        .pi .pi-file{
+            color: variables.$Secundario !important;
+        }
+        .p-overlaypanel .p-overlaypanel-close{
+            display: none;
+        }
+        .p-overlaypanel .p-overlaypanel-content {
+            background-color: variables.$Black;
+        }
+        hr {
+            background-color: purple !important;
+            color: red !important;
+            border-color: variables.$Primario !important;
+        }
+        .p-overlaypanel {
+                        color: variables.$Secundario !important;
+
+        }
+}

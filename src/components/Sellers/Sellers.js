@@ -42,83 +42,73 @@ const Sellers = () => {
     return <Tag value={rowData.status} severity={severity} />;
   };
 
-  const actionBodyTemplate = (rowData) => (
-    <Button
-      icon="pi pi-trash"
-      severity="danger"
-      rounded
-      outlined
-      tooltip="Eliminar contrato"
-      onClick={() => handleDelete(rowData.id)}
-    />
-  );
-
-  const firmaTemplate = (rowData) => {
-    console.log('FIRMA TEMPLATE:', rowData);
-    if (rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "activo") {
-      return (
-        <Tag
-          value="Firmado"
-          severity="success"
-          style={{ height: '2.5rem', display: 'flex', alignItems: 'center' }}
-        />
-      );
-    }
-
-    if (rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "pendiente") {
-      return (
-        <Button
-          icon="pi pi-code"
-          severity="p-button-secondary"
-          rounded
-          outlined
-          tooltip="Enviar código"
-          onClick={async () => {
-            try {
-              await generarCodigo(rowData.id);
-              const contractDoc = await getDoc(doc(db, "contracts", rowData.id));
-              if (!contractDoc.exists()) {
-                showError("No se pudo obtener el contrato actualizado");
-                return;
+  const actionCombinedTemplate = (rowData) => {
+   return ( 
+    <div className="accionesBotones">
+      {(rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "activo")?(
+          <Tag
+            value="Firmado"
+            severity="success"
+            className="btn-accion btn-ver"
+          />
+        ):(rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "pendiente")?(
+          <Button
+            icon="pi pi-code"
+            severity="p-button-secondary"
+            className="btn-accion btn-ver"
+            rounded
+            outlined
+            tooltip="Enviar código"
+            onClick={async () => {
+              try {
+                await generarCodigo(rowData.id);
+                const contractDoc = await getDoc(doc(db, "contracts", rowData.id));
+                if (!contractDoc.exists()) {
+                  showError("No se pudo obtener el contrato actualizado");
+                  return;
+                }
+                const updatedContract = contractDoc.data();
+                setContracts(prev =>
+                  prev.map(c => (c.id === rowData.id ? { ...c, ...updatedContract } : c))
+                );
+                showSuccess("Código enviado correctamente");
+              } catch (error) {
+                showError(`Error al enviar el código: ${error.message}`);
               }
-              const updatedContract = contractDoc.data();
-              setContracts(prev =>
-                prev.map(c => (c.id === rowData.id ? { ...c, ...updatedContract } : c))
-              );
-              showSuccess("Código enviado correctamente");
-            } catch (error) {
-              showError(`Error al enviar el código: ${error.message}`);
-            }
-          }}
-        />
-      );
-    }
+            }}
+          />
+        ):(
+          <Button
+            icon="pi pi-file-edit"
+            severity="p-button-secondary"
+            className="btn-accion btn-ver"
+            rounded
+            outlined
+            tooltip="Enviar formulario"
+            onClick={async () => {
+              try {
+                console.log("Enviando formulario para contrato:", rowData.id, rowData.email);
+                await enviarFormulario(rowData.id, rowData.email);
+              } catch (error) {
+                showError(`Error al enviar el formulario: ${error.message}`);
+              }
+            }}
+          />
+        )  
+      }
 
-    return (
       <Button
-        icon="pi pi-file-edit"
-        severity="p-button-secondary"
+        icon="pi pi-trash"
+        className="btn-accion btn-pdf"
+        severity="danger"
         rounded
         outlined
-        tooltip="Enviar formulario"
-        onClick={async () => {
-          try {
-            console.log("Enviando formulario para contrato:", rowData.id, rowData.email);
-            await enviarFormulario(rowData.id, rowData.email);
-          } catch (error) {
-            showError(`Error al enviar el formulario: ${error.message}`);
-          }
-        }}
+        tooltip="Eliminar contrato"
+        onClick={() => handleDelete(rowData.id)}
       />
+    </div>
     );
   };
-
-  const actionCombinedTemplate = (rowData) => (
-    <div style={{ display: 'flex', gap: '0.5rem' }}>
-      {actionBodyTemplate(rowData)}
-      {firmaTemplate(rowData)}
-    </div>
-  );
 
   useEffect(() => {
     const fetchContracts = async () => {
@@ -180,7 +170,7 @@ const Sellers = () => {
         <Column field="contenido" header="Contenido" sortable headerClassName="font-medium" />
         <Column field="status" header="Estado" sortable body={statusBodyTemplate} headerClassName="font-medium" />
         <Column field="email" header="Email del Cliente" sortable headerClassName="font-medium" />
-        <Column header="Acciones" body={actionCombinedTemplate} headerClassName="font-medium" style={{ width: '12rem' }} />
+        <Column header="Acciones" bodyClassName={'col-acciones'} body={actionCombinedTemplate} headerClassName="font-medium" />
       </DataTable>
     </div>
   );

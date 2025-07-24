@@ -66,10 +66,12 @@ const ContractsList = () => {
 
   const actionBodyTemplate = (rowData) => {
   return (
-    <div className="acciones-contrato">
+    <div className="accionesBotones">
       <Button
         icon="pi pi-eye"
         className="btn-accion btn-ver"
+        tooltip="Ver detalles"
+        tooltipOptions={{ position: 'bottom' }}
         onClick={() => {
           setSelectedContract(rowData);
           setShowDetailDialog(true);
@@ -77,12 +79,16 @@ const ContractsList = () => {
       />
       <Button
         icon="pi pi-download"
-        className="btn-accion btn-descargar"
+        className="btn-accion btn-pdf"
+        tooltip="Descargar PDF"
+        tooltipOptions={{ position: 'bottom' }}
         onClick={() => handleDownloadPDF(rowData)}
       />
       <Button
         icon="pi pi-file-pdf"
         className="btn-accion btn-pdf"
+        tooltip="Vista previa PDF"
+        tooltipOptions={{ position: 'bottom' }}
         onClick={() => handlePreviewPDF(rowData)}
       />
     </div>
@@ -107,9 +113,10 @@ const ContractsList = () => {
   }
 
   return (
-    <div className="p-4">
+    <div id="contractList" className="p-4">
       <Toast ref={toast} />
-      <Card title="Listado de Contratos">
+      <Card>
+        <h2 className="text-xl font-medium text-700">Listado de Contratos</h2>
         <DataTable
           value={contracts}
           paginator
@@ -119,6 +126,7 @@ const ContractsList = () => {
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} contratos"
           emptyMessage="No se encontraron contratos"
           scrollable
+          responsiveLayout="scroll"
           rowClassName={(rowData) => {
             const index = contracts.findIndex(c => c.id === rowData.id);
             return index % 2 === 0 ? 'fila-par' : 'fila-impar';
@@ -129,7 +137,12 @@ const ContractsList = () => {
           <Column field="dni" header="DNI" sortable></Column>
           <Column header="Fecha Inicio" body={dateBodyTemplate} sortable></Column>
           <Column field="monto" header="Monto (USD)" sortable></Column>
-          <Column body={actionBodyTemplate} header="Acciones"></Column>
+          <Column
+            body={actionBodyTemplate}
+            header="Acciones"
+            className="col-acciones"
+            style={{ width: '140px' }} // opcional, para hint
+          />
         </DataTable>
       </Card>
 

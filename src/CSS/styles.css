@@ -31,7 +31,7 @@ h2 {
 
 .content {
   flex: 1;
-  padding: 40px;
+  padding: 40px 120px;
 }
 
 .spinner .p-progress-spinner-circle {
@@ -53,6 +53,15 @@ h2 {
   font-weight: 700;
 }
 
+@media (max-width: 768px) {
+  .content {
+    flex: 1;
+    padding: 0px 40px;
+  }
+  h2 {
+    margin-top: 0.5rem;
+  }
+}
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
   color: #F07900 !important;
   font-size: 1.2rem;
@@ -159,6 +168,64 @@ h2 {
   font-size: 1.5rem !important;
 }
 
+/* Desactiva el botón hamburguesa automático de PrimeReact */
+.p-menubar-button {
+  display: none !important;
+  color: #F07900;
+}
+
+.desktop-navbar {
+  display: block;
+}
+
+.mobile-navbar {
+  display: none;
+  padding: 0.5rem 1rem;
+}
+
+@media (max-width: 1024px) {
+  .desktop-navbar {
+    display: none;
+  }
+  .mobile-navbar {
+    display: flex;
+    align-items: center;
+  }
+  .navbar-custom {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #F07900;
+  }
+  /* Estilos de items menú overlay */
+  .p-overlaypanel .p-menuitem-link, .p-overlaypanel div[role=menuitem] {
+    color: #F07900;
+    font-size: 1rem;
+    user-select: none;
+  }
+  .p-overlaypanel div[role=menuitem]:hover, .p-overlaypanel div[role=menuitem]:focus {
+    background-color: #333;
+    outline: none;
+  }
+  .pi {
+    color: #F07900;
+  }
+  .pi .pi-file {
+    color: #F07900 !important;
+  }
+  .p-overlaypanel .p-overlaypanel-close {
+    display: none;
+  }
+  .p-overlaypanel .p-overlaypanel-content {
+    background-color: #000000;
+  }
+  hr {
+    background-color: purple !important;
+    color: red !important;
+    border-color: #F8A145 !important;
+  }
+  .p-overlaypanel {
+    color: #F07900 !important;
+  }
+}
 .login-container {
   height: 100vh;
   display: flex;
@@ -318,7 +385,6 @@ h2 {
 }
 .p-paginator .p-paginator-pages .p-paginator-page {
   color: #F8A145;
-  background-color: rgba(255, 193, 128, 0.9);
   border: 1px solid #F8A145;
   margin: 0 2px;
   border-radius: 5px;
@@ -456,6 +522,70 @@ h2 {
   margin: 0 auto;
   display: block;
   text-align: center;
+}
+
+.accionesBotones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+.accionesBotones .btn-accion {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50% !important;
+  border: none !important;
+  background-color: transparent;
+  color: white !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+}
+.accionesBotones .btn-accion .pi {
+  font-size: 1.2rem;
+  color: white !important;
+}
+.accionesBotones .btn-accion.btn-ver {
+  background-color: #F8A145 !important;
+}
+.accionesBotones .btn-accion.btn-ver:hover {
+  background-color: rgb(246.1502590674, 136.1606217617, 19.8497409326) !important;
+}
+.accionesBotones .btn-accion.btn-pdf {
+  background-color: #D35100 !important;
+}
+.accionesBotones .btn-accion.btn-pdf:hover {
+  background-color: rgb(160, 61.4218009479, 0) !important;
+}
+
+.col-acciones {
+  width: 110px !important;
+  max-width: 110px !important;
+  text-align: center !important;
+  padding: 0.5rem 0.5rem !important;
+}
+.col-acciones .accionesBotones {
+  gap: 0.5rem;
+}
+.col-acciones .acciones-contrato {
+  gap: 0.3rem;
+  padding: 0;
+  justify-content: center;
+}
+
+.p-datatable .p-datatable-tbody td div p {
+  margin: 0;
+}
+
+.p-datatable .p-datatable-thead > tr > th.col-acciones {
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  text-align: center !important;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  background: none;
 }
 
 .formNewContract {
@@ -813,7 +943,7 @@ form .firma-section .firma-box small {
   background-color: #f9fafb;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
   cursor: crosshair;
-  background: white;
+  background: black;
 }
 
 .firma-acciones {
@@ -887,18 +1017,131 @@ form .firma-section .firma-box small {
   margin: 0 auto !important;
 }
 
+/* Acciones en móvil: columna y color iconos */
+@media (max-width: 768px) {
+  .p-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+  .accionesBotones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .accionesBotones .pi {
+    color: white;
+  }
+}
 .botonMas {
-  padding: 1rem;
-  border: 3px solid #F07900;
-  border-radius: 100%;
-  background-color: #000000;
-  margin-bottom: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background-color: #F07900;
+  color: #F8A145;
+  font-size: 1rem;
+  border: none;
+  padding: 0;
   transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-#administrador .pi {
-  color: #F07900;
-  font-size: 20px;
+.botonMas .pi {
+  font-size: 2rem;
+  color: #ffc180;
+  line-height: 1;
+}
+
+.botonMas:hover {
+  background-color: #F8A145;
+  color: #fff;
+}
+.botonMas:hover .pi {
+  color: white;
+}
+
+.botonMas:active {
+  transform: scale(0.95);
+}
+
+.botonMas .p-button-icon {
+  pointer-events: none;
+}
+
+/* Agrandar botón en pantallas más grandes */
+@media (min-width: 768px) {
+  .botonMas {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.75rem;
+  }
+}
+@media (min-width: 1024px) {
+  .botonMas {
+    font-size: 2rem;
+  }
+}
+/* ===========================================
+   ESTILOS PARA EL DIALOG “Crear Nuevo Usuario”
+   =========================================== */
+.p-dialog.custom-dialog {
+  border-radius: 0.5rem; /* esquinas redondeadas */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  padding: 0; /* eliminamos padding interno default */
+  overflow: hidden;
+  max-width: 400px; /* ancho máximo fijo */
+  width: 95vw; /* ancho responsive */
+  margin: 0 auto; /* centrar en móviles */
+}
+.p-dialog.custom-dialog .p-dialog-content {
+  padding: 1.5rem;
+  /* Espacio adicional bajo cada campo */
+}
+.p-dialog.custom-dialog .p-dialog-content .p-fluid .field {
+  margin-bottom: 1.5rem;
+}
+
+/* CABECERA */
+.p-dialog.custom-dialog .p-dialog-header {
+  padding: 1rem 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Ícono de cierre */
+.p-dialog.custom-dialog .p-dialog-header .p-dialog-header-icons {
+  top: 1rem;
+  right: 1rem;
+}
+
+.p-dialog.custom-dialog .p-dialog-header .p-dialog-header-icon {
+  margin-left: 0.5rem;
+}
+
+/* CONTENIDO */
+.p-dialog.custom-dialog .p-dialog-content {
+  padding: 1.5rem;
+}
+
+.crearUsuarioFooter {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.crearUsuarioFooter .crearUsuarioBtn {
+  background-color: #F07900;
+  border: 1px solid #F07900;
+  color: #ffffff;
+}
+.crearUsuarioFooter .crearUsuarioBtn:hover {
+  background-color: rgb(189, 95.2875, 0);
+  border-color: rgb(189, 95.2875, 0);
 }
 
 .mi-popup {
@@ -908,8 +1151,8 @@ form .firma-section .firma-box small {
 }
 
 #disabled .pi {
-  color: #F07900;
   font-size: 20px;
+  color: #fff;
 }
 
 .mi-titulo {
@@ -932,6 +1175,26 @@ form .firma-section .firma-box small {
   border-color: #d97706 !important;
 }
 
+@media (max-width: 768px) {
+  #disabled .accionesBotones {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  #disabled .btn-accion {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding: 1rem 0.5rem;
+  }
+  .p-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+  #disabled .pi {
+    font-size: 1.2rem;
+  }
+}
 .acciones-contrato {
   display: flex;
   justify-content: space-around;
@@ -969,19 +1232,31 @@ form .firma-section .firma-box small {
   background-color: rgb(160, 61.4218009479, 0);
 }
 
+.p-card .p-card-body {
+  padding: 0;
+}
+
 .register-wrapper {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6rem;
+  padding: 2rem;
   min-height: 80vh;
   margin: 20px;
+}
+
+#register .p-card .p-card-body {
+  padding: 2rem;
 }
 
 .register-card {
   width: 500px;
   margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
   border: 1px solid #F8A145;
   box-shadow: 0 0 12px rgba(240, 121, 0, 0.5);
 }
@@ -1011,8 +1286,15 @@ form .firma-section .firma-box small {
   background-color: rgba(255, 255, 255, 0.08) !important;
   border: 1px solid rgba(248, 161, 69, 0.6) !important;
   color: #F8A145 !important;
-  border-radius: 5px !important;
+  border-radius: 8px !important;
   padding: 0.75rem !important;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+.register-card form .p-field input:focus,
+.register-card form .p-field .p-inputtext:focus {
+  outline: none;
+  box-shadow: 0 0 8px #ff8c19;
 }
 .register-card form .p-field .p-password {
   width: 100% !important;
@@ -1023,10 +1305,15 @@ form .firma-section .firma-box small {
   background-color: rgba(255, 255, 255, 0.08) !important;
   border: 1px solid rgba(248, 161, 69, 0.6) !important;
   color: #F8A145 !important;
-  border-radius: 5px !important;
+  border-radius: 8px !important;
   padding: 0.75rem !important;
   padding-right: 2.5rem !important;
   box-sizing: border-box;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+.register-card form .p-field .p-password input:focus {
+  outline: none;
+  box-shadow: 0 0 8px #ff8c19;
 }
 .register-card form .p-field .p-password .p-password-toggle-icon {
   color: #F8A145 !important;
@@ -1041,11 +1328,12 @@ form .firma-section .firma-box small {
 .register-card form .p-button {
   width: 100% !important;
   padding: 0.75rem !important;
-  border-radius: 5px !important;
+  border-radius: 8px !important;
   font-weight: 600;
   font-size: 1rem;
   box-sizing: border-box;
   margin-top: 15px;
+  height: 55px;
 }
 .register-card form input,
 .register-card form .p-inputtext,
@@ -1056,7 +1344,17 @@ form .firma-section .firma-box small {
   padding: 0;
 }
 .register-card .p-text-secondary {
-  margin-top: 0 !important;
+  margin-top: 10px !important;
+  color: #ccc;
+  font-size: 0.9rem;
+}
+.register-card .p-text-secondary a {
+  color: #ff8c19;
+  font-weight: bold;
+  text-decoration: none;
+}
+.register-card .p-text-secondary a:hover {
+  text-decoration: underline;
 }
 
 .p-card .p-card-content {
@@ -1064,11 +1362,183 @@ form .firma-section .firma-box small {
 }
 
 .BotonRL {
-  background-color: #F07900;
+  background: linear-gradient(90deg, #ff8c19, #d35100);
+  color: white !important;
+  border: none !important;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(255, 140, 25, 0.3);
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .BotonRL:hover {
-  background-color: #ff8c19 !important;
+  transform: scale(1.02);
+  background: linear-gradient(90deg, #ffa733, #f65d00) !important;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 500px;
+}
+
+.read-only-input .p-inputtext {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #495057;
+  cursor: default;
+}
+.read-only-input .p-inputtext:enabled:focus {
+  box-shadow: none;
+  border-color: #dee2e6;
+}
+
+.field {
+  margin-bottom: 1.5rem;
+}
+.field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.field .p-inputtext {
+  width: 100%;
+}
+
+.info-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #000000;
+  color: #F07900;
+  display: flex;
+  align-items: center;
+}
+.info-box i {
+  margin-right: 0.5rem;
+}
+
+/* Media queries abajo */
+@media (max-width: 767px) {
+  .profile-card {
+    max-width: 90%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .profile-card {
+    max-width: 70%;
+  }
+}
+@media (min-width: 1025px) {
+  .profile-card {
+    max-width: 500px;
+  }
+}
+.reports-container {
+  padding: 2rem;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.filter-buttons button {
+  padding: 0.5rem 1rem;
+  border: none;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-buttons button.active {
+  background-color: #F8A145;
+  color: white;
+}
+.filter-buttons button:not(.active) {
+  background-color: #ccc;
+  color: #ffc180 !important;
+}
+.filter-buttons button:not(.active):hover {
+  background-color: #bbb;
+}
+
+.chart-wrapper {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.chart-wrapper canvas {
+  max-height: 500px !important;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.filter-buttons button {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid #D35100;
+  border-radius: 5px;
+  background-color: black !important;
+  color: #D35100;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.filter-buttons button:hover {
+  background-color: #D35100;
+  color: white;
+}
+.filter-buttons button.active {
+  background-color: #D35100;
+  color: white;
+  border-color: #ff8c19;
+  font-weight: 700;
+  box-shadow: 0 0 8px #ff8c19;
+}
+
+.top-vendedores {
+  border-radius: 10px;
+  padding: 2rem;
+}
+.top-vendedores h3 {
+  font-size: 1.5rem;
+  color: #F07900;
+}
+
+/* Estilos alternos para filas de tabla */
+.fila-par {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.fila-impar {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .chart-wrapper {
+    padding: 1rem;
+    max-width: 100%;
+  }
+  .reports-container {
+    padding: 1rem;
+  }
+  .filter-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */

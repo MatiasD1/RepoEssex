@@ -5,14 +5,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6rem;
+  padding: 2rem;
   min-height: 80vh;
   margin: 20px;
 }
-
+#register .p-card .p-card-body
+ {
+    padding: 2rem;
+}
 .register-card {
   width: 500px;
   margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.6); // fondo translúcido
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
   border: 1px solid variables.$Primario;
   box-shadow: 0 0 12px rgba(variables.$Secundario, 0.5);
 
@@ -44,73 +51,106 @@
         background-color: rgba(255, 255, 255, 0.08) !important;
         border: 1px solid rgba(variables.$Primario, 0.6) !important;
         color: variables.$Primario !important;
-        border-radius: 5px !important;
+        border-radius: 8px !important;
         padding: 0.75rem !important;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+        transition: box-shadow 0.3s ease;
+
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 8px #ff8c19;
+        }
       }
 
-      // Estilo específico para el componente Password
-      .p-password {
-  width: 100% !important;
-  display: block;
+     .p-password {
+        width: 100% !important;
+        display: block;
 
-  input {
-    width: 100% !important;
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    border: 1px solid rgba(variables.$Primario, 0.6) !important;
-    color: variables.$Primario !important;
-    border-radius: 5px !important;
-    padding: 0.75rem !important;
-    padding-right: 2.5rem !important; // espacio para el ícono
-    box-sizing: border-box;
-  }
+        input {
+          width: 100% !important;
+          background-color: rgba(255, 255, 255, 0.08) !important;
+          border: 1px solid rgba(variables.$Primario, 0.6) !important;
+          color: variables.$Primario !important;
+          border-radius: 8px !important;
+          padding: 0.75rem !important;
+          padding-right: 2.5rem !important;
+          box-sizing: border-box;
+          box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
 
-  .p-password-toggle-icon {
-    color: variables.$Primario !important; // opcional: para el color del ícono
-    right: 0.75rem;
-  }
+          &:focus {
+            outline: none;
+            box-shadow: 0 0 8px #ff8c19;
+          }
+        }
 
-  .p-password-input {
-    width: 100% !important;
-  }
+        .p-password-toggle-icon {
+          color: variables.$Primario !important;
+          right: 0.75rem;
+        }
 
-  .p-password-panel {
-    display: none !important;
-  }
-}
+        .p-password-input {
+          width: 100% !important;
+        }
 
-}
+        .p-password-panel {
+          display: none !important;
+        }
+      }
+    }
 
-.p-button {
-  width: 100% !important;
-  padding: 0.75rem !important;
-  border-radius: 5px !important;
-  font-weight: 600;
-  font-size: 1rem;
-  box-sizing: border-box;
-  margin-top: 15px;
-}
-input,
-.p-inputtext,
-.p-button {
-  height: 55px; // ajustalo según el diseño
-}
+    .p-button {
+      width: 100% !important;
+      padding: 0.75rem !important;
+      border-radius: 8px !important;
+      font-weight: 600;
+      font-size: 1rem;
+      box-sizing: border-box;
+      margin-top: 15px;
+      height: 55px;
+    }
 
+    input,
+    .p-inputtext,
+    .p-button {
+      height: 55px;
+    }
   }
 
   .p-card-footer {
     padding: 0;
+  }
+
+  .p-text-secondary {
+    margin-top: 10px !important;
+    color: #ccc;
+    font-size: 0.9rem;
+
+    a {
+      color: #ff8c19;
+      font-weight: bold;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
-.p-text-secondary{
-  margin-top: 0 !important; 
+
+.p-card .p-card-content {
+  padding: 10px 0 0 0;
 }
+
+.BotonRL {
+  background: linear-gradient(90deg, #ff8c19, #d35100);
+  color: white !important;
+  border: none !important;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(255, 140, 25, 0.3);
+  transition: background 0.3s ease, transform 0.2s ease;
 }
-.p-card .p-card-content
- {
-    padding: 10px 0 0 0;
-}
-.BotonRL{
-  background-color: variables.$Secundario;
-}
-.BotonRL:hover{
-  background-color: #ff8c19 !important;
+
+.BotonRL:hover {
+  transform: scale(1.02);
+  background: linear-gradient(90deg, #ffa733, #f65d00) !important;
 }

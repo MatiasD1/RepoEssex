@@ -55,21 +55,21 @@ const ContractDetail = ({ contract }) => {
       <Divider />
 
       <Fieldset legend="Firmas" className="mb-4">
-        <div className="flex flex-column md:flex-row justify-content-between gap-4">
-          <div className="flex flex-column align-items-center">
+        <div className="flex flex-column md:flex-row justify-content-between gap-4" style={{maxWidth: '460px', margin: '0 auto'}}>
+          <div className="flex flex-column align-items-center" >
             <label className="block mb-2">Firma del Cliente</label>
             {contract.firmaUsuario ? (
               <img 
                 src={contract.firmaUsuario} 
                 alt="Firma" 
-                style={{ width: '200px', height: '80px', border: '1px solid #ccc',backgroundColor:'white' }} 
+                style={{ width: '180px', height: '70px', border: '1px solid #ccc',backgroundColor:'white' }} 
               />
             ) : (
-              <div style={{ width: '200px', height: '80px', border: '1px dashed #ccc' }} className="flex align-items-center justify-content-center">
+              <div style={{ width: '180px', height: '70px', border: '1px dashed #ccc' }} className="flex align-items-center justify-content-center">
                 <span>Sin firma registrada</span>
               </div>
             )}
-            <p className="mt-2">
+            <p className="mt-2"style={{ fontSize: '0.9rem', textAlign: 'center' }}>
               {contract.nombre} {contract.apellido}
               <br />
               DNI: {contract.dni}
@@ -83,7 +83,7 @@ const ContractDetail = ({ contract }) => {
               <img 
                 src={contract.firmaVendedor} 
                 alt="Firma" 
-                style={{ width: '200px', height: '80px', border: '1px solid #ccc',backgroundColor:'white' }} 
+                style={{ width: '180px', height: '70px', border: '1px solid #ccc',backgroundColor:'white' }} 
               />
             </p>
           </div>
