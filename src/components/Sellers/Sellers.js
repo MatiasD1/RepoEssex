@@ -172,6 +172,7 @@ const Sellers = () => {
         <Column field="email" header="Email del Cliente" sortable headerClassName="font-medium" />
         <Column header="Acciones" bodyClassName={'col-acciones'} body={actionCombinedTemplate} headerClassName="font-medium" />
       </DataTable>
+
     </div>
   );
 };
