@@ -183,7 +183,7 @@ const Navbar = ({ user }) => {
   };
 
   return (
-    <nav className="navbar-container">
+    <nav id="navbar" className="navbar-container">
       {/* Menubar en desktop */}
       <div className="desktop-navbar">
         <Menubar

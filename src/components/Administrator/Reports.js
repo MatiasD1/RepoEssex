@@ -96,6 +96,8 @@ const Reports = () => {
 
   const chartOptions = {
   responsive: true,
+  maintainAspectRatio: true,
+  aspectRatio: 2,
   plugins: {
     legend: {
       labels: {

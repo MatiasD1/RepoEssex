@@ -205,7 +205,7 @@ h2 {
     background-color: #333;
     outline: none;
   }
-  .pi {
+  #navbar .pi {
     color: #F07900;
   }
   .pi .pi-file {
@@ -305,6 +305,52 @@ h2 {
   border-top: 1px solid #F8A145;
 }
 
+@media (max-width: 1024px) {
+  .login-container {
+    padding: 3rem;
+  }
+  .login-card {
+    width: 100% !important;
+    max-width: 90vw !important;
+    padding: 1.5rem !important;
+  }
+}
+@media (max-width: 767px) {
+  .login-container {
+    padding: 1.5rem;
+    align-items: flex-start;
+    padding-top: 4rem;
+  }
+  .login-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none;
+    border: none;
+    padding: 1rem !important;
+  }
+  .login-card .p-card-title {
+    font-size: 1.4rem !important;
+  }
+  .login-card form {
+    gap: 1rem;
+  }
+  .login-card form .p-field label {
+    font-size: 0.9rem;
+  }
+  .login-card form .p-inputtext,
+  .login-card form .p-password-input {
+    font-size: 0.95rem !important;
+  }
+  .login-card form .p-button {
+    font-size: 1rem !important;
+  }
+  .login-card .p-text-secondary {
+    font-size: 0.9rem;
+  }
+  .login-card .p-text-primary {
+    font-size: 0.9rem;
+  }
+}
 .footer {
   display: flex;
   flex-direction: column-reverse;
@@ -530,8 +576,14 @@ h2 {
   align-items: center;
   gap: 0.4rem;
 }
+.accionesBotones i {
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
 .accionesBotones .btn-accion {
-  width: 2.5rem;
+  width: 2.5rem !important;
   height: 2.5rem;
   border-radius: 50% !important;
   border: none !important;
@@ -541,6 +593,12 @@ h2 {
   align-items: center;
   justify-content: center;
   padding: 0 !important;
+}
+.accionesBotones .btn-accion i {
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
 }
 .accionesBotones .btn-accion .pi {
   font-size: 1.2rem;
@@ -561,7 +619,6 @@ h2 {
 
 .col-acciones {
   width: 110px !important;
-  max-width: 110px !important;
   text-align: center !important;
   padding: 0.5rem 0.5rem !important;
 }
@@ -1052,8 +1109,8 @@ form .firma-section .firma-box small {
 }
 
 .botonMas .pi {
-  font-size: 2rem;
-  color: #ffc180;
+  font-size: 1.5rem;
+  color: #fff;
   line-height: 1;
 }
 
@@ -1506,7 +1563,9 @@ form .firma-section .firma-box small {
   margin-right: auto;
 }
 .chart-wrapper canvas {
-  max-height: 500px !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 500px;
 }
 
 .filter-buttons {
@@ -1566,7 +1625,7 @@ form .firma-section .firma-box small {
   }
   .chart-wrapper {
     padding: 1rem;
-    max-width: 100%;
+    max-width: 100% !important;
   }
   .reports-container {
     padding: 1rem;
