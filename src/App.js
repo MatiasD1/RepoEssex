@@ -103,7 +103,7 @@ const App = () => {
             <Route path="/administrator/disabled" element={userRole === "administrator"?<Disabled /> : <Navigate to="/" />}/>
 
             <Route path="/sellers" element={userRole === "sellers" ? <Sellers /> : <Navigate to="/" />} />
-            <Route path="/sellers/new" element={userRole === "sellers" ? <NewContract /> : <Navigate to="/" />} />
+            <Route path="/sellers/new" element={<NewContract />} />
             <Route path="/sellers/contractsList" element={userRole === "sellers" ? <ContractsList /> : <Navigate to="/" />} />
             <Route path="/sellers/ClientVerification" element={<ClientVerfication/>}/>
 

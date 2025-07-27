@@ -4,7 +4,7 @@ import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { getUserContracts, deleteContract, formatDate } from '../Shared/FirebaseContrats';
-import { enviarFormulario, generarCodigo } from '../Shared/EmailCode';
+import { generarCodigo, completarContrato } from '../Verification-Api/ApiVer';
 import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
 import { showSuccess, showError } from '../Administrator/FirebaseSellers';
@@ -51,7 +51,7 @@ const Sellers = () => {
             severity="success"
             className="btn-accion btn-ver"
           />
-        ):(rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "pendiente")?(
+        ):(rowData.firmaVendedor && rowData.status === "pendiente")?(
           <Button
             icon="pi pi-code"
             severity="p-button-secondary"
@@ -61,7 +61,8 @@ const Sellers = () => {
             tooltip="Enviar código"
             onClick={async () => {
               try {
-                await generarCodigo(rowData.id);
+                const data = {idContract:rowData.id,email:rowData.email,telefono:rowData.telefono};
+                await generarCodigo(data);
                 const contractDoc = await getDoc(doc(db, "contracts", rowData.id));
                 if (!contractDoc.exists()) {
                   showError("No se pudo obtener el contrato actualizado");
@@ -88,7 +89,8 @@ const Sellers = () => {
             onClick={async () => {
               try {
                 console.log("Enviando formulario para contrato:", rowData.id, rowData.email);
-                await enviarFormulario(rowData.id, rowData.email);
+                await completarContrato(rowData.email, rowData.id);
+                showSuccess("Formulario enviado con éxito");
               } catch (error) {
                 showError(`Error al enviar el formulario: ${error.message}`);
               }

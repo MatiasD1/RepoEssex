@@ -50,8 +50,8 @@ const NewContract = () => {
     titulo: '', nombre: '', apellido: '', dni: '',
     fechaInicio: '', fechaFin: '', contenido: '', monto: 0,
     incluyePenalizacion: false, firma: '', aceptaTerminos: false,
-    provincia: '', localidad: '', codPostal: '', altura: '', email: '',telefono:'',
-    emailEmpresa:user?.email, nombreEmpresa:user?.nombre, firmaVendedor: '', firmaUsuario: ''
+    provincia: '', localidad: '', codPostal: '', direccion:'', altura: '', email: '',telefono:'',
+    emailEmpresa:user?.email, nombreEmpresa:user?.nombre, firmaVendedor: "", firmaUsuario: ""
   });
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -60,13 +60,7 @@ const NewContract = () => {
 
   const handleSaveSignature = () => {
     if (signatureRef.current.isEmpty()) return showError('Proporcione una firma');
-
-    if (esEmpresa) {
-      setFormData(prev => ({ ...prev, firmaVendedor: signatureRef.current.toDataURL() }));
-    } else {
-      setFormData(prev => ({ ...prev, firmaUsuario: signatureRef.current.toDataURL() }));
-    }
-
+    setFormData(prev => ({ ...prev, firmaVendedor: signatureRef.current.toDataURL() }));
     setShowSignatureDialog(false);
     showSuccess('Firma guardada');
   };
@@ -79,7 +73,7 @@ const NewContract = () => {
       } else {
         const ref = doc(db, "contracts", contractId);
         await updateDoc(ref, {
-          firmaUsuario: formData.firmaUsuario,
+          firmaUsuario: "",
           aceptaTerminos: formData.aceptaTerminos,
           nombre: formData.nombre,
           apellido: formData.apellido,
@@ -89,6 +83,7 @@ const NewContract = () => {
           provincia: formData.provincia,
           localidad: formData.localidad,
           codPostal: formData.codPostal,
+          direccion: formData.direccion,
           altura: formData.altura,
           status:'pendiente'
         });
@@ -135,7 +130,7 @@ const NewContract = () => {
                 <InputNumber name="monto" value={formData.monto} onValueChange={(e) => setFormData({ ...formData, monto: e.value })} mode="currency" currency="USD" placeholder="Monto Mensual" required />
                 <Calendar name="fechaInicio" value={formData.fechaInicio} onChange={handleChange} placeholder="Fecha de Inicio" showIcon required />
                 <Calendar name="fechaFin" value={formData.fechaFin} onChange={handleChange} placeholder="Fecha de Fin" showIcon required />
-                 <InputText name="email" value={formData.email} onChange={handleChange} placeholder="Email del Cliente" />
+                <InputText name="email" value={formData.email} onChange={handleChange} placeholder="Email del Cliente" />
               </>
             )}
 
@@ -177,6 +172,7 @@ const NewContract = () => {
           />
           <InputText name="localidad" value={formData.localidad} onChange={handleChange} placeholder="Localidad" disabled={esEmpresa} />
           <InputText name="codPostal" value={formData.codPostal} onChange={handleChange} placeholder="Código Postal" disabled={esEmpresa} />
+          <InputText name="direccion" value={formData.direccion} onChange={handleChange} placeholder="dirección" disabled={esEmpresa}/>
           <InputNumber name="altura" value={formData.altura} onValueChange={(e) => setFormData({ ...formData, altura: e.value })} placeholder="Altura" disabled={esEmpresa} />
 
           <div className="campoCheckbox">
@@ -185,41 +181,32 @@ const NewContract = () => {
           </div>
 
           {/* Firma de la empresa (solo visual si es usuario) */}
-          {!esEmpresa && formData.firmaVendedor && (
+          {!esEmpresa? (
             <div className="firma-box">
               <label>Firma de la Empresa:</label>
               <img src={formData.firmaVendedor} alt="Firma Empresa" className="firma-imagen" />
             </div>
+          ):(
+            <div className="firma-box">
+              <label>Firma de la Empresa:</label>
+              <img src={formData.firmaVendedor} alt="Firma Empresa" className="firma-imagen" />
+              <Button
+                label="Firmar"
+                icon="pi pi-pencil"
+                onClick={() => setShowSignatureDialog(true)}
+                type="button"
+                className="mt-2 botonForm"
+              />
+            </div>
           )}
 
-
-          {/* Firma del usuario o empresa según modo */}
-          <div className="firma-box">
-            <label>{esEmpresa ? 'Firma de la Empresa:' : 'Firma del Usuario:'}</label>
-            {(esEmpresa ? formData.firmaVendedor : formData.firmaUsuario) ? (
-              <img
-                src={esEmpresa ? formData.firmaVendedor : formData.firmaUsuario}
-                alt="Firma"
-                className="firma-imagen"
-              />
-            ) : (
-              <div className="firma-imagen">Sin firma</div>
-            )}
-            <Button
-              label="Firmar"
-              icon="pi pi-pencil"
-              onClick={() => setShowSignatureDialog(true)}
-              type="button"
-              className="mt-2 botonForm"
-            />
-          </div>
 
           <div className="botones">
             <Button label="Cancelar" className="p-button-secondary" onClick={() => navigate(esEmpresa ? '/sellers' : '/')} disabled={loading} />
             {esEmpresa ? (
               <Button label={loading ? 'Guardando...' : 'Guardar Contrato'} type="submit" loading={loading} disabled={!formData.aceptaTerminos || !formData.firmaVendedor} />
             ) : (
-              <Button label="Aceptar y Firmar" icon="pi pi-check" onClick={handleSubmit} type="button" disabled={!formData.firmaUsuario} />
+              <Button label="Aceptar y Firmar" icon="pi pi-check" onClick={handleSubmit} type="button" disabled={!formData.aceptaTerminos} />
             )}
           </div>
         </form>
