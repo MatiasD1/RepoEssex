@@ -1,4 +1,4 @@
-import { InputNumber } from "primereact/inputnumber";
+import { InputText } from "primereact/inputtext";
 import { Panel } from "primereact/panel";
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ import { verifcarCódigo } from "../Verification-Api/ApiVer";
 
 const ClientVerification = () => {
   const [contract, setContract] = useState(null);
-  const [code, setCode] = useState(null);
+  const [code, setCode] = useState("");
   const [verified, setVerified] = useState(false);
   const location = useLocation();
 
@@ -38,8 +38,6 @@ const ClientVerification = () => {
     }
   }, [location]);
 
-  
-
   return (
     <div>
       <Panel
@@ -51,9 +49,9 @@ const ClientVerification = () => {
           <p className="text-center">
             Ingresá el código de verificación enviado a tu email.
           </p>
-          <InputNumber
+          <InputText
             value={code}
-            onValueChange={(e) => setCode(e.value)}
+            onValueChange={(e) => setCode(e.target.value)}
             placeholder="Código de verificación"
             className="w-full md:w-20rem mb-4"
             buttonLayout="horizontal"
@@ -61,11 +59,23 @@ const ClientVerification = () => {
           <Button
             label="Verificar"
             className="p-button-success"
-            onClick={async()=>{
-              await verifcarCódigo(contract.id,code);
-              showSuccess("Código verificado con éxito");
-              setVerified(true);
-              await updateDoc(doc(db,"contracts",contract.id),{verificado:true});
+            onClick={async () => {
+              if (!code || code.trim() === "") {
+                showError("Ingresá un código válido");
+                return;
+              }
+              try {
+                const esValido = await verifcarCódigo(contract.id, code.trim());
+                if (!esValido) {
+                  showError("Código incorrecto");
+                  return;
+                }
+                showSuccess("Código verificado con éxito");
+                setVerified(true);
+                await updateDoc(doc(db, "contracts", contract.id), { verificado: true });
+              } catch (error) {
+                showError("Error al verificar el código");
+              }
             }}
           />
         </div>
