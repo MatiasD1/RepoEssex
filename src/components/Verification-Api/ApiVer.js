@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:8080/api/verificacion";
+const url = "https://api-essex.onrender.com/api/verificacion";
 
 export const completarContrato = async (email, idContrato)=>{
     try {
