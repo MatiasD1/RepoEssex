@@ -31,7 +31,7 @@ export const generarCodigoSms = async (telefono) =>{
 
 export const verifcarCódigo = async (idContrato, codigo)=>{
     try {
-        const response = await axios.post(`${url}/verificar-codigo/${idContrato}`, codigo);
+        const response = await axios.post(`${url}/verificar-codigo/${idContrato}?codigoIngresado=${encodeURIComponent(codigo)}`);
         return response.data;
     } catch (error) {
         console.log("Error al verificar el código: "+ error);

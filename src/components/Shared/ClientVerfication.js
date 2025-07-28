@@ -82,6 +82,7 @@ const ClientVerification = () => {
                 return;
               }
               try {
+                console.log("Codigo ingresado :", code);
                 const esValido = await verifcarCódigo(contract.id, code.trim());
                 if (!esValido) {
                   showError("Código incorrecto");
