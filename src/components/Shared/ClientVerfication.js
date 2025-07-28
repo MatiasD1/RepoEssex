@@ -7,6 +7,7 @@ import { showError, showSuccess } from "../Administrator/FirebaseSellers";
 import ContractDetail from "./ContractDetail";
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { verifcarCódigo } from "../Verification-Api/ApiVer";
 
 const ClientVerification = () => {
   const [contract, setContract] = useState(null);
@@ -17,7 +18,6 @@ const ClientVerification = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get("id");
-    const initialCode = queryParams.get("code");
 
     const fetchContract = async () => {
       try {
@@ -26,11 +26,7 @@ const ClientVerification = () => {
           showError("Contrato no encontrado");
           return;
         }
-
         setContract({ ...contractDoc.data(), id: contractDoc.id });
-        if (initialCode) {
-          setCode(Number(initialCode));
-        }
       } catch (error) {
         showError("Error al obtener el contrato");
         console.error(error);
@@ -42,17 +38,7 @@ const ClientVerification = () => {
     }
   }, [location]);
 
-  const handleVerify = async () => {
-    if (code !== null && contract && Number(code) === Number(contract.codigoVerificacion)) {
-      showSuccess("Verificación exitosa");
-      setVerified(true);
-      await updateDoc(doc(db, "contracts", contract.id), {
-        status: "activo",
-      });
-    } else {
-      showError("Código incorrecto");
-    }
-  };
+  
 
   return (
     <div>
@@ -75,7 +61,12 @@ const ClientVerification = () => {
           <Button
             label="Verificar"
             className="p-button-success"
-            onClick={handleVerify}
+            onClick={async()=>{
+              await verifcarCódigo(contract.id,code);
+              showSuccess("Código verificado con éxito");
+              setVerified(true);
+              await updateDoc(doc(db,"contracts",contract.id),{verificado:true});
+            }}
           />
         </div>
       </Panel>
