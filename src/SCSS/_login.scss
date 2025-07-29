@@ -91,3 +91,60 @@
         border-top: 1px solid variables.$Primario;
   }
 }
+
+@media (max-width: 1024px) {
+  .login-container {
+    padding: 3rem;
+  }
+
+  .login-card {
+    width: 100% !important;
+    max-width: 90vw !important;
+    padding: 1.5rem !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .login-container {
+    padding: 1.5rem;
+    align-items: flex-start;
+    padding-top: 4rem;
+  }
+
+  .login-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none;
+    border: none;
+    padding: 1rem !important;
+
+    .p-card-title {
+      font-size: 1.4rem !important;
+    }
+
+    form {
+      gap: 1rem;
+
+      .p-field label {
+        font-size: 0.9rem;
+      }
+
+      .p-inputtext,
+      .p-password-input {
+        font-size: 0.95rem !important;
+      }
+
+      .p-button {
+        font-size: 1rem !important;
+      }
+    }
+
+    .p-text-secondary {
+      font-size: 0.9rem;
+    }
+
+    .p-text-primary {
+      font-size: 0.9rem;
+    }
+  }
+}

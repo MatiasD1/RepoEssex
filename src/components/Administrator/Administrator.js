@@ -196,6 +196,7 @@ const Administrator = () => {
           return index % 2 === 0 ? 'fila-par' : 'fila-impar';
         }}
       >
+
         <Column field='email' header="Email" />
         <Column field='role' header="Rol" />
         <Column
@@ -238,11 +239,6 @@ const Administrator = () => {
           style={{ width: '110px', whiteSpace: 'nowrap' }}
           bodyStyle={{ textAlign: 'center'}}
         />
-
-
-
-
-
       </DataTable>
     </div>
   );

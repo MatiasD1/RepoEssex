@@ -14,7 +14,7 @@
 
   .accionesBotones {
     display: flex;
-    flex-direction: column;
+    flex-direction: row !important;
     align-items: center;
     gap: 0.5rem;
 
@@ -43,8 +43,8 @@
 }
 
 .botonMas .pi {
-  font-size: 2rem;       // ícono aún más grande
-  color: variables.$Zero;
+  font-size: 1.5rem;       // ícono aún más grande
+  color: #fff;
   line-height: 1;
 }
 
@@ -142,4 +142,5 @@
     }
   }
 }
+
 
