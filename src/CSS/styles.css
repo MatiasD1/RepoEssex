@@ -205,7 +205,8 @@ h2 {
     background-color: #333;
     outline: none;
   }
-  .pi {
+
+  #navbar .pi {
     color: #F07900;
   }
   .pi .pi-file {
@@ -305,6 +306,52 @@ h2 {
   border-top: 1px solid #F8A145;
 }
 
+@media (max-width: 1024px) {
+  .login-container {
+    padding: 3rem;
+  }
+  .login-card {
+    width: 100% !important;
+    max-width: 90vw !important;
+    padding: 1.5rem !important;
+  }
+}
+@media (max-width: 767px) {
+  .login-container {
+    padding: 1.5rem;
+    align-items: flex-start;
+    padding-top: 4rem;
+  }
+  .login-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none;
+    border: none;
+    padding: 1rem !important;
+  }
+  .login-card .p-card-title {
+    font-size: 1.4rem !important;
+  }
+  .login-card form {
+    gap: 1rem;
+  }
+  .login-card form .p-field label {
+    font-size: 0.9rem;
+  }
+  .login-card form .p-inputtext,
+  .login-card form .p-password-input {
+    font-size: 0.95rem !important;
+  }
+  .login-card form .p-button {
+    font-size: 1rem !important;
+  }
+  .login-card .p-text-secondary {
+    font-size: 0.9rem;
+  }
+  .login-card .p-text-primary {
+    font-size: 0.9rem;
+  }
+}
 .footer {
   display: flex;
   flex-direction: column-reverse;
@@ -530,8 +577,15 @@ h2 {
   align-items: center;
   gap: 0.4rem;
 }
+.accionesBotones i {
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
 .accionesBotones .btn-accion {
-  width: 2.5rem;
+  width: 2.5rem !important;
   height: 2.5rem;
   border-radius: 50% !important;
   border: none !important;
@@ -542,6 +596,13 @@ h2 {
   justify-content: center;
   padding: 0 !important;
 }
+.accionesBotones .btn-accion i {
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
 .accionesBotones .btn-accion .pi {
   font-size: 1.2rem;
   color: white !important;
@@ -1025,7 +1086,7 @@ form .firma-section .firma-box small {
   }
   .accionesBotones {
     display: flex;
-    flex-direction: column;
+    flex-direction: row !important;
     align-items: center;
     gap: 0.5rem;
   }
@@ -1052,8 +1113,8 @@ form .firma-section .firma-box small {
 }
 
 .botonMas .pi {
-  font-size: 2rem;
-  color: #ffc180;
+  font-size: 1.5rem;
+  color: #fff;
   line-height: 1;
 }
 
@@ -1236,6 +1297,35 @@ form .firma-section .firma-box small {
   padding: 0;
 }
 
+@media (max-width: 768px) {
+  .p-paginator {
+    font-size: 0.75rem;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page,
+  .p-paginator .p-paginator-first,
+  .p-paginator .p-paginator-prev,
+  .p-paginator .p-paginator-next,
+  .p-paginator .p-paginator-last {
+    font-size: 0.75rem;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .p-paginator .p-paginator-rpp-options {
+    font-size: 0.75rem;
+  }
+  .p-paginator .p-dropdown .p-dropdown-label {
+    font-size: 0.75rem;
+    padding: 0.25rem;
+  }
+  .p-paginator .p-dropdown-label {
+    padding: 0.25rem;
+  }
+  .p-paginator .p-paginator-current {
+    display: none !important;
+  }
+}
 .register-wrapper {
   height: 100vh;
   display: flex;
@@ -1478,7 +1568,9 @@ form .firma-section .firma-box small {
   margin-right: auto;
 }
 .chart-wrapper canvas {
-  max-height: 500px !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 500px;
 }
 
 .filter-buttons {
@@ -1528,9 +1620,17 @@ form .firma-section .firma-box small {
 
 /* Responsive */
 @media (max-width: 767px) {
+  h2 {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem;
+  }
+  .top-vendedores {
+    border-radius: 10px;
+    padding: 0;
+  }
   .chart-wrapper {
     padding: 1rem;
-    max-width: 100%;
+    max-width: 100% !important;
   }
   .reports-container {
     padding: 1rem;
