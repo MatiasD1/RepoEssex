@@ -58,11 +58,6 @@ const Navbar = ({ user }) => {
           icon: 'pi pi-plus',
           command: () => navigate('/sellers/new', { state: { user } })
         },
-      /*  {
-          label: 'Mis Contratos',
-          icon: 'pi pi-list',
-          command: () => navigate('/')
-        },  */
         {
           label: 'Plantillas',
           icon: 'pi pi-copy',
@@ -84,11 +79,6 @@ const Navbar = ({ user }) => {
           icon: 'pi pi-folder-open',
           command: () => navigate('/administrator/contractsListAdmin')
         },
-     /*   {
-          label: 'Vendedores',
-          icon: 'pi pi-users',
-          command: () => navigate('/')
-        },   */
         {
           label: 'Reportes',
           icon: 'pi pi-chart-bar',

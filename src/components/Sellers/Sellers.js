@@ -4,30 +4,17 @@ import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { getUserContracts, deleteContract, formatDate } from '../Shared/FirebaseContrats';
+import { generarCodigo, completarContrato } from '../Verification-Api/ApiVer';
 import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
-import { Dialog } from 'primereact/dialog';
-import SignatureCanvas from 'react-signature-canvas';
-import { showSuccess } from '../Administrator/FirebaseSellers';
-import { doc, updateDoc } from 'firebase/firestore';
+import { showSuccess, showError } from '../Administrator/FirebaseSellers';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 const Sellers = () => {
   const [contracts, setContracts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const signatureRef = useRef(null);
-  const [showFirmaDialog, setShowFirmaDialog] = useState(false)
-  const [firmaClienteTarget, setFirmaClienteTarget] = useState(null);
   const toast = useRef(null);
-
-  const showError = (message) => {
-    toast.current?.show({
-      severity: 'error',
-      summary: 'Error',
-      detail: message,
-      life: 5000
-    });
-  };
 
   const handleDelete = async (contractId) => {
     try {
@@ -51,109 +38,84 @@ const Sellers = () => {
   };
 
   const statusBodyTemplate = (rowData) => {
-    const severity = rowData.status === 'activo' ? 'success' : 'warning';
+    const severity = rowData.status === 'pendiente' ? 'warning' : rowData.status === 'activo' ? 'success' : 'danger';
     return <Tag value={rowData.status} severity={severity} />;
   };
 
-  const actionBodyTemplate = (rowData) => (
-    <Button
-      icon="pi pi-trash"
-      severity="danger"
-      rounded
-      outlined
-      tooltip="Eliminar contrato"
-      onClick={() => handleDelete(rowData.id)}
-    />
-  );
-  
-  
-  const firmaTemplate = (rowData) => {
-  return rowData.firmaCliente ? (
-    <p>Firmado</p>
-  ) : (
-    <Button
-      icon="pi pi-pencil"
-      severity="success"
-      rounded
-      outlined
-      tooltip="Firmar contrato"
-      onClick={() => {
-        setFirmaClienteTarget(rowData); 
-        setShowFirmaDialog(true);
-      }}
-    />
-  );
-};
+  const actionCombinedTemplate = (rowData) => {
+   return ( 
+    <div className="accionesBotones">
+      {(rowData.firmaUsuario && rowData.firmaVendedor && rowData.status === "activo")?(
+          <Tag
+            value="Firmado"
+            severity="success"
+            className="btn-accion btn-ver"
+          />
+        ):(rowData.firmaVendedor && rowData.status === "pendiente")?(
+          <Button
+            icon="pi pi-code"
+            severity="p-button-secondary"
+            className="btn-accion btn-ver"
+            rounded
+            outlined
+            tooltip="Enviar código"
+            onClick={async () => {
+              try {
+                const data = {idContract:rowData.id,email:rowData.email,telefono:rowData.telefono};
+                await generarCodigo(data);
+                const contractDoc = await getDoc(doc(db, "contracts", rowData.id));
+                if (!contractDoc.exists()) {
+                  showError("No se pudo obtener el contrato actualizado");
+                  return;
+                }
+                const updatedContract = contractDoc.data();
+                setContracts(prev =>
+                  prev.map(c => (c.id === rowData.id ? { ...c, ...updatedContract } : c))
+                );
+                showSuccess("Código enviado correctamente");
+              } catch (error) {
+                showError(`Error al enviar el código: ${error.message}`);
+              }
+            }}
+          />
+        ):(
+          <Button
+            icon="pi pi-file-edit"
+            severity="p-button-secondary"
+            className="btn-accion btn-ver"
+            rounded
+            outlined
+            tooltip="Enviar formulario"
+            onClick={async () => {
+              try {
+                console.log("Enviando formulario para contrato:", rowData.id, rowData.email);
+                await completarContrato(rowData.email, rowData.id);
+                showSuccess("Formulario enviado con éxito");
+              } catch (error) {
+                showError(`Error al enviar el formulario: ${error.message}`);
+              }
+            }}
+          />
+        )  
+      }
 
-
-  const handleSaveSignature = async () => {
-    if (signatureRef.current.isEmpty()) {
-      showError('Por favor, proporcione una firma');
-      return;
-    }
-    const signatureData = signatureRef.current.toDataURL();
-    try {
-      const docRef = doc(db, "contracts", firmaClienteTarget.id);
-      await updateDoc(docRef, { firmaCliente: signatureData, status:"activo"});
-      setContracts((prev) =>
-        prev.map((c) =>
-          c.id === firmaClienteTarget.id ? { ...c, firmaCliente: signatureData } : c
-        )
-      );
-      setShowFirmaDialog(false);
-      showSuccess("Firma guardada correctamente");
-    } catch (error) {
-      console.error("Error guardando firma:", error);
-      showError("Error al guardar la firma");
-    }
+      <Button
+        icon="pi pi-trash"
+        className="btn-accion btn-pdf"
+        severity="danger"
+        rounded
+        outlined
+        tooltip="Eliminar contrato"
+        onClick={() => handleDelete(rowData.id)}
+      />
+    </div>
+    );
   };
-
-  const handleClearSignature = () => {
-    signatureRef.current.clear();
-  };
-
-  const accionesBodyTemplate = (rowData) => (
-  <div className="accionesBotones">
-    <Button
-      icon="pi pi-pencil"
-      className="btn-accion btn-ver"
-      tooltip="Firmar contrato"
-      tooltipOptions={{ position: 'bottom' }}
-      onClick={() => {
-        setFirmaClienteTarget(rowData);
-        setShowFirmaDialog(true);
-      }}
-      disabled={!!rowData.firmaCliente}
-    />
-    <Button
-      icon="pi pi-trash"
-      className="btn-accion btn-pdf"
-      tooltip="Eliminar contrato"
-      tooltipOptions={{ position: 'bottom' }}
-      onClick={() => handleDelete(rowData.id)}
-    />
-  </div>
-);
-
-  const columns = [
-    { field: 'titulo', header: 'Título' },
-     {
-    field: 'contenido',
-    header: 'Contenido',
-    body: (rowData) => (
-      <div dangerouslySetInnerHTML={{ __html: rowData.contenido }} />
-    )
-  },
-    { field: 'createdAt', header: 'Fecha Creación' },
-    { field: 'status', header: 'Estado', body: statusBodyTemplate },
-    { header: 'Acciones', body: accionesBodyTemplate }
-
-  ];
 
   useEffect(() => {
-    const fetchContracts = async (userId) => {
+    const fetchContracts = async () => {
       try {
-        const contractsData = await getUserContracts(userId);
+        const contractsData = await getUserContracts();
         if (!contractsData || contractsData.length === 0) {
           showError("No se encontraron contratos para este usuario");
           return;
@@ -176,7 +138,6 @@ const Sellers = () => {
     };
 
     fetchContracts();
-    
   }, []);
 
   if (loading) {
@@ -193,7 +154,7 @@ const Sellers = () => {
       <div className="flex justify-content-between align-items-center mb-4">
         <h2 className="text-xl font-medium text-700">Mis Contratos</h2>
       </div>
-    
+
       <DataTable
         value={contracts}
         dataKey="id"
@@ -207,53 +168,13 @@ const Sellers = () => {
           return index % 2 === 0 ? 'fila-par' : 'fila-impar';
         }}
       >
-
-       {columns.map((col) => (
-        <Column
-          key={col.field || col.header}
-          field={col.field}
-          header={col.header}
-          body={col.body}
-          sortable={col.header !== 'Acciones'} // La columna acciones no es ordenable
-          headerClassName={col.header === 'Acciones' ? 'col-acciones font-medium' : 'font-medium'}
-          bodyClassName={col.header === 'Acciones' ? 'col-acciones' : ''}
-        />
-      ))}
-
+        <Column field="titulo" header="Título" sortable headerClassName="font-medium" />
+        <Column field="contenido" header="Contenido" sortable headerClassName="font-medium" />
+        <Column field="status" header="Estado" sortable body={statusBodyTemplate} headerClassName="font-medium" />
+        <Column field="email" header="Email del Cliente" sortable headerClassName="font-medium" />
+        <Column header="Acciones" bodyClassName={'col-acciones'} body={actionCombinedTemplate} headerClassName="font-medium" />
       </DataTable>
 
-      {/*Firma del cliente*/}
-            <Dialog
-              header="Firma Digital"
-              visible={showFirmaDialog}
-              style={{ width: '80vw' }}
-              onHide={() => setShowFirmaDialog(false)}
-            >
-              <div className="signature-container">
-                <SignatureCanvas
-                  ref={signatureRef}
-                  canvasProps={{
-                    width: 500,
-                    height: 200,
-                    className: 'signature-canvas'
-                  }}
-                />
-                <div className="flex justify-content-end gap-2 mt-3">
-                  <Button
-                    label="Limpiar"
-                    icon="pi pi-trash"
-                    onClick={handleClearSignature}
-                    className="p-button-danger botonEliminar"
-                  />
-                  <Button
-                    label="Guardar Firma"
-                    icon="pi pi-check"
-                    onClick={handleSaveSignature}
-                    className="p-button-success"
-                  />
-                </div>
-              </div>
-            </Dialog>
     </div>
   );
 };

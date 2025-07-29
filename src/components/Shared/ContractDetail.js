@@ -55,40 +55,36 @@ const ContractDetail = ({ contract }) => {
       <Divider />
 
       <Fieldset legend="Firmas" className="mb-4">
-        <div 
-          className="flex flex-column md:flex-row justify-content-between gap-4"
-          style={{ maxWidth: '460px', margin: '0 auto' }} // limita el ancho total y centra
-        >
-          <div className="flex flex-column align-items-center" style={{ flex: '1 1 45%', maxWidth: '220px' }}>
+        <div className="flex flex-column md:flex-row justify-content-between gap-4" style={{maxWidth: '460px', margin: '0 auto'}}>
+          <div className="flex flex-column align-items-center" >
             <label className="block mb-2">Firma del Cliente</label>
-            {contract.firma ? (
+            {contract.firmaUsuario ? (
               <img 
-                src={contract.firma} 
+                src={contract.firmaUsuario} 
                 alt="Firma" 
-                style={{ width: '180px', height: '70px', border: '1px solid #ccc' }} 
+                style={{ width: '180px', height: '70px', border: '1px solid #ccc',backgroundColor:'white' }} 
               />
             ) : (
-              <div 
-                style={{ width: '180px', height: '70px', border: '1px dashed #ccc' }} 
-                className="flex align-items-center justify-content-center"
-              >
+              <div style={{ width: '180px', height: '70px', border: '1px dashed #ccc' }} className="flex align-items-center justify-content-center">
                 <span>Sin firma registrada</span>
               </div>
             )}
-            <p className="mt-2" style={{ fontSize: '0.9rem', textAlign: 'center' }}>
+            <p className="mt-2"style={{ fontSize: '0.9rem', textAlign: 'center' }}>
               {contract.nombre} {contract.apellido}
               <br />
               DNI: {contract.dni}
             </p>
           </div>
           
-          <div className="flex flex-column align-items-center" style={{ flex: '1 1 45%', maxWidth: '220px' }}>
+          <div className="flex flex-column align-items-center">
             <label className="block mb-2">Firma del Representante</label>
-            <div style={{ width: '180px', height: '70px', borderBottom: '1px solid #000' }}></div>
-            <p className="mt-2" style={{ fontSize: '0.9rem', textAlign: 'center' }}>
-              {contract.userName || 'Representante'}
-              <br />
-              [Cargo]
+            <p className="mt-2">
+              {contract.nombreEmpresa || 'Representante'}
+              <img 
+                src={contract.firmaVendedor} 
+                alt="Firma" 
+                style={{ width: '180px', height: '70px', border: '1px solid #ccc',backgroundColor:'white' }} 
+              />
             </p>
           </div>
         </div>

@@ -34,25 +34,6 @@ const Disabled = () => {
             });
     }, []);
 
-    const confirmAction = (message, callback) => {
-        Swal.fire({
-        title: '¿Eliminar usuario?',
-        text: 'Esta acción no se puede deshacer',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Eliminar',
-        cancelButtonText: 'Cancelar',
-        customClass: {
-            popup: 'mi-popup',
-            title: 'mi-titulo',
-            confirmButton: 'mi-boton-confirmar',
-            cancelButton: 'mi-boton-cancelar',
-            icon: 'iconoSA', 
-        }
-        });
-
-    };
-
     const actionTemplate = (rowData) => (
   <div className="accionesBotones">
     <Button
@@ -111,7 +92,6 @@ const Disabled = () => {
 );
 
 
-
     if (loading) {
         return (
             <div className="flex justify-content-center align-items-center" style={{ height: '60px' }}>
@@ -125,23 +105,23 @@ const Disabled = () => {
             <h2 className='text-2xl font-bold mb-4'>Usuarios Deshabilitados</h2>
             {users.length > 0 ? (
                 <DataTable
-                  value={users}
-                  paginator
-                  rows={10}
-                  rowsPerPageOptions={[5, 10, 25]}
-                  responsiveLayout="scroll"  // <--- clave para responsividad
-                  tableStyle={{ minWidth: '50rem' }}
-                  rowClassName={(rowData) => {
-                    const index = users.findIndex(u => u.id === rowData.id);
-                    return index % 2 === 0 ? 'fila-par' : 'fila-impar';
-                  }}
-                >
+                    value={users}
+                    paginator
+                    rows={10}
+                    rowsPerPageOptions={[5, 10, 25]}
+                    responsiveLayout="scroll"
+                    tableStyle={{ minWidth: '50rem' }}
+                    rowClassName={(rowData) => {
+                        const index = users.findIndex(u => u.id === rowData.id);
+                        return index % 2 === 0 ? 'fila-par' : 'fila-impar';
+                    }}
+                    >
                     <Column field='email' header='Email' sortable />
                     <Column field='role' header='Rol' sortable />
                     <Column field='name' header='Nombre' sortable />
                     <Column 
-                        header="Acciones" 
-                        body={actionTemplate} 
+                        header='Acciones' 
+                        body={actionTemplate}
                         style={{ width: '150px' }}
                     />
                 </DataTable>

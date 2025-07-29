@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "compat-api/css": "off",
+    "create-element-svg": "off"
+  },
+  "browserslist": [
+    "defaults",
+    "not ie 11",
+    "not and_ff <= 139",
+    "not firefox <= 138",
+    "not ios_saf <= 18.5",
+    "not safari <= 18.5"
+  ]
+}

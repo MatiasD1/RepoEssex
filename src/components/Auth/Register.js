@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from '../../firebase';
@@ -8,7 +8,6 @@ import { Card } from 'primereact/card';
 import { Message } from 'primereact/message';
 import { Divider } from 'primereact/divider';
 import { Password } from 'primereact/password';
-import { Dropdown } from 'primereact/dropdown';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -18,10 +17,6 @@ const Register = () => {
   const [apellido, setApellido] = useState('');
 
 
-  const roles = [
-    { label: 'Vendedor', value: 'sellers' },
-    { label: 'Administrador', value: 'administrator' }
-  ];
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -31,7 +26,7 @@ const Register = () => {
 
       await setDoc(doc(db, "users", user.uid), {
       email: email,
-      role: "sellers", // Asigno el rol seller automáticamente
+      role: "sellers", 
       nombre: nombre,
       apellido: apellido,
       status: "active",

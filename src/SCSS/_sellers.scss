@@ -183,12 +183,14 @@
   justify-content: center;
   align-items: center;
   gap: 0.4rem;
+
   i {
       font-size: 1.2rem;
       margin: 0;
       padding: 0;
       line-height: 1;
     }
+
   .btn-accion {
     width: 2.5rem !important;
     height: 2.5rem;
@@ -200,6 +202,7 @@
     align-items: center;
     justify-content: center;
     padding: 0 !important;
+
     i {
       font-size: 1.2rem;
       margin: 0;
@@ -229,9 +232,10 @@
   }
 }
 
+
 .col-acciones {
   width: 110px !important;
-
+  max-width: 110px !important;
   text-align: center !important;
   padding: 0.5rem 0.5rem !important;
 

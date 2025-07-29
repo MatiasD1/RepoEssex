@@ -205,6 +205,7 @@ h2 {
     background-color: #333;
     outline: none;
   }
+
   #navbar .pi {
     color: #F07900;
   }
@@ -582,6 +583,7 @@ h2 {
   padding: 0;
   line-height: 1;
 }
+
 .accionesBotones .btn-accion {
   width: 2.5rem !important;
   height: 2.5rem;
@@ -600,6 +602,7 @@ h2 {
   padding: 0;
   line-height: 1;
 }
+
 .accionesBotones .btn-accion .pi {
   font-size: 1.2rem;
   color: white !important;
@@ -619,6 +622,7 @@ h2 {
 
 .col-acciones {
   width: 110px !important;
+  max-width: 110px !important;
   text-align: center !important;
   padding: 0.5rem 0.5rem !important;
 }
@@ -1340,6 +1344,7 @@ form .firma-section .firma-box small {
   width: 500px;
   margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   border-radius: 12px;
   border: 1px solid #F8A145;

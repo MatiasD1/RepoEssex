@@ -11,29 +11,31 @@ import { showError } from "../Administrator/FirebaseSellers";
     const contractDoc = {
       titulo: contractData.titulo,
       contenido: contractData.contenido,
-      nombre: contractData.nombre,
-      apellido: contractData.apellido,
-      dni: contractData.dni,
+      nombre: contractData.nombre || "",
+      apellido: contractData.apellido || "",
+      dni: contractData.dni || "",
       monto: contractData.monto,
       fechaInicio: contractData.fechaInicio,
       fechaFin: contractData.fechaFin,
       incluyePenalizacion: contractData.incluyePenalizacion,
       aceptaTerminos: contractData.aceptaTerminos,
-      firmaVendedor: contractData.firma,
-      firmaCliente: "", // o lo que corresponda según tu lógica
+      firmaVendedor: contractData.firmaVendedor,
+      firmaUsuario: "", 
       userUID: auth.currentUser.uid,
       createdAt: serverTimestamp(),
-      status: contractData.firma ? "activo" : "inactivo",
-      provincia:contractData.provincia,
-      localidad:contractData.localidad,
-      codPostal:contractData.codPostal,
+      status: "inactivo",
+      provincia:contractData.provincia || "",
+      localidad:contractData.localidad || "",
+      codPostal:contractData.codPostal || "",
       email:contractData.email,
+      telefono: contractData.telefono || "",
+      altura: contractData.altura || "",
+      nombreEmpresa: contractData.nombreEmpresa || "",
+      emailEmpresa: contractData.emailEmpresa || "",
     };
     console.log("Guardando contrato:", contractDoc);
-
     const docRef = await addDoc(collection(db, "contracts"), contractDoc);
-      return docRef.id;
-
+    return docRef.id;
   };
 
   export const formatDate = (dateString) => {
@@ -115,41 +117,78 @@ import { showError } from "../Administrator/FirebaseSellers";
 
 
   // Estilos
-  const styles = StyleSheet.create({
-    page: { 
-      padding: 40,
-      fontFamily: 'Times-Roman',
-      fontSize: 12,
-      lineHeight: 1.5
-    },
-    title: { 
-      fontSize: 16,
-      fontWeight: 'bold',
-      marginBottom: 20,
-      textAlign: 'center',
-      textDecoration: 'underline'
-    },
-    sectionTitle: {
-      fontSize: 14,
-      fontWeight: 'bold',
-      marginTop: 15,
-      marginBottom: 10
-    },
-    signatureSection: {
-      marginTop: 40,
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between'
-    },
-    signatureLine: {
-      width: 200,
-      borderBottom: '1px solid black',
-      marginBottom: 5
-    }
-  });
+  const colors = {
+  Black: '#000000',
+  Zero: '#ffc180',
+  Primario: '#F8A145',
+  Secundario: '#F07900',
+  Terciario: '#D35100',
+  Hover: '#ff8c19',
+};
+
+const styles = StyleSheet.create({
+  page: {
+    backgroundColor: '#ffffff', // fondo blanco limpio
+    padding: 20,
+    fontFamily: 'Helvetica', // jsPDF no tiene Open Sans nativo, Helvetica va bien
+    fontSize: 12,
+    color: colors.Black,
+  },
+  title: {
+    fontSize: 24,
+    color: colors.Primario,
+    marginBottom: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  sectionTitle: {
+    fontSize: 16,
+    color: colors.Terciario,
+    marginTop: 20,
+    marginBottom: 8,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  paragraph: {
+    fontSize: 12,
+    color: colors.Black,
+    marginBottom: 6,
+    lineHeight: 1.4,
+  },
+  signatureSection: {
+    marginTop: 40,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  signatureBox: {
+    width: 150,
+    borderTopWidth: 1,
+    borderTopColor: colors.Zero,
+    paddingTop: 6,
+    alignItems: 'center',
+  },
+  signatureLabel: {
+    fontSize: 12,
+    color: colors.Secundario,
+    marginBottom: 6,
+    fontWeight: '600',
+  },
+  signatureImage: {
+    width: 150,
+    height: 60,
+    marginTop: 10,
+  },
+  nameDniText: {
+    marginTop: 12,
+    fontSize: 12,
+    color: colors.Black,
+    textAlign: 'center',
+    lineHeight: 1.3,
+  },
+});
 
   // Componente PDF separado
-  const MyDocument = ({ contract, formatDate }) => (
+  const MyDocument = ({ contract, formatDate, user }) => (
     <Document>
       <Page style={styles.page}>
         <Text style={styles.title}>{contract.titulo}</Text>
@@ -157,7 +196,7 @@ import { showError } from "../Administrator/FirebaseSellers";
         <Text style={styles.sectionTitle}>PARTES CONTRATANTES:</Text>
         <Text>
           {`Entre ${contract.nombre} ${contract.apellido}, identificado con DNI ${contract.dni}, `}
-          {`y [NOMBRE_EMPRESA], celebran el presente contrato con fecha ${formatDate(contract.fechaInicio)}.`}
+          {`y ${user?.name}, celebran el presente contrato con fecha ${formatDate(contract.fechaInicio)}.`}
         </Text>
 
         <Text style={styles.sectionTitle}>DATOS DEL CONTRATO:</Text>
@@ -182,11 +221,11 @@ import { showError } from "../Administrator/FirebaseSellers";
         </Text>
 
         <View style={styles.signatureSection}>
-          <View>
+          <View style={styles.signatureLine}>
             <Text>Firma del Cliente:</Text>
-            {contract.firma && (
+            {contract.firmaUsuario && (
               <Image 
-                src={contract.firma} 
+                src={contract.firmaUsuario} 
                 style={{ width: 150, height: 60, marginTop: 10 }} 
               />
             )}
@@ -198,23 +237,28 @@ import { showError } from "../Administrator/FirebaseSellers";
           </View>
 
           <View>
-            <Text>Firma del Representante:</Text>
-            <View style={styles.signatureLine}></View>
-            <Text style={{ marginTop: 20 }}>
-              {contract.userName || '[Nombre Representante]'}
-              {'\n'}
-              [Cargo]
-            </Text>
-          </View>
+            <Text>Firma de la Empresa:</Text>
+            <View style={styles.signatureLine}>
+            {contract.firmaVendedor && (
+              <Image 
+                src={contract.firmaVendedor} 
+                style={{ width: 150, height: 60, marginTop: 10 }} 
+              />
+            )}
+            </View>
+              <Text style={{ marginTop: 20 }}>
+                {user?.name || '[Nombre Representante]'}
+              </Text>
+            </View>
         </View>
       </Page>
     </Document>
   );
 
   // Función para generar el PDF
-  export const generatePDF = async (contract, formatDate) => {
+  export const generatePDF = async (contract, formatDate, user) => {
     try {
-      const blob = await pdf(<MyDocument contract={contract} formatDate={formatDate} />).toBlob();
+      const blob = await pdf(<MyDocument contract={contract} formatDate={formatDate} user={user}/>).toBlob();
       return blob;
     } catch (error) {
       throw error;

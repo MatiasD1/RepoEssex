@@ -1,4 +1,4 @@
-import  { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
@@ -9,7 +9,7 @@ import { Toast } from 'primereact/toast';
 import { getUserContracts, formatDate, generatePDF } from '../Shared/FirebaseContrats'; 
 import ContractDetail from '../Shared/ContractDetail'; 
 import { saveAs } from 'file-saver';
-import { showError } from '../Administrator/FirebaseSellers';
+import { getUserById, showError } from '../Administrator/FirebaseSellers';
 
 const ContractsList = () => {
   const [contracts, setContracts] = useState([]);
@@ -52,7 +52,9 @@ const ContractsList = () => {
 
   const handlePreviewPDF = async (contract) => {
     try {
-      const blob = await generatePDF(contract,formatDate);
+      const user = await getUserById(contract.userUID);
+      console.log(user);
+      const blob = await generatePDF(contract,formatDate,user);
       const url = URL.createObjectURL(blob);
       setPdfUrl(url);
       setSelectedContract(contract);
@@ -94,7 +96,6 @@ const ContractsList = () => {
 };
 
 
-
   const dateBodyTemplate = (rowData) => {
     return formatDate(rowData.fechaInicio);
   };
@@ -117,32 +118,31 @@ const ContractsList = () => {
       <Card>
         <h2 className="text-xl font-medium text-700">Listado de Contratos</h2>
         <DataTable
-  value={contracts}
-  paginator
-  rows={10}
-  rowsPerPageOptions={[5, 10, 25]}
-  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} contratos"
-  emptyMessage="No se encontraron contratos"
-  scrollable
-  responsiveLayout="scroll"  // <--- Esta línea es clave
-  rowClassName={(rowData) => {
-    const index = contracts.findIndex(c => c.id === rowData.id);
-    return index % 2 === 0 ? 'fila-par' : 'fila-impar';
-  }}
->
-
+          value={contracts}
+          paginator
+          rows={10}
+          rowsPerPageOptions={[5, 10, 25]}
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} contratos"
+          emptyMessage="No se encontraron contratos"
+          scrollable
+          responsiveLayout="scroll"
+          rowClassName={(rowData) => {
+            const index = contracts.findIndex(c => c.id === rowData.id);
+            return index % 2 === 0 ? 'fila-par' : 'fila-impar';
+          }}
+        >
           <Column field="titulo" header="Título" sortable></Column>
           <Column header="Cliente" body={clientBodyTemplate} sortable></Column>
           <Column field="dni" header="DNI" sortable></Column>
           <Column header="Fecha Inicio" body={dateBodyTemplate} sortable></Column>
           <Column field="monto" header="Monto (USD)" sortable></Column>
           <Column
-  body={actionBodyTemplate}
-  header="Acciones"
-  className="col-acciones"
-  style={{ width: '140px' }} // opcional, para hint
-/>
+            body={actionBodyTemplate}
+            header="Acciones"
+            className="col-acciones"
+            style={{ width: '140px' }} // opcional, para hint
+          />
         </DataTable>
       </Card>
 

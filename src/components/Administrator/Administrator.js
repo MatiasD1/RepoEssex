@@ -128,7 +128,7 @@ const Administrator = () => {
       />
 
       <Dialog
-      className="custom-dialog"
+        className="custom-dialog"
         header={`Crear Nuevo Usuario`}
         visible={showUserDialog}
         style={{ width: '80vw' }}
@@ -173,30 +173,30 @@ const Administrator = () => {
             />
           </div>
         </div>
-     
-   <div className="crearUsuarioFooter">
-  <Button
-    label="Crear Usuario"
-    className="crearUsuarioBtn"
-    onClick={HandleCreateUser}
-  />
-</div>
+        <div className="crearUsuarioFooter">
+          <Button
+            label="Crear Usuario"
+            className="crearUsuarioBtn"
+            onClick={()=>HandleCreateUser}
+          />
+        </div>
   
       </Dialog>
 
       <DataTable
-  value={users}
-  loading={loading}
-  paginator
-  rows={10}
-  rowsPerPageOptions={[5, 10, 25]}
-  responsiveLayout="scroll"  // <--- clave para mobile
-  tableStyle={{ minWidth: '100%' }}
-  rowClassName={(rowData) => {
-    const index = users.findIndex(u => u.id === rowData.id);
-    return index % 2 === 0 ? 'fila-par' : 'fila-impar';
-  }}
->
+        value={users}
+        loading={loading}
+        paginator
+        rows={10}
+        rowsPerPageOptions={[5, 10, 25]}
+        responsiveLayout="scroll" 
+        tableStyle={{ minWidth: '100%' }}
+        rowClassName={(rowData) => {
+          const index = users.findIndex(u => u.id === rowData.id);
+          return index % 2 === 0 ? 'fila-par' : 'fila-impar';
+        }}
+      >
+
         <Column field='email' header="Email" />
         <Column field='role' header="Rol" />
         <Column
@@ -204,47 +204,41 @@ const Administrator = () => {
           body={(rowData) => `${rowData.name} ${rowData.apellido || ''}`}
         />
         <Column
-  header="Dar de baja"
-  body={(rowData) => (
-    <div className="accionesBotones">
-      <Button
-        icon="pi pi-times"
-  className="btn-accion btn-pdf"
-  tooltip="Dar de baja"
-  tooltipOptions={{ position: 'bottom' }}
-        onClick={() => {
-          Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'El usuario será deshabilitado',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, deshabilitar',
-            cancelButtonText: 'Cancelar',
-            customClass: {
-              popup: 'mi-popup',
-              title: 'mi-titulo',
-              confirmButton: 'mi-boton-confirmar',
-              cancelButton: 'mi-boton-cancelar',
-              icon: 'iconoSA',
-            }
-          }).then((result) => {
-            if (result.isConfirmed) {
-              HandleBaja(rowData.id);
-            }
-          });
-        }}
-      />
-    </div>
-  )}
-  style={{ width: '110px', whiteSpace: 'nowrap' }}
-  bodyStyle={{ textAlign: 'center' }}
-/>
-
-
-
-
-
-
+          header="Dar de baja"
+          body={(rowData) => (
+            <div className='accionesBotones'>
+              <Button
+              icon="pi pi-times"
+              className="btn-accion btn-pdf"
+              tooltip="Dar de baja"
+              tooltipOptions={{ position: 'bottom' }}
+              onClick={() => {
+                Swal.fire({
+                  title: '¿Estás seguro?',
+                  text: 'El usuario será deshabilitado',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Sí, deshabilitar',
+                  cancelButtonText: 'Cancelar',
+                  customClass: {
+                    popup: 'mi-popup',
+                    title: 'mi-titulo',
+                    confirmButton: 'mi-boton-confirmar',
+                    cancelButton: 'mi-boton-cancelar',
+                    icon: 'iconoSA',
+                  }
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    HandleBaja(rowData.id);
+                  }
+                });
+              }}
+            />
+            </div>
+          )}
+          style={{ width: '110px', whiteSpace: 'nowrap' }}
+          bodyStyle={{ textAlign: 'center'}}
+        />
       </DataTable>
     </div>
   );
