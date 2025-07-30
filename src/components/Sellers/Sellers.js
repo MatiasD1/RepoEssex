@@ -140,6 +140,12 @@ const Sellers = () => {
     fetchContracts();
   }, []);
 
+  /* Función para quitar la etiqueta <p> de la columna Contenido */
+  const contenidoBodyTemplate = (rowData) => {
+    const textoLimpio = rowData.contenido.replace(/<[^>]+>/g, '');
+    return <span>{textoLimpio}</span>;
+  };
+
   if (loading) {
     return (
       <div className="flex justify-content-center align-items-center min-h-screen bg-blue-50">
@@ -169,7 +175,7 @@ const Sellers = () => {
         }}
       >
         <Column field="titulo" header="Título" sortable headerClassName="font-medium" />
-        <Column field="contenido" header="Contenido" sortable headerClassName="font-medium" />
+        <Column header="Contenido" sortable body={contenidoBodyTemplate} headerClassName="font-medium" />
         <Column field="status" header="Estado" sortable body={statusBodyTemplate} headerClassName="font-medium" />
         <Column field="email" header="Email del Cliente" sortable headerClassName="font-medium" />
         <Column header="Acciones" bodyClassName={'col-acciones'} body={actionCombinedTemplate} headerClassName="font-medium" />

@@ -205,7 +205,6 @@ h2 {
     background-color: #333;
     outline: none;
   }
-
   #navbar .pi {
     color: #F07900;
   }
@@ -318,6 +317,7 @@ h2 {
 }
 @media (max-width: 767px) {
   .login-container {
+    height: 0;
     padding: 1.5rem;
     align-items: flex-start;
     padding-top: 4rem;
@@ -583,7 +583,6 @@ h2 {
   padding: 0;
   line-height: 1;
 }
-
 .accionesBotones .btn-accion {
   width: 2.5rem !important;
   height: 2.5rem;
@@ -602,7 +601,6 @@ h2 {
   padding: 0;
   line-height: 1;
 }
-
 .accionesBotones .btn-accion .pi {
   font-size: 1.2rem;
   color: white !important;
@@ -622,7 +620,6 @@ h2 {
 
 .col-acciones {
   width: 110px !important;
-  max-width: 110px !important;
   text-align: center !important;
   padding: 0.5rem 0.5rem !important;
 }
@@ -1004,7 +1001,7 @@ form .firma-section .firma-box small {
   background-color: #f9fafb;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
   cursor: crosshair;
-  background: black;
+  background: white;
 }
 
 .firma-acciones {
@@ -1212,6 +1209,7 @@ form .firma-section .firma-box small {
 }
 
 #disabled .pi {
+  color: #fff;
   font-size: 20px;
   color: #fff;
 }
