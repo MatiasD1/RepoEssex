@@ -138,7 +138,7 @@ const NewContract = () => {
             <InputText name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" disabled={esEmpresa} />
             <InputText name="apellido" value={formData.apellido} onChange={handleChange} placeholder="Apellido" disabled={esEmpresa} />
             <InputMask name="dni" value={formData.dni} onChange={handleChange} mask="99999999" placeholder="DNI" disabled={esEmpresa} />
-            <InputMask name="telefono" value={formData.telefono} onChange={handleChange} mask="+54 9 9999-9999" placeholder="Teléfono" disabled={esEmpresa} />
+            <InputMask name="telefono" value={formData.telefono} onChange={handleChange} mask="+54 9 9999 999-9999" placeholder="Teléfono" disabled={esEmpresa} />
           </div>
 
           {esEmpresa && (
