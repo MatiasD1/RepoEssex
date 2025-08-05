@@ -24,6 +24,11 @@ const NewContract = () => {
   const [user, setUser] = useState(null);
   const [showSignatureDialog, setShowSignatureDialog] = useState(false);
   const [selectedPro, setSelectedPro] = useState(null);
+  const [CamposOpcionales, setCamposOpcionales] = useState({
+    renovable: false, periodoRenovacion:'', cláusulaTerminaciónAnticipada:'',
+    garantia:'', seguro:'', contactoEmergencia:'', clausulaConfidencialidad:'',
+    penalidadRetrasoPago:'', modalidadPago:'', cláusulaFuerzaMayor:''
+  });
 
   const [searchParams] = useSearchParams();
   const mode = searchParams.get('mode') || 'empresa';
@@ -51,7 +56,7 @@ const NewContract = () => {
     fechaInicio: '', fechaFin: '', contenido: '', monto: 0,
     incluyePenalizacion: false, firma: '', aceptaTerminos: false,
     provincia: '', localidad: '', codPostal: '', direccion:'', altura: '', email: '',telefono:'',
-    emailEmpresa:user?.email, nombreEmpresa:user?.nombre, firmaVendedor: "", firmaUsuario: ""
+    emailEmpresa:user?.email, nombreEmpresa:user?.name, firmaVendedor: "", firmaUsuario: ""
   });
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -69,7 +74,8 @@ const NewContract = () => {
     e.preventDefault();
     try {
       if (esEmpresa) {
-        await createContract(formData);
+        const finalData = {...formData,...CamposOpcionales};
+        await createContract(finalData);
       } else {
         const ref = doc(db, "contracts", contractId);
         await updateDoc(ref, {
@@ -138,7 +144,63 @@ const NewContract = () => {
             <InputText name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" disabled={esEmpresa} />
             <InputText name="apellido" value={formData.apellido} onChange={handleChange} placeholder="Apellido" disabled={esEmpresa} />
             <InputMask name="dni" value={formData.dni} onChange={handleChange} mask="99999999" placeholder="DNI" disabled={esEmpresa} />
-            <InputMask name="telefono" value={formData.telefono} onChange={handleChange} mask="+54 9 9999-9999" placeholder="Teléfono" disabled={esEmpresa} />
+            <InputMask name="telefono" value={formData.telefono} onChange={handleChange} mask="+54 9 9999 999-9999" placeholder="Teléfono" disabled={esEmpresa} />
+            {/* Dropdown para seleccionar campos opcionales */}
+            <Dropdown
+              options={[
+                { label: 'Renovable', value: 'renovable' },
+                { label: 'Periodo de Renovación', value: 'periodoRenovacion' },
+                { label: 'Cláusula de Terminación Anticipada', value: 'clausulaTerminacionAnticipada' },
+                { label: 'Garantía', value: 'garantia' },
+                { label: 'Seguro', value: 'seguro' },
+                { label: 'Contacto de Emergencia', value: 'contactoEmergencia' },
+                { label: 'Cláusula de Confidencialidad', value: 'clausulaConfidencialidad' },
+                { label: 'Penalidad por Retraso en el Pago', value: 'penalidadRetrasoPago' },
+                { label: 'Modalidad de Pago', value: 'modalidadPago' },
+                { label: 'Cláusula de Fuerza Mayor', value: 'clausulaFuerzaMayor' }
+              ].filter(op => !CamposOpcionales[op.value])}
+              onChange={(e) => {
+                const campo = e.value;
+                if (!CamposOpcionales[campo]) {
+                  setCamposOpcionales(prev => ({ ...prev, [campo]: '' }));
+                }
+              }}
+              placeholder="Agregar campo opcional"
+              className="campo-opcional-dropdown"
+              disabled={!esEmpresa}
+            />
+            {Object.entries(CamposOpcionales).map(([clave, valor]) => (
+              valor !== false && (
+                <div key={clave} className="mb-3 flex align-items-center gap-2">
+                  <label className="w-15rem text-capitalize">
+                    {clave.replace(/([A-Z])/g, ' $1')}:
+                  </label>
+                  <InputText
+                    value={valor}
+                    onChange={(e) =>
+                      setCamposOpcionales(prev => ({ ...prev, [clave]: e.target.value }))
+                    }
+                    className="w-full"
+                    placeholder={`Ingrese ${clave}`}
+                  />
+                  <Button
+                    icon="pi pi-times"
+                    className="p-button-rounded p-button-danger p-button-outlined"
+                    onClick={() =>
+                      setCamposOpcionales(prev => {
+                        const updated = { ...prev };
+                        delete updated[clave];
+                        return updated;
+                      })
+                    }
+                    tooltip="Eliminar campo"
+                    tooltipOptions={{ position: 'top' }}
+                  />
+                </div>
+              )
+            ))}
+
+
           </div>
 
           {esEmpresa && (

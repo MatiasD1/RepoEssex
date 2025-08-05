@@ -17,6 +17,7 @@ const ClientVerification = () => {
   const [code, setCode] = useState("");
   const [verified, setVerified] = useState(false);
   const [showSignatureDialog, setShowSignatureDialog] = useState(false);
+  const [loading, setLoading] = useState(true);
   const location = useLocation();
   const signatureRef = useRef(null);
   const toast = useRef(null);
@@ -33,16 +34,18 @@ const ClientVerification = () => {
           return;
         }
         setContract({ ...contractDoc.data(), id: contractDoc.id });
+        setLoading(false);
       } catch (error) {
         showError("Error al obtener el contrato");
+        setLoading(true);
         console.error(error);
       }
     };
 
-    if (id) {
+    if (id && loading) {
       fetchContract();
     }
-  }, [location]);
+  }, [location, loading]);
 
 
   const handleSaveSignature = async() => {
