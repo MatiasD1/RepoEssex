@@ -25,9 +25,9 @@ const NewContract = () => {
   const [showSignatureDialog, setShowSignatureDialog] = useState(false);
   const [selectedPro, setSelectedPro] = useState(null);
   const [CamposOpcionales, setCamposOpcionales] = useState({
-    renovable: false, periodoRenovacion:'', cláusulaTerminaciónAnticipada:'',
+    renovable: false, periodoRenovacion:'', clausulaTerminacionAnticipada:'',
     garantia:'', seguro:'', contactoEmergencia:'', clausulaConfidencialidad:'',
-    penalidadRetrasoPago:'', modalidadPago:'', cláusulaFuerzaMayor:''
+    penalidadRetrasoPago:'', modalidadPago:'', clausulaFuerzaMayor:''
   });
 
   const [searchParams] = useSearchParams();
@@ -122,11 +122,23 @@ const NewContract = () => {
   }
 }, [contractId,esEmpresa]);
 
+const labelsOpcionales = {
+  renovable: 'Renovable',
+  periodoRenovacion: 'Periodo de Renovación',
+  clausulaTerminacionAnticipada: 'Cláusula de Terminación Anticipada',
+  garantia: 'Garantía',
+  seguro: 'Seguro',
+  contactoEmergencia: 'Contacto de Emergencia',
+  clausulaConfidencialidad: 'Cláusula de Confidencialidad',
+  penalidadRetrasoPago: 'Penalidad por Retraso en el Pago',
+  modalidadPago: 'Modalidad de Pago',
+  clausulaFuerzaMayor: 'Cláusula de Fuerza Mayor'
+};
 
  return (
     <div className="form-container">
       <Toast ref={toast} />
-      <h2>{esEmpresa ? 'Generador de Contratos' : 'Revisión y Firma del Contrato'}</h2>
+      <h2>{esEmpresa ? 'Nuevo Contrato' : 'Revisión y Firma del Contrato'}</h2>
       <Card>
         <form onSubmit={handleSubmit} className="contract-form formNewContract">
           <div className="primeraParteContrato">
@@ -171,21 +183,19 @@ const NewContract = () => {
             />
             {Object.entries(CamposOpcionales).map(([clave, valor]) => (
               valor !== false && (
-                <div key={clave} className="mb-3 flex align-items-center gap-2">
-                  <label className="w-15rem text-capitalize">
-                    {clave.replace(/([A-Z])/g, ' $1')}:
-                  </label>
+                <div key={clave} className="campoOpcional mb-3 flex align-items-center gap-2">
+                
                   <InputText
                     value={valor}
                     onChange={(e) =>
                       setCamposOpcionales(prev => ({ ...prev, [clave]: e.target.value }))
                     }
                     className="w-full"
-                    placeholder={`Ingrese ${clave}`}
+                    placeholder={`Ingrese ${labelsOpcionales[clave]}`}
                   />
                   <Button
                     icon="pi pi-times"
-                    className="p-button-rounded p-button-danger p-button-outlined"
+                    className="botonQuitarCampo"
                     onClick={() =>
                       setCamposOpcionales(prev => {
                         const updated = { ...prev };
@@ -266,9 +276,9 @@ const NewContract = () => {
           <div className="botones">
             <Button label="Cancelar" className="p-button-secondary" onClick={() => navigate(esEmpresa ? '/sellers' : '/')} disabled={loading} />
             {esEmpresa ? (
-              <Button label={loading ? 'Guardando...' : 'Guardar Contrato'} type="submit" loading={loading} disabled={!formData.aceptaTerminos || !formData.firmaVendedor} />
+              <Button label={loading ? 'Guardando...' : 'Guardar Contrato'} className="p-button-secondary" type="submit" loading={loading} disabled={!formData.aceptaTerminos || !formData.firmaVendedor} />
             ) : (
-              <Button label="Aceptar y Firmar" icon="pi pi-check" onClick={handleSubmit} type="button" disabled={!formData.aceptaTerminos} />
+              <Button label="Aceptar y Firmar" icon="pi pi-check" onClick={handleSubmit} className="p-button-secondary" type="button" disabled={!formData.aceptaTerminos} />
             )}
           </div>
         </form>
