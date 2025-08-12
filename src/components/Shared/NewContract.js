@@ -24,11 +24,8 @@ const NewContract = () => {
   const [user, setUser] = useState(null);
   const [showSignatureDialog, setShowSignatureDialog] = useState(false);
   const [selectedPro, setSelectedPro] = useState(null);
-  const [CamposOpcionales, setCamposOpcionales] = useState({
-    renovable: false, periodoRenovacion:'', clausulaTerminacionAnticipada:'',
-    garantia:'', seguro:'', contactoEmergencia:'', clausulaConfidencialidad:'',
-    penalidadRetrasoPago:'', modalidadPago:'', clausulaFuerzaMayor:''
-  });
+  const [CamposOpcionales, setCamposOpcionales] = useState({});
+
 
   const [searchParams] = useSearchParams();
   const mode = searchParams.get('mode') || 'empresa';
@@ -153,10 +150,10 @@ const labelsOpcionales = {
             )}
 
             {/* Datos de Usuario - siempre editables por el usuario */}
-            <InputText name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" disabled={esEmpresa} />
-            <InputText name="apellido" value={formData.apellido} onChange={handleChange} placeholder="Apellido" disabled={esEmpresa} />
-            <InputMask name="dni" value={formData.dni} onChange={handleChange} mask="99999999" placeholder="DNI" disabled={esEmpresa} />
-            <InputMask name="telefono" value={formData.telefono} onChange={handleChange} mask="+54 9 9999 999-9999" placeholder="Teléfono" disabled={esEmpresa} />
+            <InputText name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" disabled={esEmpresa} hidden={esEmpresa} />
+            <InputText name="apellido" value={formData.apellido} onChange={handleChange} placeholder="Apellido" disabled={esEmpresa} hidden={esEmpresa}/>
+            <InputMask name="dni" value={formData.dni} onChange={handleChange} mask="99999999" placeholder="DNI" disabled={esEmpresa} hidden={esEmpresa}/>
+            <InputMask name="telefono" value={formData.telefono} onChange={handleChange} mask="+54 9 9999 999-9999" placeholder="Teléfono" disabled={esEmpresa} hidden={esEmpresa}/>
             {/* Dropdown para seleccionar campos opcionales */}
             <Dropdown
               options={[
@@ -170,47 +167,41 @@ const labelsOpcionales = {
                 { label: 'Penalidad por Retraso en el Pago', value: 'penalidadRetrasoPago' },
                 { label: 'Modalidad de Pago', value: 'modalidadPago' },
                 { label: 'Cláusula de Fuerza Mayor', value: 'clausulaFuerzaMayor' }
-              ].filter(op => !CamposOpcionales[op.value])}
+              ].filter(op => !CamposOpcionales.hasOwnProperty(op.value))}
               onChange={(e) => {
                 const campo = e.value;
-                if (!CamposOpcionales[campo]) {
-                  setCamposOpcionales(prev => ({ ...prev, [campo]: '' }));
-                }
+                setCamposOpcionales(prev => ({ ...prev, [campo]: '' }));
               }}
               placeholder="Agregar campo opcional"
               className="campo-opcional-dropdown"
               disabled={!esEmpresa}
             />
+
             {Object.entries(CamposOpcionales).map(([clave, valor]) => (
-              valor !== false && (
-                <div key={clave} className="campoOpcional mb-3 flex align-items-center gap-2">
-                
-                  <InputText
-                    value={valor}
-                    onChange={(e) =>
-                      setCamposOpcionales(prev => ({ ...prev, [clave]: e.target.value }))
-                    }
-                    className="w-full"
-                    placeholder={`Ingrese ${labelsOpcionales[clave]}`}
-                  />
-                  <Button
-                    icon="pi pi-times"
-                    className="botonQuitarCampo"
-                    onClick={() =>
-                      setCamposOpcionales(prev => {
-                        const updated = { ...prev };
-                        delete updated[clave];
-                        return updated;
-                      })
-                    }
-                    tooltip="Eliminar campo"
-                    tooltipOptions={{ position: 'top' }}
-                  />
-                </div>
-              )
-            ))}
-
-
+            <div key={clave} className="campoOpcional mb-3 flex align-items-center gap-2">
+              <InputText
+                value={valor}
+                onChange={(e) =>
+                  setCamposOpcionales(prev => ({ ...prev, [clave]: e.target.value }))
+                }
+                className="w-full"
+                placeholder={`Ingrese ${labelsOpcionales[clave]}`}
+              />
+              <Button
+                icon="pi pi-times"
+                className="botonQuitarCampo"
+                onClick={() =>
+                  setCamposOpcionales(prev => {
+                    const updated = { ...prev };
+                    delete updated[clave];
+                    return updated;
+                  })
+                }
+                tooltip="Eliminar campo"
+                tooltipOptions={{ position: 'top' }}
+              />
+            </div>
+          ))}
           </div>
 
           {esEmpresa && (
@@ -232,20 +223,31 @@ const labelsOpcionales = {
           )}
 
           {/* Zona del usuario */}
-          <Dropdown
-            value={selectedPro || formData.provincia}
-            options={provincias}
-            onChange={(e) => {
-              setSelectedPro(e.value);
-              setFormData({ ...formData, provincia: e.value });
-            }}
-            placeholder="Provincia"
-            disabled={esEmpresa}
-          />
-          <InputText name="localidad" value={formData.localidad} onChange={handleChange} placeholder="Localidad" disabled={esEmpresa} />
-          <InputText name="codPostal" value={formData.codPostal} onChange={handleChange} placeholder="Código Postal" disabled={esEmpresa} />
-          <InputText name="direccion" value={formData.direccion} onChange={handleChange} placeholder="dirección" disabled={esEmpresa}/>
-          <InputNumber name="altura" value={formData.altura} onValueChange={(e) => setFormData({ ...formData, altura: e.value })} placeholder="Altura" disabled={esEmpresa} />
+          {!esEmpresa && (
+            <Dropdown
+              value={selectedPro || formData.provincia}
+              options={provincias}
+              onChange={(e) => {
+                setSelectedPro(e.value);
+                setFormData({ ...formData, provincia: e.value });
+              }}
+              placeholder="Provincia"
+              disabled={esEmpresa}
+            />
+          )}
+
+          <InputText name="localidad" value={formData.localidad} onChange={handleChange} placeholder="Localidad" disabled={esEmpresa} hidden={esEmpresa}/>
+          <InputText name="codPostal" value={formData.codPostal} onChange={handleChange} placeholder="Código Postal" disabled={esEmpresa} hidden={esEmpresa}/>
+          <InputText name="direccion" value={formData.direccion} onChange={handleChange} placeholder="dirección" disabled={esEmpresa} hidden={esEmpresa}/>
+          {!esEmpresa && (
+            <InputNumber
+              name="altura"
+              value={formData.altura}
+              onValueChange={(e) => setFormData({ ...formData, altura: e.value })}
+              placeholder="Altura"
+              disabled={esEmpresa}
+            />
+          )}
 
           <div className="campoCheckbox">
             <span>Acepto los términos</span>
