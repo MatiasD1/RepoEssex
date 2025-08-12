@@ -4,7 +4,6 @@
 
 .formNewContract{
   padding: 0rem 9rem 0rem 9rem;
-  margin: 0rem 12rem 0rem 12rem;
 }
 .p-card {
   border-radius: 10px;
@@ -13,7 +12,10 @@
   background-color: rgba(variables.$Black, 0.5);
 
 }
-
+.campoOpcional{
+  display: flex;
+  justify-content: center;
+}
 .p-card-title {
   font-size: 1.75rem;
   color: variables.$Secundario;
@@ -39,13 +41,7 @@
     grid-column: span 2;
   }
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
 
-    .col-2 {
-      grid-column: span 1;
-    }
-  }
 }
 .campoCheckbox {
   display: flex;
@@ -62,7 +58,6 @@
   color: variables.$Primario;
   border-radius: 5px;
   padding: 0.75rem;
-  width: 100%;
 }
 
 // Calendario
@@ -237,6 +232,12 @@
     color: black;
   }
 }
+// Botón para quitar campo opcional
+.botonQuitarCampo {
+  background-color: #F07900;
+  }
+
+
 
 // === Botones ===
 .p-button {
@@ -321,15 +322,7 @@ form {
       width: 100%;
     }
 
-    @media (min-width: 768px) {
-      .md\:col-4 {
-        width: calc(33.333% - 1rem);
-      }
 
-      .md\:col-6 {
-        width: calc(50% - 1rem);
-      }
-    }
 
     .col-12,
     .md\:col-6 {
@@ -344,11 +337,7 @@ form {
     flex-direction: column;
     gap: 1.5rem;
 
-    @media (min-width: 768px) {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
+
 
     .firma-box {
       display: flex;
@@ -473,4 +462,102 @@ form {
   gap: 1rem;
   margin-top: 1.5rem;
   flex-wrap: wrap;
+}
+/* =========================
+   RESPONSIVE DESIGN
+   ========================= */
+
+/* Tablets y pantallas medianas */
+@media (max-width: 1024px) {
+  .formNewContract {
+    padding: 0 1rem;
+    max-width: 850px; /* Limita el ancho */
+    margin: 0 auto;   /* Centra horizontalmente */
+  }
+
+  .primeraParteContrato {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .p-inputtext,
+  .p-inputmask input,
+  .p-calendar input,
+  .p-inputnumber input,
+  .p-dropdown {
+    font-size: 0.95rem; /* Ajusta texto */
+    padding: 0.5rem;    /* Más compacto */
+  }
+}
+
+
+/* Móviles y pantallas pequeñas */
+@media (max-width: 768px) {
+  .formNewContract {
+    padding: 0 1rem;
+  }
+
+  /* Poner todo en una sola columna */
+  .primeraParteContrato {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Inputs y dropdowns full width */
+  .p-inputtext,
+  .p-inputmask input,
+  .p-calendar input,
+  .p-inputnumber input,
+  .p-dropdown {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.6rem;
+  }
+
+  /* Botones uno abajo del otro */
+  .botones {
+    flex-direction: column;
+    gap: 0.8rem;
+
+    .p-button {
+      width: 100%;
+    }
+  }
+
+  /* Firma adaptada */
+  .firma-box {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  .firma-acciones {
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .p-button {
+      width: 100%;
+    }
+  }
+}
+
+/* Teléfonos muy pequeños */
+@media (max-width: 480px) {
+  .formNewContract {
+    padding: 0 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .p-card {
+    padding: 1rem;
+  }
 }

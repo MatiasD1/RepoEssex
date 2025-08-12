@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { formatDate } from '../Shared/FirebaseContrats';
+import { Tag } from 'primereact/tag';
 
 
 const ContractsListAdmin = () => {
@@ -22,7 +23,19 @@ const ContractsListAdmin = () => {
             body: (rowData) => rowData.contenido?.replace(/<[^>]+>/g, '') || ''
         },
         {field: 'createdAt', header: 'Fecha Creación'},
-        {field: 'status', header: 'Estado'}
+        {
+            field: 'status',
+            header: 'Estado',
+            body: (rowData) => {
+                const severity = rowData.status === 'pendiente'
+                ? 'warning'
+                : rowData.status === 'activo'
+                ? 'success'
+                : 'danger';
+                return <Tag value={rowData.status} severity={severity} />;
+            }
+        }
+
     ];
 
 
