@@ -26,12 +26,10 @@ const NewContract = () => {
   const [selectedPro, setSelectedPro] = useState(null);
   const [CamposOpcionales, setCamposOpcionales] = useState({});
 
-
   const [searchParams] = useSearchParams();
   const mode = searchParams.get('mode') || 'empresa';
   const contractId = searchParams.get('id');
   const esEmpresa = mode === 'empresa';
-
 
   const toast = useRef(null);
   const signatureRef = useRef(null);
