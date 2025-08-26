@@ -73,7 +73,7 @@ const NewContract = () => {
       const auth = getAuth();
       if (!auth.currentUser) return; 
       const id = auth.currentUser.uid;
-      const docRef = doc(db, "contracts", id);
+      const docRef = doc(db, "users", id);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setFormData(prev => ({
@@ -103,8 +103,9 @@ const NewContract = () => {
     e.preventDefault();
     try {
       if (esEmpresa) {
-        if (location.state.id) {
-            const ref = doc(db, "contracts", location.state.id);
+        if (location.state?.id) {
+            const id = location.state?.id;
+            const ref = doc(db, "contracts", id);
             const finalData = {...formData,...CamposOpcionales};
             await updateDoc(ref, finalData);
         } else {
