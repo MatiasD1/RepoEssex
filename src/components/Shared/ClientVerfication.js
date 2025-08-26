@@ -95,7 +95,7 @@ const ClientVerification = () => {
                 setVerified(true);
                 await updateDoc(doc(db, "contracts", contract.id), { verificado: true, status:"activo" });
               } catch (error) {
-                showError("Error al verificar el código");
+                showError("Error al verificar el código, código incorrecto o expirado(válido por 72 horas)");
               }
             }}
           />

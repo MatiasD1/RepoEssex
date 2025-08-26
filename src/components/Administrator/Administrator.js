@@ -28,27 +28,26 @@ const Administrator = () => {
 
 
   useEffect(() => {
+    let unsubscribe = () => {};
     getActiveUsers()
       .then(q => {
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-          const usersData = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }));
+        unsubscribe = onSnapshot(q, snapshot => {
+          const usersData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
           setUsers(usersData);
           setLoading(false);
-        },
-          (error) => {
-            showError(error);
-            setLoading(true);
-          });
-        return () => unsubscribe();
+        }, error => {
+          showError(error);
+          setLoading(true);
+        });
       })
       .catch(error => {
         showError(error);
         setLoading(false);
       });
+
+    return () => unsubscribe();
   }, []);
+
 
 
   const handleUserAdd = async () => {

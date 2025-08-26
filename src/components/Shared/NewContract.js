@@ -13,46 +13,80 @@ import { Card } from 'primereact/card';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import SignatureCanvas from 'react-signature-canvas';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { createContract } from './FirebaseContrats';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { createContract, getContractById } from './FirebaseContrats';
 import { showError, showSuccess } from '../Administrator/FirebaseSellers';
-import { useSearchParams } from 'react-router-dom';
+import { signOut, getAuth } from 'firebase/auth';
 
 
 const NewContract = () => {
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
   const [showSignatureDialog, setShowSignatureDialog] = useState(false);
   const [selectedPro, setSelectedPro] = useState(null);
   const [CamposOpcionales, setCamposOpcionales] = useState({});
+
 
   const [searchParams] = useSearchParams();
   const mode = searchParams.get('mode') || 'empresa';
   const contractId = searchParams.get('id');
   const esEmpresa = mode === 'empresa';
 
+  // Si viene para editar el contrato
+
   const toast = useRef(null);
   const signatureRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-
   const provincias = ["Buenos Aires", "Santa Fé", "Córdoba", "Mendoza", "Salta"];
 
   /*Carga datos de la empresa*/
   useEffect(() => {
-    const stateUser = location.state?.user;
-    setUser(stateUser);
-    setLoading(false);
+    const fetchData = async () => {
+      const id = location.state?.id;
+      if (!id) return; 
+      console.log("Cargando contrato para edición:", id);
+      const data = await getContractById(id);
+      if (data) {
+        const fechaInicio = data.fechaInicio ? data.fechaInicio.toDate() : null;
+        const fechaFin = data.fechaFin ? data.fechaFin.toDate() : null;
+        setFormData(prev => ({ ...prev, ...data, fechaInicio, fechaFin }));
+      } else {
+        showError("Contrato no encontrado");
+      }
+    };
+
+    fetchData();
   }, [location.state]);
+
 
 
   const [formData, setFormData] = useState({
     titulo: '', nombre: '', apellido: '', dni: '',
     fechaInicio: '', fechaFin: '', contenido: '', monto: 0,
-    incluyePenalizacion: false, firma: '', aceptaTerminos: false,
+    incluyePenalizacion: false, aceptaTerminos: false,
     provincia: '', localidad: '', codPostal: '', direccion:'', altura: '', email: '',telefono:'',
-    emailEmpresa:user?.email, nombreEmpresa:user?.name, firmaVendedor: "", firmaUsuario: ""
+    emailEmpresa:"", nombreEmpresa:"", firmaVendedor: "", firmaUsuario: ""
   });
+
+  useEffect(() => {
+    if (!esEmpresa) return;   
+    const fetchUserData = async () => {
+      const auth = getAuth();
+      if (!auth.currentUser) return; 
+      const id = auth.currentUser.uid;
+      const docRef = doc(db, "contracts", id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setFormData(prev => ({
+          ...prev,
+          emailEmpresa: docSnap.data().email || prev.emailEmpresa,
+          nombreEmpresa: docSnap.data().name || prev.nombreEmpresa
+        }));
+      }
+    };
+    fetchUserData();
+  }, [esEmpresa]);
+
+
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
     setFormData(prev => ({ ...prev, [name]: name.includes('Penalizacion') || name.includes('Terminos') ? checked : value }));
@@ -69,8 +103,15 @@ const NewContract = () => {
     e.preventDefault();
     try {
       if (esEmpresa) {
-        const finalData = {...formData,...CamposOpcionales};
-        await createContract(finalData);
+        if (location.state.id) {
+            const ref = doc(db, "contracts", location.state.id);
+            const finalData = {...formData,...CamposOpcionales};
+            await updateDoc(ref, finalData);
+        } else {
+            const finalData = {...formData,...CamposOpcionales};
+            await createContract(finalData);
+        }
+        navigate('/sellers');
       } else {
         const ref = doc(db, "contracts", contractId);
         await updateDoc(ref, {
@@ -90,7 +131,7 @@ const NewContract = () => {
         });
       }
       showSuccess("Contrato guardado exitosamente");
-      navigate(esEmpresa ? '/sellers' : '/');
+      navigate('/');
     } catch (error) {
       console.error("Error al guardar el contrato:", error);
     }
@@ -99,23 +140,33 @@ const NewContract = () => {
 
   /*Cargar el contrato si el que ingresa es un usuario a completar su parte*/
   useEffect(() => {
-  if (contractId && !esEmpresa) {
-    const cargarContrato = async () => {
-      try {
-        const docRef = doc(db, "contracts", contractId);
-        const contratoSnap = await getDoc(docRef);
-        if (contratoSnap.exists()) {
-          setFormData(contratoSnap.data());
-        } else {
-          showError("Contrato no encontrado");
-        }
-      } catch (e) {
-        showError("Error al cargar contrato");
+  if (!contractId || esEmpresa) return;
+
+  const fetchForAnonymous = async () => {
+    try {
+      const auth = getAuth();
+      // si estás logueado, deslogueá y esperá
+      if (auth.currentUser) {
+        await signOut(auth);
       }
-    };
-    cargarContrato();
-  }
-}, [contractId,esEmpresa]);
+
+      const docRef = doc(db, "contracts", contractId);
+      const contratoSnap = await getDoc(docRef);
+
+      if (contratoSnap.exists()) {
+        setFormData(contratoSnap.data());
+      } else {
+        showError("Contrato no encontrado");
+      }
+    } catch (e) {
+      console.error(e);
+      showError("Error al cargar contrato");
+    }
+  };
+
+  fetchForAnonymous();
+}, [contractId, esEmpresa]);
+
 
 const labelsOpcionales = {
   renovable: 'Renovable',
@@ -130,6 +181,8 @@ const labelsOpcionales = {
   clausulaFuerzaMayor: 'Cláusula de Fuerza Mayor'
 };
 
+ 
+
  return (
     <div className="form-container">
       <Toast ref={toast} />
@@ -139,19 +192,19 @@ const labelsOpcionales = {
           <div className="primeraParteContrato">
             {esEmpresa && (
               <>
-                <InputText name="titulo" value={formData.titulo} onChange={handleChange} placeholder="Título del Contrato" required />
-                <InputNumber name="monto" value={formData.monto} onValueChange={(e) => setFormData({ ...formData, monto: e.value })} mode="currency" currency="USD" placeholder="Monto Mensual" required />
-                <Calendar name="fechaInicio" value={formData.fechaInicio} onChange={handleChange} placeholder="Fecha de Inicio" showIcon required />
-                <Calendar name="fechaFin" value={formData.fechaFin} onChange={handleChange} placeholder="Fecha de Fin" showIcon required />
-                <InputText name="email" value={formData.email} onChange={handleChange} placeholder="Email del Cliente" />
+                <InputText name="titulo" value={formData.titulo || ''} onChange={handleChange} placeholder="Título del Contrato" required />
+                <InputNumber name="monto" value={formData.monto || 0} onValueChange={(e) => setFormData({ ...formData, monto: e.value })} mode="currency" currency="USD" placeholder="Monto Mensual" required />
+                <Calendar name="fechaInicio" minDate={new Date()} maxDate={new Date()} value={formData.fechaInicio || null} onChange={handleChange} placeholder="Fecha de Inicio" showIcon required />
+                <Calendar name="fechaFin" minDate={new Date()} value={formData.fechaFin || null} onChange={handleChange} placeholder="Fecha de Fin" showIcon required />
+                <InputText name="email" value={formData.email || ''} onChange={handleChange} placeholder="Email del Cliente" required/>
               </>
             )}
 
             {/* Datos de Usuario - siempre editables por el usuario */}
-            <InputText name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" disabled={esEmpresa} hidden={esEmpresa} />
-            <InputText name="apellido" value={formData.apellido} onChange={handleChange} placeholder="Apellido" disabled={esEmpresa} hidden={esEmpresa}/>
-            <InputMask name="dni" value={formData.dni} onChange={handleChange} mask="99999999" placeholder="DNI" disabled={esEmpresa} hidden={esEmpresa}/>
-            <InputMask name="telefono" value={formData.telefono} onChange={handleChange} mask="+54 9 9999 999-9999" placeholder="Teléfono" disabled={esEmpresa} hidden={esEmpresa}/>
+            <InputText name="nombre" value={formData.nombre || ''} onChange={handleChange} placeholder="Nombre" disabled={esEmpresa} hidden={esEmpresa} required/>
+            <InputText name="apellido" value={formData.apellido || ''} onChange={handleChange} placeholder="Apellido" disabled={esEmpresa} hidden={esEmpresa} required/>
+            <InputMask name="dni" value={formData.dni || ''} onChange={handleChange} mask="99999999" placeholder="DNI" disabled={esEmpresa} hidden={esEmpresa} required/>
+            <InputMask name="telefono" value={formData.telefono || ''} onChange={handleChange} mask="+54 9 999 999-9999" placeholder="Teléfono" disabled={esEmpresa} hidden={esEmpresa} required/>
             {/* Dropdown para seleccionar campos opcionales */}
             <Dropdown
               options={[
@@ -253,15 +306,12 @@ const labelsOpcionales = {
           </div>
 
           {/* Firma de la empresa (solo visual si es usuario) */}
-          {!esEmpresa? (
-            <div className="firma-box">
-              <label>Firma de la Empresa:</label>
+          <div className="firma-box">
+            <label>Firma de la Empresa:</label>
+            {formData.firmaVendedor && (
               <img src={formData.firmaVendedor} alt="Firma Empresa" className="firma-imagen" />
-            </div>
-          ):(
-            <div className="firma-box">
-              <label>Firma de la Empresa:</label>
-              <img src={formData.firmaVendedor} alt="Firma Empresa" className="firma-imagen" />
+            )}
+            {esEmpresa && (
               <Button
                 label="Firmar"
                 icon="pi pi-pencil"
@@ -269,16 +319,18 @@ const labelsOpcionales = {
                 type="button"
                 className="mt-2 botonForm"
               />
-            </div>
-          )}
-
+            )}
+          </div>
 
           <div className="botones">
-            <Button label="Cancelar" className="p-button-secondary" onClick={() => navigate(esEmpresa ? '/sellers' : '/')} disabled={loading} />
+            <Button label="Cancelar" className="p-button-secondary" onClick={() => navigate(esEmpresa ? '/sellers' : '/')}  />
             {esEmpresa ? (
-              <Button label={loading ? 'Guardando...' : 'Guardar Contrato'} className="p-button-secondary" type="submit" loading={loading} disabled={!formData.aceptaTerminos || !formData.firmaVendedor} />
-            ) : (
-              <Button label="Aceptar y Firmar" icon="pi pi-check" onClick={handleSubmit} className="p-button-secondary" type="button" disabled={!formData.aceptaTerminos} />
+              location.state?.id? (
+                <Button label='Editar Contrato' className='p-button-secondary' type='submit' hidden={!location.state.id} disabled={!formData.aceptaTerminos || !formData.firmaVendedor}/>
+              ):(
+                <Button label='Guardar Contrato' className="p-button-secondary" type="submit" hidden={location.state?.id} disabled={!formData.aceptaTerminos || !formData.firmaVendedor} />
+            )) : (
+              <Button label="Aceptar y Firmar" icon="pi pi-check" className="p-button-secondary" type="submit" disabled={!formData.aceptaTerminos} />
             )}
           </div>
         </form>

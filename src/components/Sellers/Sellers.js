@@ -10,11 +10,13 @@ import { Tag } from 'primereact/tag';
 import { showSuccess, showError } from '../Administrator/FirebaseSellers';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { useNavigate } from 'react-router-dom';
 
-const Sellers = () => {
+const Sellers = ({ currentUser }) => {
   const [contracts, setContracts] = useState([]);
   const [loading, setLoading] = useState(true);
   const toast = useRef(null);
+  const navigate = useNavigate();
 
   const handleDelete = async (contractId) => {
     try {
@@ -50,6 +52,7 @@ const Sellers = () => {
             value="Firmado"
             severity="success"
             className="btn-accion btn-ver"
+            onClick={()=>navigate(`/sellers/contractsList`)}
           />
         ):(rowData.firmaVendedor && rowData.status === "pendiente")?(
           <Button
@@ -78,7 +81,7 @@ const Sellers = () => {
               }
             }}
           />
-        ):(
+        ):(<>
           <Button
             icon="pi pi-file-edit"
             severity="p-button-secondary"
@@ -96,6 +99,18 @@ const Sellers = () => {
               }
             }}
           />
+          <Button
+            icon="pi pi-pencil"
+            severity='p-button-secondary'
+            className='btn-accion btn-ver'
+            rounded
+            tooltip='Editar Contrato'
+            onClick={()=>{
+              navigate(`/sellers/new`, { state: { currentUser, id: rowData.id }});
+              console.log("Editando contrato:", rowData.id);
+            }}
+          />
+          </>
         )  
       }
 

@@ -56,7 +56,7 @@ const Navbar = ({ user }) => {
         {
           label: 'Nuevo Contrato',
           icon: 'pi pi-plus',
-          command: () => navigate('/sellers/new', { state: { user } })
+          command: () => navigate('/sellers/new')
         },
         {
           label: 'Plantillas',

@@ -3,8 +3,7 @@ import { collection, query, where, getDocs, doc, getDoc, updateDoc, deleteDoc, s
 import { db, auth } from "../../firebase";
 import { StyleSheet, Text, View, Document, Page, pdf, Image } from "@react-pdf/renderer";
 import { showError } from "../Administrator/FirebaseSellers";
-
-
+import { generarToken } from "../Verification-Api/ApiVer";
 
   export const createContract = async (contractData) => {
     if (!auth.currentUser) throw new Error("Usuario no autenticado");
@@ -24,17 +23,28 @@ import { showError } from "../Administrator/FirebaseSellers";
       userUID: auth.currentUser.uid,
       createdAt: serverTimestamp(),
       status: "inactivo",
-      provincia:contractData.provincia || "",
-      localidad:contractData.localidad || "",
-      codPostal:contractData.codPostal || "",
-      email:contractData.email,
+      provincia: contractData.provincia || "",
+      localidad: contractData.localidad || "",
+      codPostal: contractData.codPostal || "",
+      email: contractData.email,
       telefono: contractData.telefono || "",
       altura: contractData.altura || "",
       nombreEmpresa: contractData.nombreEmpresa || "",
       emailEmpresa: contractData.emailEmpresa || "",
+      renovable: contractData.renovable || false,
+      periodoRenovacion: contractData.periodoRenovacion || "",
+      clausulaTerminacionAnticipada: contractData.clausulaTerminacionAnticipada || false,
+      garantia: contractData.garantia || false,
+      seguro: contractData.seguro || false,
+      contactoEmergencia: contractData.contactoEmergencia || "",
+      clausulaConfidencialidad: contractData.clausulaConfidencialidad || false,
+      penalidadRetrasoPago: contractData.penalidadRetrasoPago || false,
+      modalidadPago: contractData.modalidadPago || "",
+      clausulaFuerzaMayor: contractData.clausulaFuerzaMayor || false
     };
     console.log("Guardando contrato:", contractDoc);
     const docRef = await addDoc(collection(db, "contracts"), contractDoc);
+    await generarToken(docRef.id, contractDoc);
     return docRef.id;
   };
 
@@ -50,7 +60,7 @@ import { showError } from "../Administrator/FirebaseSellers";
 
   export const getContractById = async (id) => {
     try {
-      const docRef = doc(db,"users",id);
+      const docRef = doc(db,"contracts",id);
       const docSnap = await getDoc(docRef);
       return {id:docSnap.id, ...docSnap.data()};
     } catch (error) {
