@@ -4,7 +4,7 @@ import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { getUserContracts, deleteContract, formatDate } from '../Shared/FirebaseContrats';
-import { generarCodigo, completarContrato } from '../Verification-Api/ApiVer';
+import { generarCodigo, completarContrato, generarCodigoSms } from '../Verification-Api/ApiVer';
 import { Button } from 'primereact/button';
 import { Tag } from 'primereact/tag';
 import { showSuccess, showError } from '../Administrator/FirebaseSellers';
@@ -40,9 +40,17 @@ const Sellers = ({ currentUser }) => {
   };
 
   const statusBodyTemplate = (rowData) => {
-    const severity = rowData.status === 'pendiente' ? 'warning' : rowData.status === 'activo' ? 'success' : 'danger';
+    const severityMap = {
+      pendiente: "warning",
+      activo: "success",
+      vencido: "danger",
+      inactivo: "danger",
+    };
+
+    const severity = severityMap[rowData.status] || "info"; 
     return <Tag value={rowData.status} severity={severity} />;
   };
+
 
   const actionCombinedTemplate = (rowData) => {
    return ( 
@@ -66,6 +74,8 @@ const Sellers = ({ currentUser }) => {
               try {
                 const data = {idContract:rowData.id,email:rowData.email,telefono:rowData.telefono};
                 await generarCodigo(data);
+                const smsData = {telefono:rowData.telefono, idContract:rowData.id};
+                await generarCodigoSms(smsData);
                 const contractDoc = await getDoc(doc(db, "contracts", rowData.id));
                 if (!contractDoc.exists()) {
                   showError("No se pudo obtener el contrato actualizado");
