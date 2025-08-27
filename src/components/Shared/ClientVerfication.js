@@ -11,6 +11,7 @@ import { verifcarCódigo } from "../Verification-Api/ApiVer";
 import { Dialog } from "primereact/dialog";
 import SignatureCanvas from "react-signature-canvas";
 import { Toast } from 'primereact/toast';
+import { getAuth, signOut } from "firebase/auth";
 
 const ClientVerification = () => {
   const [contract, setContract] = useState(null);
@@ -25,9 +26,12 @@ const ClientVerification = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get("id");
-
     const fetchContract = async () => {
       try {
+        const auth = getAuth();
+        if (auth.currentUser) {
+          await signOut(auth);
+        } 
         const contractDoc = await getDoc(doc(db, "contracts", id));
         if (!contractDoc.exists()) {
           showError("Contrato no encontrado");
@@ -95,7 +99,7 @@ const ClientVerification = () => {
                 setVerified(true);
                 await updateDoc(doc(db, "contracts", contract.id), { verificado: true, status:"activo" });
               } catch (error) {
-                showError("Error al verificar el código");
+                showError("Error al verificar el código, código incorrecto o expirado(válido por 72 horas)");
               }
             }}
           />

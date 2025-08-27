@@ -2,11 +2,19 @@ import React from 'react';
 import { Fieldset, Divider } from 'primereact';
 
 const ContractDetail = ({ contract }) => {
-  const formatDate = (dateString) => {
-    if (!dateString) return 'No especificada';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('es-ES');
-  };
+  
+  const formatDate = (dateValue) => {
+  if (!dateValue) return 'No especificada';
+  let date;
+  if (dateValue.toDate) {
+    date = dateValue.toDate();
+  } 
+  else {
+    date = new Date(dateValue);
+  }
+  return isNaN(date) ? 'Fecha inválida' : date.toLocaleDateString('es-ES');
+};
+
 
   return (
     <div>
