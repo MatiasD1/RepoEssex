@@ -50,6 +50,14 @@
   gap: 0.5rem; // espacio entre texto y checkbox
   font-size: 1rem;
 }
+.p-checkbox .p-checkbox-box {
+  border: 2px solid variables.$Primario;   /* borde verde-azulado */
+  border-radius: 6px;          /* opcional: esquinas redondeadas */
+  width: 22px;                 /* opcional: tamaño más grande */
+  height: 22px;
+  background-color: rgb(0, 0, 0) !important;
+}
+
 .p-inputtext,
 .p-inputmask input {
   background-color: rgba(255, 255, 255, 0.08);
@@ -463,6 +471,7 @@ form {
   margin-top: 1.5rem;
   flex-wrap: wrap;
 }
+
 /* =========================
    RESPONSIVE DESIGN
    ========================= */

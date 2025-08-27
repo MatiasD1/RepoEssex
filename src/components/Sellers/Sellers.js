@@ -11,6 +11,7 @@ import { showSuccess, showError } from '../Administrator/FirebaseSellers';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Sellers = ({ currentUser }) => {
   const [contracts, setContracts] = useState([]);
@@ -70,6 +71,7 @@ const Sellers = ({ currentUser }) => {
             rounded
             outlined
             tooltip="Enviar código"
+            tooltipOptions={{ position: 'bottom' }}
             onClick={async () => {
               try {
                 const data = {idContract:rowData.id,email:rowData.email,telefono:rowData.telefono};
@@ -99,6 +101,7 @@ const Sellers = ({ currentUser }) => {
             rounded
             outlined
             tooltip="Enviar formulario"
+            tooltipOptions={{ position: 'bottom' }}
             onClick={async () => {
               try {
                 console.log("Enviando formulario para contrato:", rowData.id, rowData.email);
@@ -115,6 +118,7 @@ const Sellers = ({ currentUser }) => {
             className='btn-accion btn-ver'
             rounded
             tooltip='Editar Contrato'
+            tooltipOptions={{ position: 'bottom' }}
             onClick={()=>{
               navigate(`/sellers/new`, { state: { currentUser, id: rowData.id }});
               console.log("Editando contrato:", rowData.id);
@@ -124,14 +128,35 @@ const Sellers = ({ currentUser }) => {
         )  
       }
 
-      <Button
+     <Button
         icon="pi pi-trash"
         className="btn-accion btn-pdf"
         severity="danger"
         rounded
         outlined
         tooltip="Eliminar contrato"
-        onClick={() => handleDelete(rowData.id)}
+        tooltipOptions={{ position: 'bottom' }}
+        onClick={() => {
+          Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'El contrato será eliminado.', 
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+            customClass: {
+              popup: 'mi-popup',
+              title: 'mi-titulo',
+              confirmButton: 'mi-boton-confirmar',
+              cancelButton: 'mi-boton-cancelar',
+              icon: 'iconoSA',
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              handleDelete(rowData.id);
+            }
+          });
+        }}
       />
     </div>
     );
